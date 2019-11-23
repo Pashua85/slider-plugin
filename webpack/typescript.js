@@ -7,7 +7,10 @@ module.exports = function() {
           exclude: /(node_modules|bower_components)/,
           loader: 'ts-loader',  
         },
-      ],
+      ]
     },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js']
+    }
   };
 };

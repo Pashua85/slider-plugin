@@ -1,10 +1,12 @@
 import { IConfig } from './Presenter';
 
-export class View {
+class View {
   root: HTMLElement;
+  config: IConfig;
 
   constructor(root: HTMLElement, config: IConfig) {
     this.root = root;
+    this.config = config;
     let slider = document.createElement('div');
     if(!config.isVertical) {
       this.initHorizontalSlider(slider);
@@ -13,10 +15,20 @@ export class View {
 
   initHorizontalSlider(slider: HTMLElement): void {
     slider.classList.add('slider');
-    let thumb = document.createElement('div');
-    thumb.classList.add('thumb');
-    slider.appendChild(thumb);
+    let thumbOne = document.createElement('div');
+    thumbOne.classList.add('thumb');
+    thumbOne.classList.add('thumb--one');
+    slider.appendChild(thumbOne);
+    
+    if(this.config.valueTwo !== undefined) {
+      let thumbTwo = document.createElement('div');
+      thumbTwo.classList.add('thumb thumb--two');
+      slider.appendChild(thumbTwo);
+    };
+
     this.root.appendChild(slider);
   }
-}
+};
+
+export {View};
 
