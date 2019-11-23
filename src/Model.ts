@@ -18,4 +18,8 @@ export class Model {
     this.state.valueOne = newValue;
   }
 
+  updateValueTwo(newValue: Value): void {
+    this.state.valueTwo = newValue;
+  }
+
 }
