@@ -1,1 +1,1 @@
-console.log('another test');
+import './styles.scss';

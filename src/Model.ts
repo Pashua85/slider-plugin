@@ -16,10 +16,14 @@ export class Model {
 
   updateValueOne(newValue: Value): void {
     this.state.valueOne = newValue;
+    this.onStateChange();
   }
 
   updateValueTwo(newValue: Value): void {
     this.state.valueTwo = newValue;
+    this.onStateChange();
   }
+
+  onStateChange(): void {}
 
 }
