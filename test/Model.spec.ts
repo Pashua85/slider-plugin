@@ -9,7 +9,7 @@ describe('Model', () => {
   });
 
   it('should update value two', () => {
-    model.updateValueTwo('some value');
-    expect(model.state.valueTwo).toBe('some value');
+    model.updateValueTwo(5);
+    expect(model.state.valueTwo).toBe(5);
   })
 })

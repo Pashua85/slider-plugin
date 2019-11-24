@@ -1,3 +1,40 @@
-.main-header {
-  color: red;
+
+.main {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.header {
+  color: mediumslateblue;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: 200;
+  text-align: center;
+}
+
+.root {
+  width: 30rem;
+  margin: 0 auto;
+}
+
+.slider {
+  position: relative;
+  box-sizing: border-box;
+  position: relative;
+  height: 4px;
+  background-color: rgb(190,200,190);
+}
+
+.slider__thumb {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: rgba(red,.3);
+}
+
+.slider--horizontal .slider__thumb {
+  top: 0;
+  left: 0;
+  margin-top: -4px;
+  margin-left: -4px;
 }

@@ -1,4 +1,4 @@
-type Value = number | string;
+type Value = number;
 
 interface IState {
   valueOne?: Value;
@@ -7,7 +7,7 @@ interface IState {
 
 
 
-export class Model {
+class Model {
   state: IState;
 
   constructor() {
@@ -16,14 +16,16 @@ export class Model {
 
   updateValueOne(newValue: Value): void {
     this.state.valueOne = newValue;
-    this.onStateChange();
+    this.onValueOneChange();
   }
 
   updateValueTwo(newValue: Value): void {
     this.state.valueTwo = newValue;
-    this.onStateChange();
+    this.onValueTwoChange();
   }
 
-  onStateChange(): void {}
-
+  onValueOneChange(): void {}
+  onValueTwoChange(): void {}
 }
+
+export { Model, Value };

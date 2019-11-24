@@ -15,18 +15,25 @@ class View {
 
   initHorizontalSlider(slider: HTMLElement): void {
     slider.classList.add('slider');
+    slider.classList.add('slider--horizontal')
     let thumbOne = document.createElement('div');
-    thumbOne.classList.add('thumb');
-    thumbOne.classList.add('thumb--one');
+    thumbOne.classList.add('slider__thumb');
+    thumbOne.classList.add('slider__thumb--one');
     slider.appendChild(thumbOne);
     
     if(this.config.valueTwo !== undefined) {
       let thumbTwo = document.createElement('div');
-      thumbTwo.classList.add('thumb thumb--two');
+      thumbOne.classList.add('slider__thumb');
+      thumbOne.classList.add('slider__thumb--two');
       slider.appendChild(thumbTwo);
     };
 
     this.root.appendChild(slider);
+  }
+
+  renderValueOneHorizontaly(newLeft: number): void {
+    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    thumb.style.left = newLeft.toString() + 'px';
   }
 };
 
