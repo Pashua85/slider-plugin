@@ -7,9 +7,10 @@ import { Model } from './Model';
 import { Presenter } from './Presenter';
 
 const config = {
-  maxValue: 100,
+  maxValue: 10,
   minValue: 0,
-  valueOne: 20,
+  valueOne: 9,
+  valueTwo: 0,
   isVertical: false
 }
 

@@ -38,6 +38,19 @@ export class Presenter {
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
     let thumbWidth = thumb.offsetWidth;
     let newLeft = this.model.state.valueOne * width / this.range - thumbWidth;
+    console.log(newLeft);
+    if (newLeft < 0) { newLeft = 0 };
+    return newLeft;
+  }
+
+  setNewLeftTwo(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let width = slider.offsetWidth;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+    let thumbWidth = thumb.offsetWidth;
+    let newLeft = this.model.state.valueTwo * width / this.range - thumbWidth;
+    console.log('left two', newLeft);
+    if (newLeft < 0) { newLeft = 0 };
     return newLeft;
   }
 
@@ -59,5 +72,9 @@ export class Presenter {
 
   onValueTwoChange(): void {
     console.log('valueTwo was changed');
+    if(!this.config.isVertical) {
+      let newLeft = this.setNewLeftTwo();
+      this.view.renderValueTwoHorizontaly(newLeft);
+    }
   }
 }

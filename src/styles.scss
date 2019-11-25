@@ -27,14 +27,18 @@
 
 .slider__thumb {
   position: absolute;
-  width: 12px;
+  width: 8px;
   height: 12px;
-  background-color: rgba(red,.3);
+  border-radius: 4px;
+  background-color: rgba(red,.2);
 }
 
 .slider--horizontal .slider__thumb {
+  top: -4px;
+  left: 0;
+}
+
+.slider--vertical .slider__thumb {
   top: 0;
   left: 0;
-  margin-top: -4px;
-  margin-left: -4px;
 }

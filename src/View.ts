@@ -23,8 +23,8 @@ class View {
     
     if(this.config.valueTwo !== undefined) {
       let thumbTwo = document.createElement('div');
-      thumbOne.classList.add('slider__thumb');
-      thumbOne.classList.add('slider__thumb--two');
+      thumbTwo.classList.add('slider__thumb');
+      thumbTwo.classList.add('slider__thumb--two');
       slider.appendChild(thumbTwo);
     };
 
@@ -35,6 +35,12 @@ class View {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
     thumb.style.left = newLeft.toString() + 'px';
   }
+
+  renderValueTwoHorizontaly(newLeft: number): void {
+    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    thumb.style.left = newLeft.toString() + 'px';
+  }
+
 };
 
 export {View};
