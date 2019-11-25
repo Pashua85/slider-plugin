@@ -7,24 +7,37 @@ class View {
   constructor(root: HTMLElement, config: IConfig) {
     this.root = root;
     this.config = config;
-    let slider = document.createElement('div');
-    if(!config.isVertical) {
-      this.initHorizontalSlider(slider);
-    }
+    
+    this.initSlider();
   }
 
-  initHorizontalSlider(slider: HTMLElement): void {
+  initSlider():void {
+    let slider = document.createElement('div');
     slider.classList.add('slider');
-    slider.classList.add('slider--horizontal')
     let thumbOne = document.createElement('div');
     thumbOne.classList.add('slider__thumb');
     thumbOne.classList.add('slider__thumb--one');
+
+    if(this.config.isVertical) {
+      slider.classList.add('slider--vertical')
+      thumbOne.classList.add('slider__thumb--vertical');
+    } else {
+      thumbOne.classList.add('slider__thumb--horizontal')
+    };
+
     slider.appendChild(thumbOne);
-    
+
     if(this.config.valueTwo !== undefined) {
       let thumbTwo = document.createElement('div');
       thumbTwo.classList.add('slider__thumb');
       thumbTwo.classList.add('slider__thumb--two');
+
+      if(this.config.isVertical) {
+        thumbTwo.classList.add('slider__thumb--vertical');
+      } else {
+        thumbTwo.classList.add('slider__thumb--horizontal');
+      }
+  
       slider.appendChild(thumbTwo);
     };
 
