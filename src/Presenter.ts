@@ -54,6 +54,28 @@ export class Presenter {
     return newLeft;
   }
 
+  setNewBottomOne(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let height = slider.offsetHeight;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
+    let thumbHeight = thumb.offsetHeight;
+    let newBottom = this.model.state.valueOne * height/ this.range - thumbHeight;
+    console.log('bottom one', newBottom);
+    if (newBottom < 0) { newBottom = 0 };
+    return newBottom;
+  }
+
+  setNewBottomTwo(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let height = slider.offsetHeight;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+    let thumbHeight = thumb.offsetHeight;
+    let newBottom = this.model.state.valueTwo * height/ this.range - thumbHeight;
+    console.log('bottom one', newBottom);
+    if (newBottom < 0) { newBottom = 0 };
+    return newBottom;
+  }
+
   updateValueOne(newValue: Value): void {
     this.model.updateValueOne(newValue);
   }
@@ -67,6 +89,9 @@ export class Presenter {
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft);
+    } else {
+      let newBottom = this.setNewBottomOne();
+      this.view.renderValueOneVerticaly(newBottom);
     }
   }
 
@@ -75,6 +100,9 @@ export class Presenter {
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftTwo();
       this.view.renderValueTwoHorizontaly(newLeft);
+    } else {
+      let newBottom = this.setNewBottomTwo();
+      this.view.renderValueTwoVerticaly(newBottom);
     }
   }
 }

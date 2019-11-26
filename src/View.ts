@@ -19,10 +19,11 @@ class View {
     thumbOne.classList.add('slider__thumb--one');
 
     if(this.config.isVertical) {
-      slider.classList.add('slider--vertical')
+      slider.classList.add('slider--vertical');
       thumbOne.classList.add('slider__thumb--vertical');
     } else {
-      thumbOne.classList.add('slider__thumb--horizontal')
+      slider.classList.add('slider--horizontal');
+      thumbOne.classList.add('slider__thumb--horizontal');
     };
 
     slider.appendChild(thumbOne);
@@ -52,6 +53,16 @@ class View {
   renderValueTwoHorizontaly(newLeft: number): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
     thumb.style.left = newLeft.toString() + 'px';
+  }
+
+  renderValueOneVerticaly(newBottom: number): void {
+    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    thumb.style.bottom = newBottom.toString() + 'px';
+  }
+
+  renderValueTwoVerticaly(newBottom: number): void {
+    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    thumb.style.bottom = newBottom.toString() + 'px';
   }
 
 };

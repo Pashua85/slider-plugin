@@ -1,7 +1,5 @@
 import './styles.scss';
 
-console.log('form script');
-
 import { View } from './View';
 import { Model } from './Model';
 import { Presenter } from './Presenter';
@@ -14,8 +12,18 @@ const config = {
   isVertical: false
 }
 
-const root: HTMLElement = document.querySelector('#root');
+const anotherConfig = {
+  maxValue: 10,
+  minValue: 0,
+  valueOne: 3,
+  valueTwo: 5,
+  isVertical: true
+}
 
-const view = new View(root, config);
+// const root: HTMLElement = document.querySelector('#root');
+// const view = new View(root, config);
+// new Presenter(new Model(), view, config);
 
-new Presenter(new Model(), view, config);
+const root1: HTMLElement = document.querySelector('#root1');
+const anotherView = new View(root1, anotherConfig);
+new Presenter(new Model(), anotherView, anotherConfig);

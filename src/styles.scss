@@ -15,14 +15,29 @@
 .root {
   width: 30rem;
   margin: 0 auto;
+  margin-bottom: 4rem;
+}
+
+.root1 {
+  height: 7rem;
 }
 
 .slider {
   position: relative;
   box-sizing: border-box;
   position: relative;
-  height: 4px;
   background-color: rgb(190,200,190);
+}
+
+.slider--horizontal {
+  height: 4px;
+}
+
+.slider--vertical {
+  min-height: 5rem;
+  height: 100%;
+  width: 4px;
+  margin: 0 auto;
 }
 
 .slider__thumb {
@@ -38,7 +53,7 @@
   left: 0;
 }
 
-.slider--vertical .slider__thumb {
-  top: 0;
-  left: 0;
+.slider__thumb--vertical {
+  bottom: 0;
+  left: -4px;
 }
