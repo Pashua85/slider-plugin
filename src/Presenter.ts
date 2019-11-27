@@ -15,6 +15,7 @@ export class Presenter {
   config: IConfig;
   range?: number;
   horizontalMoveOneHandler: () => void;
+  thumbOneMouseUpHandler: () => void;
 
   constructor(model: Model, view: View, config: IConfig) {
     this.model = model;
@@ -25,6 +26,7 @@ export class Presenter {
     this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
 
     this.horizontalMoveOneHandler = this.handleHorizontalMoveOne.bind(this);
+    this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
 
     if(this.config.maxValue !== undefined && this.config.minValue !== undefined) {
       this.range = this.config.maxValue - this.config.minValue;
@@ -108,6 +110,7 @@ export class Presenter {
 
   onThumbOneMouseDown(event: MouseEvent) {
     document.addEventListener('mousemove', this.horizontalMoveOneHandler);
+    document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 
   handleHorizontalMoveOne(event: MouseEvent) {
@@ -120,7 +123,8 @@ export class Presenter {
     let rightEdge: number;
 
     if(this.config.valueTwo !== undefined) {
-      rightEdge = slider.querySelector('.slider__thumb--two').getBoundingClientRect().left - sliderLeft;
+      let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
+      rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft + thumbTwo.offsetWidth / 2;
     } else {
       rightEdge = sliderWidth;
     };
@@ -129,5 +133,11 @@ export class Presenter {
 
     let newValue = this.range * newLeft / sliderWidth;
     this.updateValueOne(newValue);
+  }
+
+  handleThumbOneMouseUp (event: MouseEvent) {
+    event.preventDefault();
+    document.removeEventListener('mousemove', this.horizontalMoveOneHandler);
+    document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 }

@@ -8,6 +8,7 @@ const config = {
   maxValue: 10,
   minValue: 0,
   valueOne: 3,
+  valueTwo: 7,
   isVertical: false
 }
 
