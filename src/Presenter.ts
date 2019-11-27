@@ -113,6 +113,13 @@ export class Presenter {
     document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 
+  roundToStep(number: number, step: number): number {
+    let roundNumber = Math.round(number/step)*step;
+    let stepArray = step.toString().split('.');
+    let fractionChars = stepArray.length > 1 ? stepArray[1].length : 0;
+    return Number(roundNumber.toFixed(fractionChars));
+  }
+
   handleHorizontalMoveOne(event: MouseEvent) {
     event.preventDefault();
     let slider: HTMLElement = this.view.root.querySelector('.slider');
@@ -132,7 +139,7 @@ export class Presenter {
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
     let newValue = this.range * newLeft / sliderWidth;
-    this.updateValueOne(newValue);
+    this.updateValueOne(this.roundToStep(newValue,1));
   }
 
   handleThumbOneMouseUp (event: MouseEvent) {
