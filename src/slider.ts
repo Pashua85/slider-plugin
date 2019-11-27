@@ -5,10 +5,11 @@ import { Model } from './Model';
 import { Presenter } from './Presenter';
 
 const config = {
-  maxValue: 10,
+  maxValue: 100,
   minValue: 0,
-  valueOne: 3,
-  valueTwo: 7,
+  valueOne: 30,
+  valueTwo: 60,
+  step: 1,
   isVertical: false
 }
 

@@ -7,6 +7,7 @@ export interface IConfig {
   isVertical: boolean;
   maxValue?: number;
   minValue?: number;
+  step: number;
 };
 
 export class Presenter {
@@ -15,7 +16,10 @@ export class Presenter {
   config: IConfig;
   range?: number;
   horizontalMoveOneHandler: () => void;
+  horizontalMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
+  thumbTwoMouseUpHandler: () => void;
+
 
   constructor(model: Model, view: View, config: IConfig) {
     this.model = model;
@@ -24,9 +28,12 @@ export class Presenter {
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
     this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
+    this.view.onThumbTwoMouseDown = this.onThumbTwoMouseDown.bind(this);
 
     this.horizontalMoveOneHandler = this.handleHorizontalMoveOne.bind(this);
+    this.horizontalMoveTwoHandler = this.handleHorizontalMoveTwo.bind(this);
     this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
+    this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
 
     if(this.config.maxValue !== undefined && this.config.minValue !== undefined) {
       this.range = this.config.maxValue - this.config.minValue;
@@ -98,7 +105,7 @@ export class Presenter {
   }
 
   onValueTwoChange(): void {
-    console.log('valueTwo was changed');
+    console.log('valueTwo was changed', this.model.state.valueTwo);
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftTwo();
       this.view.renderValueTwoHorizontaly(newLeft);
@@ -108,10 +115,15 @@ export class Presenter {
     }
   }
 
-  onThumbOneMouseDown(event: MouseEvent) {
+  onThumbOneMouseDown(event: MouseEvent): void {
     document.addEventListener('mousemove', this.horizontalMoveOneHandler);
     document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
+
+  onThumbTwoMouseDown(event: MouseEvent): void {
+    document.addEventListener('mousemove', this.horizontalMoveTwoHandler);
+    document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
+  };
 
   roundToStep(number: number, step: number): number {
     let roundNumber = Math.round(number/step)*step;
@@ -120,13 +132,11 @@ export class Presenter {
     return Number(roundNumber.toFixed(fractionChars));
   }
 
-  handleHorizontalMoveOne(event: MouseEvent) {
-    event.preventDefault();
+  handleHorizontalMoveOne(event: MouseEvent): void {
     let slider: HTMLElement = this.view.root.querySelector('.slider');
     let sliderLeft: number = slider.getBoundingClientRect().left;
     let sliderWidth: number = slider.offsetWidth;
     let newLeft: number = event.clientX - sliderLeft;
-    let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
     let rightEdge: number;
 
     if(this.config.valueTwo !== undefined) {
@@ -139,12 +149,38 @@ export class Presenter {
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
     let newValue = this.range * newLeft / sliderWidth;
-    this.updateValueOne(this.roundToStep(newValue,1));
+    this.updateValueOne(this.roundToStep(newValue,this.config.step));
   }
 
-  handleThumbOneMouseUp (event: MouseEvent) {
+  handleHorizontalMoveTwo(event: MouseEvent): void {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let sliderLeft: number = slider.getBoundingClientRect().left;
+    let sliderWidth: number = slider.offsetWidth;
+    let newLeft: number = event.clientX - sliderLeft;
+    let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
+    let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two')
+    let rightEdge: number = sliderWidth;
+    let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + thumbOne.offsetWidth + thumbTwo.offsetWidth/2;
+    console.log('thumbOne', thumbOne.getBoundingClientRect().left - sliderLeft);
+    console.log('leftEdge', leftEdge);
+
+    if(newLeft < leftEdge) { newLeft = leftEdge };
+    if(newLeft > rightEdge) { newLeft = rightEdge };
+
+    let newValue = this.range * newLeft / sliderWidth;
+    this.updateValueTwo(this.roundToStep(newValue, this.config.step));
+  }
+
+  handleThumbOneMouseUp (event: MouseEvent): void {
     event.preventDefault();
     document.removeEventListener('mousemove', this.horizontalMoveOneHandler);
     document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
+  }
+
+  handleThumbTwoMouseUp (event: MouseEvent): void {
+    console.log('up was called');
+    event.preventDefault();
+    document.removeEventListener('mousemove', this.horizontalMoveTwoHandler);
+    document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
   }
 }

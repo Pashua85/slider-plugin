@@ -36,6 +36,10 @@ class View {
       let thumbTwo = document.createElement('div');
       thumbTwo.classList.add('slider__thumb');
       thumbTwo.classList.add('slider__thumb--two');
+      thumbTwo.addEventListener('mousedown', event => {
+        event.preventDefault();
+        this.onThumbTwoMouseDown(event);
+      });
 
       if(this.config.isVertical) {
         thumbTwo.classList.add('slider__thumb--vertical');
@@ -70,7 +74,8 @@ class View {
   }
 
   onThumbOneMouseDown(event: MouseEvent): void {};
-
+  
+  onThumbTwoMouseDown(event: MouseEvent): void {};
 };
 
 export {View};
