@@ -17,6 +17,10 @@ class View {
     let thumbOne = document.createElement('div');
     thumbOne.classList.add('slider__thumb');
     thumbOne.classList.add('slider__thumb--one');
+    thumbOne.addEventListener('mousedown',event => {
+      event.preventDefault();
+      this.onThumbOneMouseDown(event);
+    });
 
     if(this.config.isVertical) {
       slider.classList.add('slider--vertical');
@@ -64,6 +68,8 @@ class View {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
     thumb.style.bottom = newBottom.toString() + 'px';
   }
+
+  onThumbOneMouseDown(event: MouseEvent): void {};
 
 };
 

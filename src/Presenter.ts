@@ -14,6 +14,7 @@ export class Presenter {
   view: View;
   config: IConfig;
   range?: number;
+  horizontalMoveOneHandler: () => void;
 
   constructor(model: Model, view: View, config: IConfig) {
     this.model = model;
@@ -21,6 +22,9 @@ export class Presenter {
     this.config = config;
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
+    this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
+
+    this.horizontalMoveOneHandler = this.handleHorizontalMoveOne.bind(this);
 
     if(this.config.maxValue !== undefined && this.config.minValue !== undefined) {
       this.range = this.config.maxValue - this.config.minValue;
@@ -38,7 +42,6 @@ export class Presenter {
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
     let thumbWidth = thumb.offsetWidth;
     let newLeft = this.model.state.valueOne * width / this.range - thumbWidth;
-    console.log(newLeft);
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
   }
@@ -49,7 +52,6 @@ export class Presenter {
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
     let thumbWidth = thumb.offsetWidth;
     let newLeft = this.model.state.valueTwo * width / this.range - thumbWidth;
-    console.log('left two', newLeft);
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
   }
@@ -60,7 +62,6 @@ export class Presenter {
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
     let thumbHeight = thumb.offsetHeight;
     let newBottom = this.model.state.valueOne * height/ this.range - thumbHeight;
-    console.log('bottom one', newBottom);
     if (newBottom < 0) { newBottom = 0 };
     return newBottom;
   }
@@ -71,7 +72,6 @@ export class Presenter {
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
     let thumbHeight = thumb.offsetHeight;
     let newBottom = this.model.state.valueTwo * height/ this.range - thumbHeight;
-    console.log('bottom one', newBottom);
     if (newBottom < 0) { newBottom = 0 };
     return newBottom;
   }
@@ -85,7 +85,7 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-    console.log('valueOne was changed');
+    console.log('valueOne was changed', this.model.state.valueOne);
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft);
@@ -104,5 +104,30 @@ export class Presenter {
       let newBottom = this.setNewBottomTwo();
       this.view.renderValueTwoVerticaly(newBottom);
     }
+  }
+
+  onThumbOneMouseDown(event: MouseEvent) {
+    document.addEventListener('mousemove', this.horizontalMoveOneHandler);
+  }
+
+  handleHorizontalMoveOne(event: MouseEvent) {
+    event.preventDefault();
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let sliderLeft: number = slider.getBoundingClientRect().left;
+    let sliderWidth: number = slider.offsetWidth;
+    let newLeft: number = event.clientX - sliderLeft;
+    let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
+    let rightEdge: number;
+
+    if(this.config.valueTwo !== undefined) {
+      rightEdge = slider.querySelector('.slider__thumb--two').getBoundingClientRect().left - sliderLeft;
+    } else {
+      rightEdge = sliderWidth;
+    };
+    if(newLeft < 0) { newLeft = 0 };
+    if(newLeft > rightEdge) { newLeft = rightEdge };
+
+    let newValue = this.range * newLeft / sliderWidth;
+    this.updateValueOne(newValue);
   }
 }

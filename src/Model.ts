@@ -5,8 +5,6 @@ interface IState {
   valueTwo?: Value;
 }
 
-
-
 class Model {
   state: IState;
 
