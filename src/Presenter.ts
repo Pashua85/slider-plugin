@@ -19,6 +19,7 @@ export class Presenter {
   horizontalMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
   thumbTwoMouseUpHandler: () => void;
+  verticalMoveOneHandler: () => void;
 
 
   constructor(model: Model, view: View, config: IConfig) {
@@ -34,6 +35,7 @@ export class Presenter {
     this.horizontalMoveTwoHandler = this.handleHorizontalMoveTwo.bind(this);
     this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
     this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
+    this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
 
     if(this.config.maxValue !== undefined && this.config.minValue !== undefined) {
       this.range = this.config.maxValue - this.config.minValue;
@@ -116,13 +118,21 @@ export class Presenter {
   }
 
   onThumbOneMouseDown(event: MouseEvent): void {
-    document.addEventListener('mousemove', this.horizontalMoveOneHandler);
-    document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
+    if (this.config.isVertical) {
+      document.addEventListener('mousemove', this.verticalMoveOneHandler);
+    } else {
+      document.addEventListener('mousemove', this.horizontalMoveOneHandler);
+      document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
+    }
   }
 
   onThumbTwoMouseDown(event: MouseEvent): void {
-    document.addEventListener('mousemove', this.horizontalMoveTwoHandler);
-    document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
+    if (this.config.isVertical) {
+      console.log('vertical two clicked');
+    } else {
+      document.addEventListener('mousemove', this.horizontalMoveTwoHandler);
+      document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
+    }
   };
 
   roundToStep(number: number, step: number): number {
@@ -171,6 +181,27 @@ export class Presenter {
     this.updateValueTwo(this.roundToStep(newValue, this.config.step));
   }
 
+  handleVerticalMoveOne(event: MouseEvent): void {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let sliderBottom: number = slider.getBoundingClientRect().bottom;
+    let sliderHeight: number = slider.offsetHeight;
+    let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
+    let newBottom: number = sliderBottom - event.clientY;
+    let topEdge: number;
+
+    if(this.config.valueTwo !== undefined) {
+      let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
+      topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom + thumbOne.offsetHeight / 2;
+    } else {
+      topEdge = sliderHeight;
+    }
+
+    if(newBottom < 0) newBottom = 0;
+    if(newBottom > topEdge) newBottom = topEdge;
+    let newValue = this.range * newBottom / sliderHeight;
+    this.updateValueOne(this.roundToStep(newValue,this.config.step));
+  }
+
   handleThumbOneMouseUp (event: MouseEvent): void {
     event.preventDefault();
     document.removeEventListener('mousemove', this.horizontalMoveOneHandler);
@@ -178,7 +209,6 @@ export class Presenter {
   }
 
   handleThumbTwoMouseUp (event: MouseEvent): void {
-    console.log('up was called');
     event.preventDefault();
     document.removeEventListener('mousemove', this.horizontalMoveTwoHandler);
     document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);

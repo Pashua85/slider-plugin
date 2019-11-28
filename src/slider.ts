@@ -17,7 +17,8 @@ const anotherConfig = {
   maxValue: 10,
   minValue: 0,
   valueOne: 0,
-  valueTwo: 10,
+  valueTwo: 5,
+  step: .1,
   isVertical: true
 }
 
@@ -25,6 +26,6 @@ const root: HTMLElement = document.querySelector('#root');
 const view = new View(root, config);
 new Presenter(new Model(), view, config);
 
-// const root1: HTMLElement = document.querySelector('#root1');
-// const anotherView = new View(root1, anotherConfig);
-// new Presenter(new Model(), anotherView, anotherConfig);
+const root1: HTMLElement = document.querySelector('#root1');
+const anotherView = new View(root1, anotherConfig);
+new Presenter(new Model(), anotherView, anotherConfig);
