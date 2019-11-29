@@ -65,3 +65,29 @@
 .slider__thumb--two {
   z-index: 10;
 }
+
+.slider__label {
+  position: absolute;
+  background: #f9f9f3;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  user-select: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s;
+}
+
+.slider__thumb:hover .slider__label,
+.slider__thumb:active .slider__label {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+.slider__label--horizontal {
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -3px);
+}

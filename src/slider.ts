@@ -17,8 +17,8 @@ const anotherConfig = {
   maxValue: 10,
   minValue: 0,
   valueOne: 0,
-  valueTwo: 5,
-  step: .1,
+  // valueTwo: 5,
+  step: .1, 
   isVertical: true
 }
 

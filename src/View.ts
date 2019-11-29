@@ -1,6 +1,6 @@
 import { IConfig } from './Presenter';
 
-class View {
+ export class View {
   root: HTMLElement;
   config: IConfig;
 
@@ -21,15 +21,22 @@ class View {
       event.preventDefault();
       this.onThumbOneMouseDown(event);
     });
+    let valueLabelOne = document.createElement('div');
+    valueLabelOne.classList.add('slider__label');
+    valueLabelOne.classList.add('slider__label--one');
 
     if(this.config.isVertical) {
       slider.classList.add('slider--vertical');
       thumbOne.classList.add('slider__thumb--vertical');
+      valueLabelOne.classList.add('slider__label--vertical');
     } else {
       slider.classList.add('slider--horizontal');
       thumbOne.classList.add('slider__thumb--horizontal');
+      valueLabelOne.classList.add('slider__label--horizontal');
     };
 
+    valueLabelOne.innerText = 'Long String';
+    thumbOne.appendChild(valueLabelOne);
     slider.appendChild(thumbOne);
 
     if(this.config.valueTwo !== undefined) {
@@ -53,8 +60,10 @@ class View {
     this.root.appendChild(slider);
   }
 
-  renderValueOneHorizontaly(newLeft: number): void {
+  renderValueOneHorizontaly(newLeft: number, valueString: string): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    let label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = valueString;
     thumb.style.left = newLeft.toString() + 'px';
   }
 
@@ -78,5 +87,5 @@ class View {
   onThumbTwoMouseDown(event: MouseEvent): void {};
 };
 
-export {View};
+
 

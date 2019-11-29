@@ -99,9 +99,10 @@ export class Presenter {
 
   onValueOneChange(): void {
     console.log('valueOne was changed', this.model.state.valueOne);
+    let valueString = typeof this.model.state.valueOne === 'number' ? this.model.state.valueOne.toString() : this.model.state.valueOne;
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftOne();
-      this.view.renderValueOneHorizontaly(newLeft);
+      this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
       let newBottom = this.setNewBottomOne();
       this.view.renderValueOneVerticaly(newBottom);
