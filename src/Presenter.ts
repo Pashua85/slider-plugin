@@ -105,7 +105,7 @@ export class Presenter {
       this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
       let newBottom = this.setNewBottomOne();
-      this.view.renderValueOneVerticaly(newBottom);
+      this.view.renderValueOneVerticaly(newBottom, valueString);
     }
   }
 

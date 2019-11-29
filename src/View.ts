@@ -35,7 +35,6 @@ import { IConfig } from './Presenter';
       valueLabelOne.classList.add('slider__label--horizontal');
     };
 
-    valueLabelOne.innerText = 'Long String';
     thumbOne.appendChild(valueLabelOne);
     slider.appendChild(thumbOne);
 
@@ -72,8 +71,10 @@ import { IConfig } from './Presenter';
     thumb.style.left = newLeft.toString() + 'px';
   }
 
-  renderValueOneVerticaly(newBottom: number): void {
+  renderValueOneVerticaly(newBottom: number, valueString: string): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    let label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = valueString;
     thumb.style.bottom = newBottom.toString() + 'px';
   }
 

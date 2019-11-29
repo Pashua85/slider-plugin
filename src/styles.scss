@@ -76,18 +76,24 @@
   user-select: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 1s;
+  transition: opacity .4s;
 }
 
 .slider__thumb:hover .slider__label,
 .slider__thumb:active .slider__label {
   visibility: visible;
   opacity: 1;
-  transition: opacity 1s;
+  transition: opacity .4s;
 }
 
 .slider__label--horizontal {
   bottom: 100%;
   left: 50%;
   transform: translate(-50%, -3px);
+}
+
+.slider__label--vertical {
+  right: 100%;
+  top: 50%;
+  transform: translate(-3px, -50%);
 }
