@@ -1,4 +1,4 @@
-type Value = number;
+type Value = number | string;
 
 interface IState {
   valueOne?: Value;

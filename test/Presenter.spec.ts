@@ -8,7 +8,13 @@ describe('Presenter', () => {
   let config, model: Model, presenter: Presenter, view: View;
 
   beforeEach(() => {
-    config = { valueOne: 17, valueTwo: 45, isVertical: false, step: 1 };
+    config = { 
+      valueOne: 17, 
+      valueTwo: 45, 
+      isVertical: false, 
+      step: 1,
+      values: []
+    };
     model = new Model();
     view = new View(root, config);
     presenter = new Presenter(model, view, config);

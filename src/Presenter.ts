@@ -8,6 +8,7 @@ export interface IConfig {
   maxValue?: number;
   minValue?: number;
   step: number;
+  values: Value[];
 };
 
 export class Presenter {
@@ -15,6 +16,7 @@ export class Presenter {
   view: View;
   config: IConfig;
   range?: number;
+  isWithStrings: boolean;
   horizontalMoveOneHandler: () => void;
   horizontalMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
@@ -27,8 +29,9 @@ export class Presenter {
     this.model = model;
     this.view = view;
     this.config = config;
+    this.isWithStrings = this.config.values.length > 0;
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
-    this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
+    // this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
     this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
     this.view.onThumbTwoMouseDown = this.onThumbTwoMouseDown.bind(this);
 
@@ -39,8 +42,10 @@ export class Presenter {
     this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
     this.verticalMoveTwoHandler = this.handleVerticalMoveTwo.bind(this);
 
-    if(this.config.maxValue !== undefined && this.config.minValue !== undefined) {
+    if(!this.isWithStrings && this.config.maxValue !== undefined && this.config.minValue !== undefined) {
       this.range = this.config.maxValue - this.config.minValue;
+    } else if (this.isWithStrings) {
+      this.range = this.config.values.length - 1;
     }
 
     this.updateValueOne(this.config.valueOne);
@@ -54,40 +59,46 @@ export class Presenter {
     let width = slider.offsetWidth;
     let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
     let thumbWidth = thumb.offsetWidth;
-    let newLeft = this.model.state.valueOne * width / this.range - thumbWidth;
+    let newLeft: number;
+    if(this.isWithStrings) {
+      let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
+      newLeft = valueIndex * width / this.range - thumbWidth;
+    } else {
+      newLeft = Number(this.model.state.valueOne) * width / this.range - thumbWidth;
+    }
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
   }
 
-  setNewLeftTwo(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let width = slider.offsetWidth;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    let thumbWidth = thumb.offsetWidth;
-    let newLeft = this.model.state.valueTwo * width / this.range - thumbWidth;
-    if (newLeft < 0) { newLeft = 0 };
-    return newLeft;
-  }
+  // setNewLeftTwo(): number {
+  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
+  //   let width = slider.offsetWidth;
+  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+  //   let thumbWidth = thumb.offsetWidth;
+  //   let newLeft = this.model.state.valueTwo * width / this.range - thumbWidth;
+  //   if (newLeft < 0) { newLeft = 0 };
+  //   return newLeft;
+  // }
 
-  setNewBottomOne(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let height = slider.offsetHeight;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    let thumbHeight = thumb.offsetHeight;
-    let newBottom = this.model.state.valueOne * height/ this.range - thumbHeight;
-    if (newBottom < 0) { newBottom = 0 };
-    return newBottom;
-  }
+  // setNewBottomOne(): number {
+  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
+  //   let height = slider.offsetHeight;
+  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
+  //   let thumbHeight = thumb.offsetHeight;
+  //   let newBottom = this.model.state.valueOne * height/ this.range - thumbHeight;
+  //   if (newBottom < 0) { newBottom = 0 };
+  //   return newBottom;
+  // }
 
-  setNewBottomTwo(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let height = slider.offsetHeight;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    let thumbHeight = thumb.offsetHeight;
-    let newBottom = this.model.state.valueTwo * height/ this.range - thumbHeight;
-    if (newBottom < 0) { newBottom = 0 };
-    return newBottom;
-  }
+  // setNewBottomTwo(): number {
+  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
+  //   let height = slider.offsetHeight;
+  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+  //   let thumbHeight = thumb.offsetHeight;
+  //   let newBottom = this.model.state.valueTwo * height/ this.range - thumbHeight;
+  //   if (newBottom < 0) { newBottom = 0 };
+  //   return newBottom;
+  // }
 
   updateValueOne(newValue: Value): void {
     this.model.updateValueOne(newValue);
@@ -98,27 +109,26 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-    console.log('valueOne was changed', this.model.state.valueOne);
     let valueString = typeof this.model.state.valueOne === 'number' ? this.model.state.valueOne.toString() : this.model.state.valueOne;
     if(!this.config.isVertical) {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
-      let newBottom = this.setNewBottomOne();
-      this.view.renderValueOneVerticaly(newBottom, valueString);
+      // let newBottom = this.setNewBottomOne();
+      // this.view.renderValueOneVerticaly(newBottom, valueString);
     }
   }
 
-  onValueTwoChange(): void {
-    console.log('valueTwo was changed', this.model.state.valueTwo);
-    if(!this.config.isVertical) {
-      let newLeft = this.setNewLeftTwo();
-      this.view.renderValueTwoHorizontaly(newLeft);
-    } else {
-      let newBottom = this.setNewBottomTwo();
-      this.view.renderValueTwoVerticaly(newBottom);
-    }
-  }
+  // onValueTwoChange(): void {
+  //   let valueString = typeof this.model.state.valueTwo === 'number' ? this.model.state.valueTwo.toString() : this.model.state.valueTwo;
+  //   if(!this.config.isVertical) {
+  //     let newLeft = this.setNewLeftTwo();
+  //     this.view.renderValueTwoHorizontaly(newLeft, valueString);
+  //   } else {
+  //     let newBottom = this.setNewBottomTwo();
+  //     this.view.renderValueTwoVerticaly(newBottom, valueString);
+  //   }
+  // }
 
   onThumbOneMouseDown(event: MouseEvent): void {
     if (this.config.isVertical) {
@@ -162,7 +172,12 @@ export class Presenter {
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
     let newValue = this.range * newLeft / sliderWidth;
-    this.updateValueOne(this.roundToStep(newValue,this.config.step));
+    if (this.isWithStrings) {
+      let newValueIndex = this.roundToStep(newValue, 1);
+      this.updateValueOne(this.config.values[newValueIndex]);
+    } else {
+      this.updateValueOne(this.roundToStep(newValue,this.config.step));
+    }
   }
 
   handleHorizontalMoveTwo(event: MouseEvent): void {
@@ -174,8 +189,6 @@ export class Presenter {
     let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two')
     let rightEdge: number = sliderWidth;
     let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + thumbOne.offsetWidth + thumbTwo.offsetWidth/2;
-    console.log('thumbOne', thumbOne.getBoundingClientRect().left - sliderLeft);
-    console.log('leftEdge', leftEdge);
 
     if(newLeft < leftEdge) { newLeft = leftEdge };
     if(newLeft > rightEdge) { newLeft = rightEdge };

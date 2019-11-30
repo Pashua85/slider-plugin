@@ -23,7 +23,6 @@ import { IConfig } from './Presenter';
     });
     let valueLabelOne = document.createElement('div');
     valueLabelOne.classList.add('slider__label');
-    valueLabelOne.classList.add('slider__label--one');
 
     if(this.config.isVertical) {
       slider.classList.add('slider--vertical');
@@ -46,13 +45,18 @@ import { IConfig } from './Presenter';
         event.preventDefault();
         this.onThumbTwoMouseDown(event);
       });
+      let valueLabelTwo = document.createElement('div');
+      valueLabelTwo.classList.add('slider__label');
 
       if(this.config.isVertical) {
         thumbTwo.classList.add('slider__thumb--vertical');
+        valueLabelTwo.classList.add('slider__label--vertical');
       } else {
         thumbTwo.classList.add('slider__thumb--horizontal');
+        valueLabelTwo.classList.add('slider__label--horizontal');
       }
-  
+      
+      thumbTwo.appendChild(valueLabelTwo);
       slider.appendChild(thumbTwo);
     };
 
@@ -62,12 +66,15 @@ import { IConfig } from './Presenter';
   renderValueOneHorizontaly(newLeft: number, valueString: string): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
     let label: HTMLElement = thumb.querySelector('.slider__label');
+    console.log(label);
     label.innerHTML = valueString;
     thumb.style.left = newLeft.toString() + 'px';
   }
 
-  renderValueTwoHorizontaly(newLeft: number): void {
+  renderValueTwoHorizontaly(newLeft: number, valueString: string): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    let label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = valueString;
     thumb.style.left = newLeft.toString() + 'px';
   }
 
@@ -78,8 +85,10 @@ import { IConfig } from './Presenter';
     thumb.style.bottom = newBottom.toString() + 'px';
   }
 
-  renderValueTwoVerticaly(newBottom: number): void {
+  renderValueTwoVerticaly(newBottom: number, valueString: string): void {
     let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    let label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = valueString;
     thumb.style.bottom = newBottom.toString() + 'px';
   }
 
