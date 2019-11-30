@@ -48,7 +48,7 @@ export class Presenter {
       this.range = this.config.values.length - 1;
     }
 
-    this.updateValueOne(this.config.valueOne);
+    this.updateValueOne(config.valueOne);
     if(config.valueTwo !== undefined) {
       this.updateValueTwo(config.valueTwo);
     }
@@ -80,31 +80,43 @@ export class Presenter {
       let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
       newLeft = valueIndex * width / this.range - thumbWidth;
     } else {
-      let newLeft = Number(this.model.state.valueTwo) * width / this.range - thumbWidth;
+      newLeft = Number(this.model.state.valueTwo) * width / this.range - thumbWidth;
     }
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
   }
 
-  // setNewBottomOne(): number {
-  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
-  //   let height = slider.offsetHeight;
-  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-  //   let thumbHeight = thumb.offsetHeight;
-  //   let newBottom = this.model.state.valueOne * height/ this.range - thumbHeight;
-  //   if (newBottom < 0) { newBottom = 0 };
-  //   return newBottom;
-  // }
+  setNewBottomOne(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let height = slider.offsetHeight;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
+    let thumbHeight = thumb.offsetHeight;
+    let newBottom: number;
+    if(this.isWithStrings) {
+      let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
+      newBottom = valueIndex * height / this.range - thumbHeight;
+    } else {
+      newBottom = Number(this.model.state.valueOne) * height/ this.range - thumbHeight;
+    }
+    if (newBottom < 0) { newBottom = 0 };
+    return newBottom;
+  }
 
-  // setNewBottomTwo(): number {
-  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
-  //   let height = slider.offsetHeight;
-  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-  //   let thumbHeight = thumb.offsetHeight;
-  //   let newBottom = this.model.state.valueTwo * height/ this.range - thumbHeight;
-  //   if (newBottom < 0) { newBottom = 0 };
-  //   return newBottom;
-  // }
+  setNewBottomTwo(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let height = slider.offsetHeight;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+    let thumbHeight = thumb.offsetHeight;
+    let newBottom: number;
+    if(this.isWithStrings) {
+      let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
+      newBottom = valueIndex * height / this.range - thumbHeight;
+    } else {
+      newBottom = Number(this.model.state.valueTwo) * height/ this.range - thumbHeight;
+    }
+    if (newBottom < 0) { newBottom = 0 };
+    return newBottom;
+  }
 
   updateValueOne(newValue: Value): void {
     this.model.updateValueOne(newValue);
@@ -120,8 +132,8 @@ export class Presenter {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
-      // let newBottom = this.setNewBottomOne();
-      // this.view.renderValueOneVerticaly(newBottom, valueString);
+      let newBottom = this.setNewBottomOne();
+      this.view.renderValueOneVerticaly(newBottom, valueString);
     }
   }
 
@@ -131,8 +143,8 @@ export class Presenter {
       let newLeft = this.setNewLeftTwo();
       this.view.renderValueTwoHorizontaly(newLeft, valueString);
     } else {
-      // let newBottom = this.setNewBottomTwo();
-      // this.view.renderValueTwoVerticaly(newBottom, valueString);
+      let newBottom = this.setNewBottomTwo();
+      this.view.renderValueTwoVerticaly(newBottom, valueString);
     }
   }
 
@@ -226,7 +238,12 @@ export class Presenter {
     if(newBottom < 0) newBottom = 0;
     if(newBottom > topEdge) newBottom = topEdge;
     let newValue = this.range * newBottom / sliderHeight;
-    this.updateValueOne(this.roundToStep(newValue,this.config.step));
+    if (this.isWithStrings) {
+      let newValueIndex = this.roundToStep(newValue, 1);
+      this.updateValueOne(this.config.values[newValueIndex]);
+    } else {
+      this.updateValueOne(this.roundToStep(newValue,this.config.step));
+    }
   }
 
   handleVerticalMoveTwo (event: MouseEvent): void {
@@ -241,7 +258,12 @@ export class Presenter {
     if(newBottom > sliderHeight) newBottom = sliderHeight;
     if(newBottom < bottomEdge) newBottom = bottomEdge;
     let newValue = this.range * newBottom / sliderHeight;
-    this.updateValueTwo(this.roundToStep(newValue, this.config.step));
+    if (this.isWithStrings) {
+      let newValueIndex = this.roundToStep(newValue, 1);
+      this.updateValueTwo(this.config.values[newValueIndex]);
+    } else {
+      this.updateValueTwo(this.roundToStep(newValue,this.config.step));
+    }
   }
 
   handleThumbOneMouseUp (event: MouseEvent): void {

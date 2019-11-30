@@ -18,14 +18,25 @@
   margin-bottom: 4rem;
 }
 
+.row {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 3rem;
+}
+
 .root1 {
   height: 10rem;
-  margin-bottom: 3rem;
 }
 
 .root2 {
   width: 30rem;
   margin: 0 auto;
+}
+
+.root3 {
+  height: 12rem;
 }
 
 .slider {
@@ -51,7 +62,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: rgba(red,.2);
+  background-color: red;
 }
 
 .slider__thumb--horizontal {
@@ -102,4 +113,19 @@
   right: 100%;
   top: 50%;
   transform: translate(-3px, -50%);
+}
+
+.slider__interval {
+  position: absolute;
+  background-color: green;
+}
+
+.slider__interval--horizontal {
+  height: 4px;
+  top: 0;
+}
+
+.slider__interval--vertical {
+  width: 4px;
+  left: 0;
 }
