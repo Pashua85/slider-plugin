@@ -37,6 +37,7 @@ const arrayWithValues = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
 
 const config2 = {
   valueOne: 'Two',
+  valueTwo: 'Four',
   step: 1,
   isVertical: false,
   values: arrayWithValues

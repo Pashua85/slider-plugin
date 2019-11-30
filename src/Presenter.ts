@@ -31,7 +31,7 @@ export class Presenter {
     this.config = config;
     this.isWithStrings = this.config.values.length > 0;
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
-    // this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
+    this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
     this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
     this.view.onThumbTwoMouseDown = this.onThumbTwoMouseDown.bind(this);
 
@@ -70,15 +70,21 @@ export class Presenter {
     return newLeft;
   }
 
-  // setNewLeftTwo(): number {
-  //   let slider: HTMLElement = this.view.root.querySelector('.slider');
-  //   let width = slider.offsetWidth;
-  //   let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-  //   let thumbWidth = thumb.offsetWidth;
-  //   let newLeft = this.model.state.valueTwo * width / this.range - thumbWidth;
-  //   if (newLeft < 0) { newLeft = 0 };
-  //   return newLeft;
-  // }
+  setNewLeftTwo(): number {
+    let slider: HTMLElement = this.view.root.querySelector('.slider');
+    let width = slider.offsetWidth;
+    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+    let thumbWidth = thumb.offsetWidth;
+    let newLeft: number;
+    if(this.isWithStrings) {
+      let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
+      newLeft = valueIndex * width / this.range - thumbWidth;
+    } else {
+      let newLeft = Number(this.model.state.valueTwo) * width / this.range - thumbWidth;
+    }
+    if (newLeft < 0) { newLeft = 0 };
+    return newLeft;
+  }
 
   // setNewBottomOne(): number {
   //   let slider: HTMLElement = this.view.root.querySelector('.slider');
@@ -119,16 +125,16 @@ export class Presenter {
     }
   }
 
-  // onValueTwoChange(): void {
-  //   let valueString = typeof this.model.state.valueTwo === 'number' ? this.model.state.valueTwo.toString() : this.model.state.valueTwo;
-  //   if(!this.config.isVertical) {
-  //     let newLeft = this.setNewLeftTwo();
-  //     this.view.renderValueTwoHorizontaly(newLeft, valueString);
-  //   } else {
-  //     let newBottom = this.setNewBottomTwo();
-  //     this.view.renderValueTwoVerticaly(newBottom, valueString);
-  //   }
-  // }
+  onValueTwoChange(): void {
+    let valueString = typeof this.model.state.valueTwo === 'number' ? this.model.state.valueTwo.toString() : this.model.state.valueTwo;
+    if(!this.config.isVertical) {
+      let newLeft = this.setNewLeftTwo();
+      this.view.renderValueTwoHorizontaly(newLeft, valueString);
+    } else {
+      // let newBottom = this.setNewBottomTwo();
+      // this.view.renderValueTwoVerticaly(newBottom, valueString);
+    }
+  }
 
   onThumbOneMouseDown(event: MouseEvent): void {
     if (this.config.isVertical) {
@@ -194,7 +200,12 @@ export class Presenter {
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
     let newValue = this.range * newLeft / sliderWidth;
-    this.updateValueTwo(this.roundToStep(newValue, this.config.step));
+    if (this.isWithStrings) {
+      let newValueIndex = this.roundToStep(newValue, 1);
+      this.updateValueTwo(this.config.values[newValueIndex]);
+    } else {
+      this.updateValueTwo(this.roundToStep(newValue, this.config.step));
+    }
   }
 
   handleVerticalMoveOne(event: MouseEvent): void {
