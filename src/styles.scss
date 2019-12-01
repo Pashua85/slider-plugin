@@ -2,6 +2,7 @@
 .main {
   width: 80%;
   margin: 0 auto;
+  padding-top: 5rem;
 }
 
 .header {
@@ -33,10 +34,22 @@
 .root2 {
   width: 30rem;
   margin: 0 auto;
+  margin-bottom: 5rem;
 }
 
 .root3 {
   height: 12rem;
+}
+
+.root5 {
+  width: 40rem;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+.root6 {
+  width: 20rem;
+  margin: 0 auto;
 }
 
 .slider {
@@ -63,6 +76,10 @@
   height: 12px;
   border-radius: 50%;
   background-color: red;
+
+  &:active {
+    background-color: darken(red, 5%);
+  }
 }
 
 .slider__thumb--horizontal {

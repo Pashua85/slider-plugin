@@ -17,6 +17,7 @@ export class Presenter {
   config: IConfig;
   range?: number;
   isWithStrings: boolean;
+  shift: number;
   horizontalMoveOneHandler: () => void;
   horizontalMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
@@ -30,6 +31,8 @@ export class Presenter {
     this.view = view;
     this.config = config;
     this.isWithStrings = this.config.values.length > 0;
+    this.shift = this.config.minValue !== undefined ? this.config.minValue : 0;
+
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
     this.view.onThumbOneMouseDown = this.onThumbOneMouseDown.bind(this);
@@ -64,7 +67,7 @@ export class Presenter {
       let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
       newLeft = valueIndex * width / this.range - thumbWidth;
     } else {
-      newLeft = Number(this.model.state.valueOne) * width / this.range - thumbWidth;
+      newLeft = (Number(this.model.state.valueOne) - this.shift) * width / this.range - thumbWidth;
     }
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
@@ -80,7 +83,7 @@ export class Presenter {
       let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
       newLeft = valueIndex * width / this.range - thumbWidth;
     } else {
-      newLeft = Number(this.model.state.valueTwo) * width / this.range - thumbWidth;
+      newLeft = (Number(this.model.state.valueTwo) - this.shift) * width / this.range - thumbWidth;
     }
     if (newLeft < 0) { newLeft = 0 };
     return newLeft;
@@ -96,7 +99,7 @@ export class Presenter {
       let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
       newBottom = valueIndex * height / this.range - thumbHeight;
     } else {
-      newBottom = Number(this.model.state.valueOne) * height/ this.range - thumbHeight;
+      newBottom = (Number(this.model.state.valueOne) - this.shift) * height/ this.range - thumbHeight;
     }
     if (newBottom < 0) { newBottom = 0 };
     return newBottom;
@@ -112,7 +115,7 @@ export class Presenter {
       let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
       newBottom = valueIndex * height / this.range - thumbHeight;
     } else {
-      newBottom = Number(this.model.state.valueTwo) * height/ this.range - thumbHeight;
+      newBottom = (Number(this.model.state.valueTwo) - this.shift) * height/ this.range - thumbHeight;
     }
     if (newBottom < 0) { newBottom = 0 };
     return newBottom;
@@ -189,12 +192,12 @@ export class Presenter {
     if(newLeft < 0) { newLeft = 0 };
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
-    let newValue = this.range * newLeft / sliderWidth;
+    let newValue = this.range * newLeft / sliderWidth + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueOne(this.config.values[newValueIndex]);
     } else {
-      this.updateValueOne(this.roundToStep(newValue,this.config.step));
+      this.updateValueOne(this.roundToStep(newValue,this.config.step) + this.config.minValue);
     }
   }
 
@@ -211,7 +214,7 @@ export class Presenter {
     if(newLeft < leftEdge) { newLeft = leftEdge };
     if(newLeft > rightEdge) { newLeft = rightEdge };
 
-    let newValue = this.range * newLeft / sliderWidth;
+    let newValue = this.range * newLeft / sliderWidth + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueTwo(this.config.values[newValueIndex]);
@@ -237,7 +240,7 @@ export class Presenter {
 
     if(newBottom < 0) newBottom = 0;
     if(newBottom > topEdge) newBottom = topEdge;
-    let newValue = this.range * newBottom / sliderHeight;
+    let newValue = this.range * newBottom / sliderHeight + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueOne(this.config.values[newValueIndex]);
@@ -257,7 +260,8 @@ export class Presenter {
 
     if(newBottom > sliderHeight) newBottom = sliderHeight;
     if(newBottom < bottomEdge) newBottom = bottomEdge;
-    let newValue = this.range * newBottom / sliderHeight;
+
+    let newValue = this.range * newBottom / sliderHeight + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueTwo(this.config.values[newValueIndex]);

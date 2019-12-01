@@ -93,8 +93,10 @@ import { IConfig } from './Presenter';
     let label: HTMLElement = thumb.querySelector('.slider__label');
     label.innerHTML = valueString;
     thumb.style.left = newLeft.toString() + 'px';
-
-    this.renderIntervalBar();
+    
+    if(this.config.valueTwo !== undefined) {
+      this.renderIntervalBar();
+    }
   }
 
   renderValueTwoHorizontaly(newLeft: number, valueString: string): void {
@@ -112,7 +114,9 @@ import { IConfig } from './Presenter';
     label.innerHTML = valueString;
     thumb.style.bottom = newBottom.toString() + 'px';
 
-    this.renderIntervalBar();
+    if(this.config.valueTwo !== undefined) {
+      this.renderIntervalBar();
+    }
   }
 
   renderValueTwoVerticaly(newBottom: number, valueString: string): void {
