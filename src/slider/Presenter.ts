@@ -1,6 +1,6 @@
 import { Model, Value } from "./Model";
 import { View } from "./View";
-import { IParams } from './slider';
+import { IParams, IAdditionalOptions } from './slider';
 
 
 export class Presenter {
@@ -22,7 +22,6 @@ export class Presenter {
     this.model = model;
     this.view = view;
     this.params = params;
-    this.isWithStrings = this.params.values.length > 0;
     this.shift = this.params.minValue !== undefined ? this.params.minValue : 0;
 
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
@@ -36,16 +35,24 @@ export class Presenter {
     this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
     this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
     this.verticalMoveTwoHandler = this.handleVerticalMoveTwo.bind(this);
-
-    if(!this.isWithStrings && this.params.maxValue !== undefined && this.params.minValue !== undefined) {
-      this.range = this.params.maxValue - this.params.minValue;
-    } else if (this.isWithStrings) {
-      this.range = this.params.values.length - 1;
-    }
-
+    
+    this.setIsWithStrings();
+    this.setRange();
     this.updateValueOne(this.params.valueOne);
     if(params.valueTwo !== undefined) {
       this.updateValueTwo(this.params.valueTwo);
+    }
+  }
+
+  setIsWithStrings(): void {
+    this.isWithStrings = this.params.values.length > 0;
+  }
+
+  setRange(): void {
+    if(!this.isWithStrings) {
+      this.range = this.params.maxValue - this.params.minValue;
+    } else if (this.isWithStrings) {
+      this.range = this.params.values.length - 1;
     }
   }
 
@@ -280,5 +287,19 @@ export class Presenter {
       document.removeEventListener('mousemove', this.horizontalMoveTwoHandler);      
     } 
     document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
+  }
+
+  updateParams(options: IAdditionalOptions): void {
+    const newParams = {...this.params,...options};
+    this.params = newParams;
+    this.setIsWithStrings();
+    this.setRange();
+    this.view.params = newParams;
+    this.view.updateParams(newParams);
+    this.view.rebootSliderView();
+    this.updateValueOne(this.params.valueOne);
+    if(this.params.valueTwo !== undefined) {
+      this.updateValueTwo(this.params.valueTwo);
+    }
   }
 }

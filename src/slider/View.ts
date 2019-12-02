@@ -128,6 +128,15 @@ import { IParams } from './slider';
     this.renderIntervalBar();
   }
 
+  updateParams(newParams: IParams): void {
+    this.params = newParams;
+  }
+
+  rebootSliderView(): void {
+    this.root.innerHTML = '';
+    this.initSlider();
+  };
+
   onThumbOneMouseDown(event: MouseEvent): void {};
   
   onThumbTwoMouseDown(event: MouseEvent): void {};
