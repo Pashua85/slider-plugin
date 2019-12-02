@@ -1,12 +1,12 @@
-import { IConfig } from './Presenter';
+import { IParams } from './slider';
 
  export class View {
   root: HTMLElement;
-  config: IConfig;
+  params: IParams;
 
-  constructor(root: HTMLElement, config: IConfig) {
+  constructor(root: HTMLElement, params: IParams) {
     this.root = root;
-    this.config = config;
+    this.params = params;
     
     this.initSlider();
   }
@@ -24,7 +24,7 @@ import { IConfig } from './Presenter';
     let valueLabelOne = document.createElement('div');
     valueLabelOne.classList.add('slider__label');
 
-    if(this.config.isVertical) {
+    if(this.params.isVertical) {
       slider.classList.add('slider--vertical');
       thumbOne.classList.add('slider__thumb--vertical');
       valueLabelOne.classList.add('slider__label--vertical');
@@ -37,7 +37,7 @@ import { IConfig } from './Presenter';
     thumbOne.appendChild(valueLabelOne);
     slider.appendChild(thumbOne);
 
-    if(this.config.valueTwo !== undefined) {
+    if(this.params.valueTwo !== undefined) {
       let thumbTwo = document.createElement('div');
       thumbTwo.classList.add('slider__thumb');
       thumbTwo.classList.add('slider__thumb--two');
@@ -50,7 +50,7 @@ import { IConfig } from './Presenter';
       let intervalBar = document.createElement('div');
       intervalBar.classList.add('slider__interval');
 
-      if(this.config.isVertical) {
+      if(this.params.isVertical) {
         thumbTwo.classList.add('slider__thumb--vertical');
         valueLabelTwo.classList.add('slider__label--vertical');
         intervalBar.classList.add('slider__interval--vertical');
@@ -75,7 +75,7 @@ import { IConfig } from './Presenter';
     let intervalBar: HTMLElement = slider.querySelector('.slider__interval');
     let interval: number;
 
-    if(this.config.isVertical) {
+    if(this.params.isVertical) {
       interval = thumbOne.getBoundingClientRect().bottom - thumbTwo.getBoundingClientRect().bottom;
       let intervalBottom = slider.getBoundingClientRect().bottom - thumbOne.getBoundingClientRect().bottom + thumbOne.offsetHeight / 2;
       intervalBar.style.height = interval.toString() + 'px';
@@ -94,7 +94,7 @@ import { IConfig } from './Presenter';
     label.innerHTML = valueString;
     thumb.style.left = newLeft.toString() + 'px';
     
-    if(this.config.valueTwo !== undefined) {
+    if(this.params.valueTwo !== undefined) {
       this.renderIntervalBar();
     }
   }
@@ -114,7 +114,7 @@ import { IConfig } from './Presenter';
     label.innerHTML = valueString;
     thumb.style.bottom = newBottom.toString() + 'px';
 
-    if(this.config.valueTwo !== undefined) {
+    if(this.params.valueTwo !== undefined) {
       this.renderIntervalBar();
     }
   }

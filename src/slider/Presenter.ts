@@ -1,20 +1,12 @@
 import { Model, Value } from "./Model";
 import { View } from "./View";
+import { IParams } from './slider';
 
-export interface IConfig {
-  valueOne: Value;
-  valueTwo?: Value;
-  isVertical: boolean;
-  maxValue?: number;
-  minValue?: number;
-  step: number;
-  values: Value[];
-};
 
 export class Presenter {
   model: Model;
   view: View;
-  config: IConfig;
+  params: IParams;
   range?: number;
   isWithStrings: boolean;
   shift: number;
@@ -26,12 +18,12 @@ export class Presenter {
   verticalMoveTwoHandler: () => void;
 
 
-  constructor(model: Model, view: View, config: IConfig) {
+  constructor(model: Model, view: View, params: IParams) {
     this.model = model;
     this.view = view;
-    this.config = config;
-    this.isWithStrings = this.config.values.length > 0;
-    this.shift = this.config.minValue !== undefined ? this.config.minValue : 0;
+    this.params = params;
+    this.isWithStrings = this.params.values.length > 0;
+    this.shift = this.params.minValue !== undefined ? this.params.minValue : 0;
 
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
@@ -45,15 +37,15 @@ export class Presenter {
     this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
     this.verticalMoveTwoHandler = this.handleVerticalMoveTwo.bind(this);
 
-    if(!this.isWithStrings && this.config.maxValue !== undefined && this.config.minValue !== undefined) {
-      this.range = this.config.maxValue - this.config.minValue;
+    if(!this.isWithStrings && this.params.maxValue !== undefined && this.params.minValue !== undefined) {
+      this.range = this.params.maxValue - this.params.minValue;
     } else if (this.isWithStrings) {
-      this.range = this.config.values.length - 1;
+      this.range = this.params.values.length - 1;
     }
 
-    this.updateValueOne(config.valueOne);
-    if(config.valueTwo !== undefined) {
-      this.updateValueTwo(config.valueTwo);
+    this.updateValueOne(this.params.valueOne);
+    if(params.valueTwo !== undefined) {
+      this.updateValueTwo(this.params.valueTwo);
     }
   }
 
@@ -64,7 +56,7 @@ export class Presenter {
     let thumbWidth = thumb.offsetWidth;
     let newLeft: number;
     if(this.isWithStrings) {
-      let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
+      let valueIndex = this.params.values.indexOf(String(this.model.state.valueOne));
       newLeft = valueIndex * width / this.range - thumbWidth;
     } else {
       newLeft = (Number(this.model.state.valueOne) - this.shift) * width / this.range - thumbWidth;
@@ -80,7 +72,7 @@ export class Presenter {
     let thumbWidth = thumb.offsetWidth;
     let newLeft: number;
     if(this.isWithStrings) {
-      let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
+      let valueIndex = this.params.values.indexOf(String(this.model.state.valueTwo));
       newLeft = valueIndex * width / this.range - thumbWidth;
     } else {
       newLeft = (Number(this.model.state.valueTwo) - this.shift) * width / this.range - thumbWidth;
@@ -96,7 +88,7 @@ export class Presenter {
     let thumbHeight = thumb.offsetHeight;
     let newBottom: number;
     if(this.isWithStrings) {
-      let valueIndex = this.config.values.indexOf(this.model.state.valueOne);
+      let valueIndex = this.params.values.indexOf(String(this.model.state.valueOne));
       newBottom = valueIndex * height / this.range - thumbHeight;
     } else {
       newBottom = (Number(this.model.state.valueOne) - this.shift) * height/ this.range - thumbHeight;
@@ -112,7 +104,7 @@ export class Presenter {
     let thumbHeight = thumb.offsetHeight;
     let newBottom: number;
     if(this.isWithStrings) {
-      let valueIndex = this.config.values.indexOf(this.model.state.valueTwo);
+      let valueIndex = this.params.values.indexOf(String(this.model.state.valueTwo));
       newBottom = valueIndex * height / this.range - thumbHeight;
     } else {
       newBottom = (Number(this.model.state.valueTwo) - this.shift) * height/ this.range - thumbHeight;
@@ -131,7 +123,7 @@ export class Presenter {
 
   onValueOneChange(): void {
     let valueString = typeof this.model.state.valueOne === 'number' ? this.model.state.valueOne.toString() : this.model.state.valueOne;
-    if(!this.config.isVertical) {
+    if(!this.params.isVertical) {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
@@ -142,7 +134,7 @@ export class Presenter {
 
   onValueTwoChange(): void {
     let valueString = typeof this.model.state.valueTwo === 'number' ? this.model.state.valueTwo.toString() : this.model.state.valueTwo;
-    if(!this.config.isVertical) {
+    if(!this.params.isVertical) {
       let newLeft = this.setNewLeftTwo();
       this.view.renderValueTwoHorizontaly(newLeft, valueString);
     } else {
@@ -152,7 +144,7 @@ export class Presenter {
   }
 
   onThumbOneMouseDown(event: MouseEvent): void {
-    if (this.config.isVertical) {
+    if (this.params.isVertical) {
       document.addEventListener('mousemove', this.verticalMoveOneHandler);
     } else {
       document.addEventListener('mousemove', this.horizontalMoveOneHandler);
@@ -161,7 +153,7 @@ export class Presenter {
   }
 
   onThumbTwoMouseDown(event: MouseEvent): void {
-    if (this.config.isVertical) {
+    if (this.params.isVertical) {
       document.addEventListener('mousemove', this.verticalMoveTwoHandler);
     } else {
       document.addEventListener('mousemove', this.horizontalMoveTwoHandler);
@@ -183,7 +175,7 @@ export class Presenter {
     let newLeft: number = event.clientX - sliderLeft;
     let rightEdge: number;
 
-    if(this.config.valueTwo !== undefined) {
+    if(this.params.valueTwo !== undefined) {
       let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
       rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft + thumbTwo.offsetWidth / 2;
     } else {
@@ -195,9 +187,9 @@ export class Presenter {
     let newValue = this.range * newLeft / sliderWidth + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
-      this.updateValueOne(this.config.values[newValueIndex]);
+      this.updateValueOne(this.params.values[newValueIndex]);
     } else {
-      this.updateValueOne(this.roundToStep(newValue,this.config.step) + this.config.minValue);
+      this.updateValueOne(this.roundToStep(newValue,this.params.step) + this.params.minValue);
     }
   }
 
@@ -217,9 +209,9 @@ export class Presenter {
     let newValue = this.range * newLeft / sliderWidth + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
-      this.updateValueTwo(this.config.values[newValueIndex]);
+      this.updateValueTwo(this.params.values[newValueIndex]);
     } else {
-      this.updateValueTwo(this.roundToStep(newValue, this.config.step));
+      this.updateValueTwo(this.roundToStep(newValue, this.params.step));
     }
   }
 
@@ -231,7 +223,7 @@ export class Presenter {
     let newBottom: number = sliderBottom - event.clientY;
     let topEdge: number;
 
-    if(this.config.valueTwo !== undefined) {
+    if(this.params.valueTwo !== undefined) {
       let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
       topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom + thumbOne.offsetHeight / 2;
     } else {
@@ -243,9 +235,9 @@ export class Presenter {
     let newValue = this.range * newBottom / sliderHeight + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
-      this.updateValueOne(this.config.values[newValueIndex]);
+      this.updateValueOne(this.params.values[newValueIndex]);
     } else {
-      this.updateValueOne(this.roundToStep(newValue,this.config.step));
+      this.updateValueOne(this.roundToStep(newValue,this.params.step));
     }
   }
 
@@ -264,15 +256,15 @@ export class Presenter {
     let newValue = this.range * newBottom / sliderHeight + this.shift;
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
-      this.updateValueTwo(this.config.values[newValueIndex]);
+      this.updateValueTwo(this.params.values[newValueIndex]);
     } else {
-      this.updateValueTwo(this.roundToStep(newValue,this.config.step));
+      this.updateValueTwo(this.roundToStep(newValue,this.params.step));
     }
   }
 
   handleThumbOneMouseUp (event: MouseEvent): void {
     event.preventDefault();
-    if (this.config.isVertical) {
+    if (this.params.isVertical) {
       document.removeEventListener('mousemove', this.verticalMoveOneHandler);
     } else {
       document.removeEventListener('mousemove', this.horizontalMoveOneHandler);
@@ -282,7 +274,7 @@ export class Presenter {
 
   handleThumbTwoMouseUp (event: MouseEvent): void {
     event.preventDefault();
-    if (this.config.isVertical) {
+    if (this.params.isVertical) {
       document.removeEventListener('mousemove', this.verticalMoveTwoHandler);
     } else {
       document.removeEventListener('mousemove', this.horizontalMoveTwoHandler);      

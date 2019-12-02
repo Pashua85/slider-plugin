@@ -5,19 +5,21 @@ import { View } from '../src/slider/View';
 describe('Presenter', () => {
 
   let root = document.createElement('div');
-  let config, model: Model, presenter: Presenter, view: View;
+  let params, model: Model, presenter: Presenter, view: View;
 
   beforeEach(() => {
-    config = { 
+    params = { 
       valueOne: 17, 
       valueTwo: 45, 
+      minValue: 0,
+      maxValue: 100,
       isVertical: false, 
       step: 1,
       values: []
     };
     model = new Model();
-    view = new View(root, config);
-    presenter = new Presenter(model, view, config);
+    view = new View(root, params);
+    presenter = new Presenter(model, view, params);
   });
 
   it('should set up values in model on initialisation', () => {

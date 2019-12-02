@@ -1,16 +1,19 @@
 import './styles.scss';
 import * as $ from 'jquery';
 import './slider/slider';
-import { emptyArray } from './slider/slider';
+
 
 const config2 = {
-  isVertical: false,
   minValue: 0,
   maxValue: 300,
   valueOne: 100,
-  valueTwo: 200,
-  step: 1,
-  values: emptyArray
+  valueTwo: 200
 };
 
-$('#root').customSlider(config2);
+const slider1 = $('#root').customSlider(config2);
+
+console.log(slider1);
+
+
+
+
