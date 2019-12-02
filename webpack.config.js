@@ -17,7 +17,8 @@ const PATHS = {
 const common = merge([
   {
     entry: {
-      'slider': PATHS.source + '/slider.ts'
+      'slider': PATHS.source + '/slider/slider.ts',
+      'index': PATHS.source + '/index.ts'
     },
     output: {
       path: PATHS.build,
@@ -26,6 +27,7 @@ const common = merge([
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'index.html',
+        excludeChunks: ['slider'],
         template: PATHS.source + '/index.html'
       })
     ]

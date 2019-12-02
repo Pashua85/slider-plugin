@@ -1,2 +1,2 @@
-import { View } from '../src/View';
+import { View } from '../src/slider/View';
 

@@ -1,4 +1,4 @@
-import { Model } from '../src/Model';
+import { Model } from '../src/slider/Model';
 
 describe('Model', () => {
   let model = new Model();

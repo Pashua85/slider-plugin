@@ -1,5 +1,5 @@
 import { Model, Value } from "./Model";
-import { View } from "View";
+import { View } from "./View";
 
 export interface IConfig {
   valueOne: Value;

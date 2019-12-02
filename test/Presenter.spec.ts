@@ -1,6 +1,6 @@
-import { Presenter } from '../src/Presenter';
-import { Model } from '../src/Model';
-import { View } from '../src/View';
+import { Presenter } from '../src/slider/Presenter';
+import { Model } from '../src/slider/Model';
+import { View } from '../src/slider/View';
 
 describe('Presenter', () => {
 
