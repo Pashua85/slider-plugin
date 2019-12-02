@@ -27,7 +27,7 @@ const common = merge([
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        excludeChunks: ['slider'],
+        chunks: ['index'],
         template: PATHS.source + '/index.html'
       })
     ]

@@ -13,7 +13,6 @@ import { Presenter, IConfig } from './Presenter';
   }
 })($);
 
-
 export const emptyArray: Value[] = [];
 
 
