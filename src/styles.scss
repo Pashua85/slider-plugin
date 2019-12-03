@@ -13,6 +13,16 @@
   text-align: center;
 }
 
+.outer-input {
+  outline: none;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  border: 1px solid #532412;
+  height: 2rem;
+  text-align: right;
+}
+
 .root {
   width: 30rem;
   margin: 0 auto;

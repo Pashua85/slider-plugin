@@ -10,6 +10,7 @@ export class Presenter {
   range?: number;
   isWithStrings: boolean;
   shift: number;
+  outerInputsOne: HTMLInputElement[];
   horizontalMoveOneHandler: () => void;
   horizontalMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
@@ -22,6 +23,7 @@ export class Presenter {
     this.model = model;
     this.view = view;
     this.params = params;
+    this.outerInputsOne = [];
     this.setUpIsWithStrings();
     this.setUpRange();
     this.setUpShift();
@@ -42,7 +44,6 @@ export class Presenter {
     if(params.valueTwo !== undefined) {
       this.updateValueTwo(this.params.valueTwo);
     }
-    console.log('isSting', this.isWithStrings);
   }
 
   setUpShift(): void {
@@ -138,18 +139,23 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-    let valueString = typeof this.model.state.valueOne === 'number' ? this.model.state.valueOne.toString() : this.model.state.valueOne;
+    const valueString = String(this.model.state.valueOne);
     if(!this.params.isVertical) {
       let newLeft = this.setNewLeftOne();
       this.view.renderValueOneHorizontaly(newLeft, valueString);
     } else {
       let newBottom = this.setNewBottomOne();
       this.view.renderValueOneVerticaly(newBottom, valueString);
-    }
+    };
+    if(this.outerInputsOne.length > 0) {
+      this.outerInputsOne.forEach(input => {
+        this.updateOuterInput(input, valueString);
+      })
+    };
   }
 
   onValueTwoChange(): void {
-    let valueString = typeof this.model.state.valueTwo === 'number' ? this.model.state.valueTwo.toString() : this.model.state.valueTwo;
+    const valueString = String(this.model.state.valueTwo);
     if(!this.params.isVertical) {
       let newLeft = this.setNewLeftTwo();
       this.view.renderValueTwoHorizontaly(newLeft, valueString);
@@ -201,7 +207,6 @@ export class Presenter {
     if(newLeft > rightEdge) { newLeft = rightEdge };
     
     let newValue = this.range * newLeft / sliderWidth + this.shift;
-    console.log('newValue from handle', newValue);
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueOne(this.params.values[newValueIndex]);
@@ -312,5 +317,23 @@ export class Presenter {
     if(this.params.valueTwo !== undefined) {
       this.updateValueTwo(this.params.valueTwo);
     }
+  }
+
+  addOuterInput(input: HTMLInputElement): void {
+    input.value = String(this.model.state.valueOne);
+    this.outerInputsOne.push(input);
+  }
+
+  removeOuterInputOne(input: HTMLInputElement): void {
+    const index = this.outerInputsOne.indexOf(input);
+    if(index !== -1) this.outerInputsOne.splice(index, 1);
+  }
+
+  removeAllOuterInputsOne(): void {
+    this.outerInputsOne = [];
+  };
+
+  updateOuterInput(input: HTMLInputElement, valueString: string) {
+    input.value = String(valueString);
   }
 }
