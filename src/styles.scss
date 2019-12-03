@@ -13,14 +13,25 @@
   text-align: center;
 }
 
+.input-row {
+  display: flex;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
 .outer-input {
   outline: none;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 2rem;
   border: 1px solid #532412;
+  border-radius: 4px;
   height: 2rem;
   text-align: right;
+  width: 4rem;
+  padding-right: .5rem;
+  padding-left: .5rem;
+
+  &:not(:last-child) {
+    margin-right: 2rem; 
+  }
 }
 
 .root {

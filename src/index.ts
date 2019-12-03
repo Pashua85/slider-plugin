@@ -6,12 +6,15 @@ const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
   maxValue: 300,
-  valueOne: 100,
+  valueOne: 'b',
+  valueTwo: 'f',
+  values: wordsArray
 };
 
 
 const slider1 = $('#root').customSlider(config2);
-const outerInput = document.querySelector('#outer-input');
+const outerInput1 = document.querySelector('#outer-input-1');
+const outerInput2 = document.querySelector('#outer-input-2');
 
 document.querySelector('#btn').addEventListener('click',() => {
   slider1.updateOptions({ 
@@ -22,7 +25,9 @@ document.querySelector('#btn').addEventListener('click',() => {
   console.log(slider1.range);
 });
 
-slider1.addOuterInput(outerInput);
+slider1.addOuterInputOne(outerInput1);
+slider1.addOuterInputTwo(outerInput2);
+
 
 console.log(slider1);
 
