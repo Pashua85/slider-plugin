@@ -14,6 +14,7 @@ class Model {
 
   updateValueOne(newValue: Value): void {
     this.state.valueOne = newValue;
+    console.log('newValue from model', this.state.valueOne);
     this.onValueOneChange();
   }
 

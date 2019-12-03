@@ -22,7 +22,9 @@ export class Presenter {
     this.model = model;
     this.view = view;
     this.params = params;
-    this.shift = this.params.minValue !== undefined ? this.params.minValue : 0;
+    this.setUpIsWithStrings();
+    this.setUpRange();
+    this.setUpShift();
 
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
@@ -35,23 +37,30 @@ export class Presenter {
     this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
     this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
     this.verticalMoveTwoHandler = this.handleVerticalMoveTwo.bind(this);
-    
-    this.setIsWithStrings();
-    this.setRange();
+  
     this.updateValueOne(this.params.valueOne);
     if(params.valueTwo !== undefined) {
       this.updateValueTwo(this.params.valueTwo);
     }
+    console.log('isSting', this.isWithStrings);
   }
 
-  setIsWithStrings(): void {
+  setUpShift(): void {
+    if(this.isWithStrings) {
+      this.shift = 0;
+    } else {
+      this.shift = this.params.minValue !== undefined ? this.params.minValue : 0;
+    }
+  }
+
+  setUpIsWithStrings(): void {
     this.isWithStrings = this.params.values.length > 0;
   }
 
-  setRange(): void {
+  setUpRange(): void {
     if(!this.isWithStrings) {
       this.range = this.params.maxValue - this.params.minValue;
-    } else if (this.isWithStrings) {
+    } else {
       this.range = this.params.values.length - 1;
     }
   }
@@ -190,13 +199,14 @@ export class Presenter {
     };
     if(newLeft < 0) { newLeft = 0 };
     if(newLeft > rightEdge) { newLeft = rightEdge };
-
+    
     let newValue = this.range * newLeft / sliderWidth + this.shift;
+    console.log('newValue from handle', newValue);
     if (this.isWithStrings) {
       let newValueIndex = this.roundToStep(newValue, 1);
       this.updateValueOne(this.params.values[newValueIndex]);
     } else {
-      this.updateValueOne(this.roundToStep(newValue,this.params.step) + this.params.minValue);
+      this.updateValueOne(this.roundToStep(newValue,this.params.step));
     }
   }
 
@@ -289,11 +299,12 @@ export class Presenter {
     document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
   }
 
-  updateParams(options: IAdditionalOptions): void {
+  updateOptions(options: IAdditionalOptions): void {
     const newParams = {...this.params,...options};
     this.params = newParams;
-    this.setIsWithStrings();
-    this.setRange();
+    this.setUpIsWithStrings();
+    this.setUpRange();
+    this.setUpShift();
     this.view.params = newParams;
     this.view.updateParams(newParams);
     this.view.rebootSliderView();
