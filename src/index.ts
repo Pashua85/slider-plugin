@@ -4,11 +4,11 @@ import './slider/slider';
 
 const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
-  minValue: 0,
+  minValue: -150,
   maxValue: 300,
-  valueOne: 'b',
-  valueTwo: 'f',
-  values: wordsArray
+  valueOne: 100,
+  valueTwo: 200,
+  // values: wordsArray
 };
 
 
@@ -17,12 +17,9 @@ const outerInput1 = document.querySelector('#outer-input-1');
 const outerInput2 = document.querySelector('#outer-input-2');
 
 document.querySelector('#btn').addEventListener('click',() => {
-  slider1.updateOptions({ 
-    values: [], 
-    valueOne: 40, 
-    valueTwo: 90 
-  });
-  console.log(slider1.range);
+  // slider1.removeOuterInputOne(outerInput1);
+  slider1.removeAllOuterInputsTwo();
+  console.log(slider1);
 });
 
 slider1.addOuterInputOne(outerInput1);

@@ -18,8 +18,8 @@ export class Presenter {
   thumbTwoMouseUpHandler: () => void;
   verticalMoveOneHandler: () => void;
   verticalMoveTwoHandler: () => void;
-  inputOneBlurHandler: (event: Event, input: HTMLInputElement) => void;
-
+  inputOneBlurHandler: () => void;
+  inputTwoBlurHandler: () => void;
 
   constructor(model: Model, view: View, params: IParams) {
     this.model = model;
@@ -43,6 +43,7 @@ export class Presenter {
     this.verticalMoveOneHandler = this.handleVerticalMoveOne.bind(this);
     this.verticalMoveTwoHandler = this.handleVerticalMoveTwo.bind(this);
     this.inputOneBlurHandler = this.handleInputOneBlur.bind(this);
+    this.inputTwoBlurHandler = this.handleInputTwoBlur.bind(this);
   
     this.updateValueOne(this.params.valueOne);
     if(params.valueTwo !== undefined) {
@@ -329,43 +330,65 @@ export class Presenter {
   }
 
   addOuterInputOne(input: HTMLInputElement): void {
-    input.addEventListener('blur', event => this.inputOneBlurHandler(event, input));
+    input.addEventListener('blur', this.inputOneBlurHandler);
     input.value = String(this.model.state.valueOne);
     this.outerInputsOne.push(input);
   }
 
-  handleInputOneBlur(event: Event, input: HTMLInputElement) {
-    if(this.validateInputValue(input.value)) {
-      const newValue = this.isWithStrings ? input.value : Number(input.value);
+  addOuterInputTwo(input: HTMLInputElement): void {
+    input.addEventListener('blur', this.inputTwoBlurHandler);
+    input.value = String(this.model.state.valueTwo);
+    this.outerInputsTwo.push(input);
+  }
+
+  handleInputOneBlur(event: Event) {
+    const inputValue = (<HTMLInputElement>event.target).value;
+    if(this.validateInputValue(inputValue)) {
+      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
       this.updateValueOne(newValue);
     }
   }
 
+  handleInputTwoBlur(event: Event) {
+    const inputValue = (<HTMLInputElement>event.target).value;
+    if(this.validateInputValue(inputValue)) {
+      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
+      this.updateValueTwo(newValue);
+    }
+  }
+
   removeOuterInputOne(input: HTMLInputElement): void {
+    input.removeEventListener('blur', this.inputOneBlurHandler);
     const index = this.outerInputsOne.indexOf(input);
     if(index !== -1) this.outerInputsOne.splice(index, 1);
   }
 
-  removeAllOuterInputsOne(): void {
-    this.outerInputsOne = [];
-  };
-
-  addOuterInputTwo(input: HTMLInputElement): void {
-    input.value = String(this.model.state.valueTwo);
-    this.outerInputsTwo.push(input);
-  };
-
   removeOuterInputTwo(input: HTMLInputElement): void {
+    input.removeEventListener('blur', this.inputTwoBlurHandler);
     const index = this.outerInputsTwo.indexOf(input);
     if(index !== -1) this.outerInputsTwo;
   }
-  
+
+  removeAllOuterInputsOne(): void {
+    this.outerInputsOne.forEach(input => {
+      input.removeEventListener('blur', this.inputOneBlurHandler);
+    });
+    this.outerInputsOne = [];
+  }
+
+  removeAllOuterInputsTwo(): void {
+    this.outerInputsTwo.forEach(input => {
+      input.removeEventListener('blur', this.inputTwoBlurHandler);
+    });
+    this.outerInputsTwo = [];
+  }
+ 
   validateInputValue(inputValue: string): boolean {
     if(this.isWithStrings) {
       return this.params.values.indexOf(inputValue) !== -1;
     } else {
       const inputValueNumber = Number(inputValue);
-      return Number.isNaN(inputValueNumber) && inputValueNumber >= this.params.minValue && inputValueNumber <= this.params.maxValue;
+      return !(Number.isNaN(inputValueNumber)) && inputValueNumber >= this.params.minValue && inputValueNumber <= this.params.maxValue;
     }
   }
 
