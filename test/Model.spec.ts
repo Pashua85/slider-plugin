@@ -11,5 +11,5 @@ describe('Model', () => {
   it('should update value two', () => {
     model.updateValueTwo(5);
     expect(model.state.valueTwo).toBe(5);
-  })
+  });
 })
