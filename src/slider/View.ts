@@ -1,14 +1,21 @@
 import { IParams } from './slider';
+import { Value } from './Model';
 
  export class View {
   root: HTMLElement;
   params: IParams;
+  isWithStrings: boolean;
 
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
     this.params = params;
     
     this.initSlider();
+    this.setUpIsWithStrings();
+  }
+
+  setUpIsWithStrings(): void {
+    this.isWithStrings = this.params.values.length > 0;
   }
 
   initSlider():void {
@@ -86,50 +93,72 @@ import { IParams } from './slider';
       intervalBar.style.left = intervalLeft.toString() + 'px';
       intervalBar.style.width = interval.toString() + 'px';
     }
-  };
+  }
 
-  renderValueOneHorizontaly(newLeft: number, valueString: string): void {
-    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
-    let label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = valueString;
-    thumb.style.left = newLeft.toString() + 'px';
-    
+  defineCoords(thumb: HTMLElement,value: Value, range: number, shift: number ): number {
+    const slider: HTMLElement = this.root.querySelector('.slider');
+
+    if(this.params.isVertical) {
+      const height = slider.offsetHeight;
+      const thumbHeight = thumb.offsetHeight;
+      let newBottom: number;  
+      if(this.isWithStrings) {
+        const valueIndex = this.params.values.indexOf(String(value));
+        newBottom = valueIndex * height / range - thumbHeight;
+      } else {
+        newBottom = (Number(value) - shift) * height / range - thumbHeight;
+      }
+      if (newBottom < 0) newBottom = 0;
+      return newBottom;
+    } else {
+      const width = slider.offsetWidth;
+      const thumbWidth = thumb.offsetWidth;
+      let newLeft: number;
+      if(this.isWithStrings) {
+        const valueIndex = this.params.values.indexOf(String(value));
+        newLeft = valueIndex * width / range - thumbWidth;
+      } else {
+        newLeft = (Number(value) - shift) * width / range - thumbWidth;
+      }
+      if (newLeft < 0) newLeft = 0;
+      return newLeft;
+    }
+  }
+
+  renderThumbOne (value: Value, range: number, shift: number): void {
+    const thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    const label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = String(value);
+    const newCoords = this.defineCoords(thumb, value, range, shift);
+
+    if(this.params.isVertical) {
+      thumb.style.bottom = newCoords.toString() + 'px';
+    } else {
+      thumb.style.left = newCoords.toString() + 'px';
+    }
     if(this.params.valueTwo !== undefined) {
       this.renderIntervalBar();
     }
   }
 
-  renderValueTwoHorizontaly(newLeft: number, valueString: string): void {
-    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
-    let label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = valueString;
-    thumb.style.left = newLeft.toString() + 'px';
+  renderThumbTwo (value: Value, range: number, shift: number): void {
+    const thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    const label: HTMLElement = thumb.querySelector('.slider__label');
+    label.innerHTML = String(value);
+    const newCoords = this.defineCoords(thumb, value, range, shift);
 
-    this.renderIntervalBar();
-  }
-
-  renderValueOneVerticaly(newBottom: number, valueString: string): void {
-    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
-    let label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = valueString;
-    thumb.style.bottom = newBottom.toString() + 'px';
-
-    if(this.params.valueTwo !== undefined) {
-      this.renderIntervalBar();
+    if(this.params.isVertical) {
+      thumb.style.bottom = newCoords.toString() + 'px';
+    } else {
+      thumb.style.left = newCoords.toString() + 'px';
     }
-  }
-
-  renderValueTwoVerticaly(newBottom: number, valueString: string): void {
-    let thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
-    let label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = valueString;
-    thumb.style.bottom = newBottom.toString() + 'px';
-
     this.renderIntervalBar();
+    console.log('render 2');
   }
 
   updateParams(newParams: IParams): void {
     this.params = newParams;
+    this.setUpIsWithStrings();
   }
 
   rebootSliderView(): void {

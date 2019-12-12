@@ -71,70 +71,6 @@ export class Presenter {
     }
   }
 
-  setNewLeftOne(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let width = slider.offsetWidth;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    let thumbWidth = thumb.offsetWidth;
-    let newLeft: number;
-    if(this.isWithStrings) {
-      let valueIndex = this.params.values.indexOf(String(this.model.state.valueOne));
-      newLeft = valueIndex * width / this.range - thumbWidth;
-    } else {
-      newLeft = (Number(this.model.state.valueOne) - this.shift) * width / this.range - thumbWidth;
-    }
-    if (newLeft < 0) { newLeft = 0 };
-    return newLeft;
-  }
-
-  setNewLeftTwo(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let width = slider.offsetWidth;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    let thumbWidth = thumb.offsetWidth;
-    let newLeft: number;
-    if(this.isWithStrings) {
-      let valueIndex = this.params.values.indexOf(String(this.model.state.valueTwo));
-      newLeft = valueIndex * width / this.range - thumbWidth;
-    } else {
-      newLeft = (Number(this.model.state.valueTwo) - this.shift) * width / this.range - thumbWidth;
-    }
-    if (newLeft < 0) { newLeft = 0 };
-    return newLeft;
-  }
-
-  setNewBottomOne(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let height = slider.offsetHeight;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    let thumbHeight = thumb.offsetHeight;
-    let newBottom: number;
-    if(this.isWithStrings) {
-      let valueIndex = this.params.values.indexOf(String(this.model.state.valueOne));
-      newBottom = valueIndex * height / this.range - thumbHeight;
-    } else {
-      newBottom = (Number(this.model.state.valueOne) - this.shift) * height/ this.range - thumbHeight;
-    }
-    if (newBottom < 0) { newBottom = 0 };
-    return newBottom;
-  }
-
-  setNewBottomTwo(): number {
-    let slider: HTMLElement = this.view.root.querySelector('.slider');
-    let height = slider.offsetHeight;
-    let thumb: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    let thumbHeight = thumb.offsetHeight;
-    let newBottom: number;
-    if(this.isWithStrings) {
-      let valueIndex = this.params.values.indexOf(String(this.model.state.valueTwo));
-      newBottom = valueIndex * height / this.range - thumbHeight;
-    } else {
-      newBottom = (Number(this.model.state.valueTwo) - this.shift) * height/ this.range - thumbHeight;
-    }
-    if (newBottom < 0) { newBottom = 0 };
-    return newBottom;
-  }
-
   updateValueOne(newValue: Value): void {
     this.model.updateValueOne(newValue);
   }
@@ -144,33 +80,23 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-    const valueString = String(this.model.state.valueOne);
-    if(!this.params.isVertical) {
-      let newLeft = this.setNewLeftOne();
-      this.view.renderValueOneHorizontaly(newLeft, valueString);
-    } else {
-      let newBottom = this.setNewBottomOne();
-      this.view.renderValueOneVerticaly(newBottom, valueString);
-    };
+
+    this.view.renderThumbOne(this.model.state.valueOne, this.range, this.shift);
+
     if(this.outerInputsOne.length > 0) {
       this.outerInputsOne.forEach(input => {
-        this.updateOuterInput(input, valueString);
+        this.updateOuterInput(input, String(this.model.state.valueOne));
       })
     };
   }
 
   onValueTwoChange(): void {
-    const valueString = String(this.model.state.valueTwo);
-    if(!this.params.isVertical) {
-      let newLeft = this.setNewLeftTwo();
-      this.view.renderValueTwoHorizontaly(newLeft, valueString);
-    } else {
-      let newBottom = this.setNewBottomTwo();
-      this.view.renderValueTwoVerticaly(newBottom, valueString);
-    };
+
+    this.view.renderThumbTwo(this.model.state.valueTwo, this.range, this.shift);
+  
     if(this.outerInputsTwo.length > 0) {
       this.outerInputsTwo.forEach(input => {
-        this.updateOuterInput(input, valueString);
+        this.updateOuterInput(input, String(this.model.state.valueTwo));
       })
     };
   }
@@ -320,7 +246,6 @@ export class Presenter {
     this.setUpIsWithStrings();
     this.setUpRange();
     this.setUpShift();
-    this.view.params = newParams;
     this.view.updateParams(newParams);
     this.view.rebootSliderView();
     this.updateValueOne(this.params.valueOne);

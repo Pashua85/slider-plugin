@@ -6,7 +6,7 @@ const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: -150,
   maxValue: 300,
-  valueOne: 100,
+  valueOne: 150,
   valueTwo: 200,
   // values: wordsArray
 };
