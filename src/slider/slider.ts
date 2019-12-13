@@ -31,6 +31,7 @@ export interface IOptions {
   minValue?: number;
   step?: number;
   values?: string[];
+  scaleStep?: number;
 };
 
 export interface IAdditionalOptions {
@@ -51,6 +52,7 @@ export interface IParams {
   minValue: number;
   step: number;
   values: string[];
+  scaleStep?: number;
 };
 
 

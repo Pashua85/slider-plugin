@@ -4,13 +4,13 @@ import './slider/slider';
 
 const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
-  minValue: -150,
-  maxValue: 300,
-  valueOne: 150,
-  valueTwo: 200,
+  minValue: 0,
+  maxValue: 13,
+  valueOne: 5,
+  scaleStep: 2,
+  // valueTwo: 200,
   // values: wordsArray
 };
-
 
 const slider1 = $('#root').customSlider(config2);
 const outerInput1 = document.querySelector('#outer-input-1');
@@ -23,7 +23,7 @@ document.querySelector('#btn').addEventListener('click',() => {
 });
 
 slider1.addOuterInputOne(outerInput1);
-slider1.addOuterInputTwo(outerInput2);
+// slider1.addOuterInputTwo(outerInput2);
 
 
 console.log(slider1);

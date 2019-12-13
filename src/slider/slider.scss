@@ -21,11 +21,10 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: red;
+  background-color: rgba(red, .4);
 
   &:active {
-    background-color: darken(red, 5%);
-    z-index: 300;
+    // background-color: darken(red, 5%);
   }
 }
 
@@ -92,4 +91,15 @@
 .slider__interval--vertical {
   width: 4px;
   left: 0;
+}
+
+.slider__mark {
+  position: absolute;
+  background-color: rgb(190,200,190);
+}
+
+.slider__mark--horizontal {
+  width: 4px;
+  height: 10px;
+  top: -3px;
 }

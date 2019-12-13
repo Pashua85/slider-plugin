@@ -5,6 +5,8 @@ import { Value } from './Model';
   root: HTMLElement;
   params: IParams;
   isWithStrings: boolean;
+  range: number;
+  marksAmount?: number;
 
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
@@ -12,10 +14,24 @@ import { Value } from './Model';
     
     this.initSlider();
     this.setUpIsWithStrings();
+    this.setUpRange();
+
+    if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
+      this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
+      this.initScale(this.renderScale.bind(this));
+    }
   }
 
   setUpIsWithStrings(): void {
     this.isWithStrings = this.params.values.length > 0;
+  }
+
+  setUpRange(): void {
+    if(!this.isWithStrings) {
+      this.range = this.params.maxValue - this.params.minValue;
+    } else {
+      this.range = this.params.values.length - 1;
+    }
   }
 
   initSlider():void {
@@ -95,6 +111,34 @@ import { Value } from './Model';
     }
   }
 
+  initScale(callback: () => void): void {
+    const slider: HTMLElement = this.root.querySelector('.slider');
+    
+    for(let i = 0; i < this.marksAmount; i++) {
+      const mark: HTMLElement = document.createElement('div');
+      mark.classList.add('slider__mark');
+      mark.classList.add('slider__mark--' + (i + 1).toString());
+      slider.appendChild(mark);
+    }
+    callback();
+  }
+
+  renderScale(): void {
+    const slider: HTMLElement = this.root.querySelector('.slider');
+    const thumb: HTMLElement = this.root.querySelector('.slider__thumb');
+    
+    for(let i = 0; i < this.marksAmount ; i ++) {
+      const mark: HTMLElement = slider.querySelector('.slider__mark--' + (i + 1).toString());
+      if(this.params.isVertical) {
+        mark.classList.add('slider__mark--vertical');
+      } else {
+        mark.classList.add('slider__mark--horizontal');
+        const markLeft = slider.offsetWidth * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetWidth + mark.offsetWidth) / 2;
+        mark.style.left = markLeft.toString() + 'px';
+      }
+    }
+  }
+
   defineCoords(thumb: HTMLElement,value: Value, range: number, shift: number ): number {
     const slider: HTMLElement = this.root.querySelector('.slider');
 
@@ -159,6 +203,7 @@ import { Value } from './Model';
   updateParams(newParams: IParams): void {
     this.params = newParams;
     this.setUpIsWithStrings();
+    this.setUpRange();
   }
 
   rebootSliderView(): void {
