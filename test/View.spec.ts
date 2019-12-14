@@ -37,6 +37,15 @@ describe( 'View', () => {
     values: emptyArray
   };
 
+  const params4 = {
+    minValue: 0,
+    maxValue: 100,
+    step: 1,
+    valueOne: 'a',
+    isVertical: false,
+    values: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+  }
+
   beforeEach(() => {
     container.innerHTML = '';
   })
@@ -82,5 +91,18 @@ describe( 'View', () => {
     expect(sliderElement2.classList).not.toContain('slider--horizontal');
     expect(intervalBar2.classList).toContain('slider__interval--vertical');
     expect(intervalBar2.classList).not.toContain('slider__interval--horizontal');
+  });
+
+  it('should set up range, root and isWithStrings values on initialisation', () => {
+    const view = new View(container, params1);
+    expect(view.root).toEqual(container);
+    expect(view.range).toBe(10);
+    expect(view.isWithStrings).toBe(false);
+  });
+
+  it('should set up range and isWithStings values for slider working with stings', () => {
+    const view = new View(container, params4);
+    expect(view.isWithStrings).toBe(true);
+    expect(view.range).toBe(7);
   });
 });
