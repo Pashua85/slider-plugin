@@ -43,7 +43,11 @@
 }
 
 .slider__thumb--two {
-  z-index: 30;
+  z-index: 20;
+}
+
+.slider__thumb--top {
+  z-index: 50;
 }
 
 .slider__label {
@@ -81,6 +85,7 @@
 .slider__interval {
   position: absolute;
   background-color: green;
+  z-index: 2;
 }
 
 .slider__interval--horizontal {
@@ -99,13 +104,13 @@
 }
 
 .slider__mark--horizontal {
-  width: 4px;
+  width: 2px;
   height: 10px;
   top: -3px;
 }
 
 .slider__mark--vertical {
-  height: 4px;
+  height: 2px;
   width: 10px;
   left: -3px;
 }

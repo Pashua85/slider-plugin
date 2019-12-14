@@ -102,6 +102,13 @@ export class Presenter {
   }
 
   onThumbOneMouseDown(event: MouseEvent): void {
+    if(this.params.valueTwo !== undefined ) {
+      const thumbTwo: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+      thumbTwo.classList.remove('slider__thumb--top');
+    };
+    const thumbOne: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
+    thumbOne.classList.add('slider__thumb--top');
+
     if (this.params.isVertical) {
       document.addEventListener('mousemove', this.verticalMoveOneHandler);
     } else {
@@ -111,6 +118,11 @@ export class Presenter {
   }
 
   onThumbTwoMouseDown(event: MouseEvent): void {
+    const thumbOne: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
+    const thumbTwo: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
+    thumbOne.classList.remove('slider__thumb--top');
+    thumbTwo.classList.add('slider__thumb--top');
+
     if (this.params.isVertical) {
       document.addEventListener('mousemove', this.verticalMoveTwoHandler);
     } else {
@@ -135,7 +147,8 @@ export class Presenter {
 
     if(this.params.valueTwo !== undefined) {
       let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
-      rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft + thumbTwo.offsetWidth / 2;
+      let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
+      rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft;
     } else {
       rightEdge = sliderWidth;
     };
@@ -159,7 +172,7 @@ export class Presenter {
     let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
     let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two')
     let rightEdge: number = sliderWidth;
-    let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + thumbOne.offsetWidth + thumbTwo.offsetWidth/2;
+    let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + thumbOne.offsetWidth;
 
     if(newLeft < leftEdge) { newLeft = leftEdge };
     if(newLeft > rightEdge) { newLeft = rightEdge };
@@ -183,7 +196,8 @@ export class Presenter {
 
     if(this.params.valueTwo !== undefined) {
       let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
-      topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom + thumbOne.offsetHeight / 2;
+      // rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft;
+      topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom;
     } else {
       topEdge = sliderHeight;
     }
@@ -206,7 +220,7 @@ export class Presenter {
     let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
     let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
     let newBottom: number = sliderBottom - event.clientY;
-    let bottomEdge: number = sliderBottom - thumbOne.getBoundingClientRect().bottom + thumbOne.offsetHeight + thumbTwo.offsetHeight / 2;
+    let bottomEdge: number = sliderBottom - thumbOne.getBoundingClientRect().bottom + thumbOne.offsetHeight;
 
     if(newBottom > sliderHeight) newBottom = sliderHeight;
     if(newBottom < bottomEdge) newBottom = bottomEdge;

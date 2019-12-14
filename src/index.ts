@@ -5,12 +5,13 @@ import './slider/slider';
 const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
-  maxValue: 20,
-  valueOne: 0,
-  // valueTwo: 20,
-  scaleStep: 2,
-  isVertical: true
-  // valueTwo: 200,
+  maxValue: 100,
+  valueOne: 4,
+  valueTwo: 67,
+  scaleStep: 5,
+  // isVertical: true,
+  step: 0.5,
+  // valueTwo: 'f',
   // values: wordsArray
 };
 
@@ -25,7 +26,7 @@ document.querySelector('#btn').addEventListener('click',() => {
 });
 
 slider1.addOuterInputOne(outerInput1);
-// slider1.addOuterInputTwo(outerInput2);
+slider1.addOuterInputTwo(outerInput2);
 
 
 console.log(slider1);
