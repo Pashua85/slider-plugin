@@ -15,7 +15,8 @@ describe( 'View', () => {
     valueTwo: 6,
     isVertical: false,
     step: 1,
-    values: emptyArray
+    values: emptyArray,
+    scaleStep: 1
   };
 
   const params2 = {

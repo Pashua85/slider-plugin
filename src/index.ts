@@ -5,9 +5,11 @@ import './slider/slider';
 const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
-  maxValue: 13,
-  valueOne: 5,
+  maxValue: 20,
+  valueOne: 0,
+  valueTwo: 20,
   scaleStep: 2,
+  // isVertical: true
   // valueTwo: 200,
   // values: wordsArray
 };

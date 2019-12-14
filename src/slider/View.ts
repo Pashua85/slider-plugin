@@ -131,6 +131,8 @@ import { Value } from './Model';
       const mark: HTMLElement = slider.querySelector('.slider__mark--' + (i + 1).toString());
       if(this.params.isVertical) {
         mark.classList.add('slider__mark--vertical');
+        const markBottom = slider.offsetHeight * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetHeight + mark.offsetHeight) / 2;
+        mark.style.bottom = markBottom.toString() + 'px';
       } else {
         mark.classList.add('slider__mark--horizontal');
         const markLeft = slider.offsetWidth * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetWidth + mark.offsetWidth) / 2;
@@ -148,9 +150,9 @@ import { Value } from './Model';
       let newBottom: number;  
       if(this.isWithStrings) {
         const valueIndex = this.params.values.indexOf(String(value));
-        newBottom = valueIndex * height / range - thumbHeight;
+        newBottom = valueIndex * height / range - thumbHeight/2;
       } else {
-        newBottom = (Number(value) - shift) * height / range - thumbHeight;
+        newBottom = (Number(value) - shift) * height / range - thumbHeight/2;
       }
       if (newBottom < 0) newBottom = 0;
       return newBottom;
@@ -160,11 +162,11 @@ import { Value } from './Model';
       let newLeft: number;
       if(this.isWithStrings) {
         const valueIndex = this.params.values.indexOf(String(value));
-        newLeft = valueIndex * width / range - thumbWidth;
+        newLeft = valueIndex * width / range - thumbWidth/2;
       } else {
-        newLeft = (Number(value) - shift) * width / range - thumbWidth;
+        newLeft = (Number(value) - shift) * width / range - thumbWidth/2;
       }
-      if (newLeft < 0) newLeft = 0;
+      // if (newLeft < 0) newLeft = 0;
       return newLeft;
     }
   }
