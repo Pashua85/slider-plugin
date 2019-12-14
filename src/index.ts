@@ -7,9 +7,9 @@ const config2 = {
   minValue: 0,
   maxValue: 20,
   valueOne: 0,
-  valueTwo: 20,
+  // valueTwo: 20,
   scaleStep: 2,
-  // isVertical: true
+  isVertical: true
   // valueTwo: 200,
   // values: wordsArray
 };

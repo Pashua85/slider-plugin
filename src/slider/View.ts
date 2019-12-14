@@ -131,11 +131,14 @@ import { Value } from './Model';
       const mark: HTMLElement = slider.querySelector('.slider__mark--' + (i + 1).toString());
       if(this.params.isVertical) {
         mark.classList.add('slider__mark--vertical');
-        const markBottom = slider.offsetHeight * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetHeight + mark.offsetHeight) / 2;
+        // const markBottom = slider.offsetHeight * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetHeight + mark.offsetHeight) / 2;
+        const markBottom = (i+1) * this.params.scaleStep * (slider.offsetHeight - (thumb.offsetHeight - slider.offsetWidth) / 2)
+          / this.range - slider.offsetWidth/2 + mark.offsetHeight/2;
         mark.style.bottom = markBottom.toString() + 'px';
       } else {
         mark.classList.add('slider__mark--horizontal');
-        const markLeft = slider.offsetWidth * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetWidth + mark.offsetWidth) / 2;
+        const markLeft = (i+1) * this.params.scaleStep * (slider.offsetWidth - (thumb.offsetWidth - slider.offsetHeight) / 2)
+          / this.range - slider.offsetHeight/2 + mark.offsetWidth/2;
         mark.style.left = markLeft.toString() + 'px';
       }
     }
@@ -152,21 +155,20 @@ import { Value } from './Model';
         const valueIndex = this.params.values.indexOf(String(value));
         newBottom = valueIndex * height / range - thumbHeight/2;
       } else {
-        newBottom = (Number(value) - shift) * height / range - thumbHeight/2;
+        newBottom = (Number(value) - shift) * (height - (thumbHeight - slider.offsetWidth)/2) / range - (thumbHeight - slider.offsetWidth)/2;
       }
-      if (newBottom < 0) newBottom = 0;
+      // if (newBottom < 0) newBottom = 0;
       return newBottom;
     } else {
-      const width = slider.offsetWidth;
       const thumbWidth = thumb.offsetWidth;
+      const width = slider.offsetWidth;
       let newLeft: number;
       if(this.isWithStrings) {
         const valueIndex = this.params.values.indexOf(String(value));
-        newLeft = valueIndex * width / range - thumbWidth/2;
+        newLeft = valueIndex * (width - (thumbWidth - slider.offsetHeight)/2) / range - (thumbWidth - slider.offsetHeight)/2;
       } else {
-        newLeft = (Number(value) - shift) * width / range - thumbWidth/2;
+        newLeft = (Number(value) - shift) * (width - (thumbWidth - slider.offsetHeight)/2) / range - (thumbWidth - slider.offsetHeight)/2;
       }
-      // if (newLeft < 0) newLeft = 0;
       return newLeft;
     }
   }
