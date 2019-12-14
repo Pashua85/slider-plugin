@@ -6,9 +6,9 @@ const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
   maxValue: 100,
-  valueOne: 4,
-  valueTwo: 67,
-  scaleStep: 5,
+  valueOne: 40,
+  valueTwo: 60,
+  scaleStep: 10,
   // isVertical: true,
   step: 0.5,
   // valueTwo: 'f',

@@ -131,17 +131,15 @@ import { Value } from './Model';
       const mark: HTMLElement = slider.querySelector('.slider__mark--' + (i + 1).toString());
       if(this.params.isVertical) {
         mark.classList.add('slider__mark--vertical');
-        console.log(mark.offsetWidth);
-        console.log(slider.offsetWidth);
-        console.log(thumb.offsetWidth);
         // const markBottom = slider.offsetHeight * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetHeight + mark.offsetHeight) / 2;
         const markBottom = (i+1) * this.params.scaleStep * (slider.offsetHeight - (thumb.offsetHeight - slider.offsetWidth) / 2)
-          / this.range - slider.offsetWidth/2 + mark.offsetHeight/2;
+          / this.range + slider.offsetWidth/2 - mark.offsetHeight/2;
         mark.style.bottom = markBottom.toString() + 'px';
       } else {
         mark.classList.add('slider__mark--horizontal');
         const markLeft = (i+1) * this.params.scaleStep * (slider.offsetWidth - (thumb.offsetWidth - slider.offsetHeight) / 2)
-          / this.range - slider.offsetHeight/2 + mark.offsetWidth/2;
+          / this.range + slider.offsetHeight/2 - mark.offsetWidth/2;
+        
         mark.style.left = markLeft.toString() + 'px';
       }
     }
