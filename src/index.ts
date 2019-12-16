@@ -6,13 +6,13 @@ const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
   maxValue: 100,
-  valueOne: 'b',
-  valueTwo: 'c',
-  scaleStep: 1,
+  valueOne: 15,
+  valueTwo: 39,
+  // scaleStep: 1,
   isVertical: true,
   // step: 1,
   // valueTwo: 'f',
-  values: wordsArray
+  // values: wordsArray
 };
 
 const slider1 = $('#root').customSlider(config2);

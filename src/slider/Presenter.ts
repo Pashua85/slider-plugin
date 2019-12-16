@@ -197,7 +197,7 @@ export class Presenter {
     if(this.params.valueTwo !== undefined) {
       let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
       // rightEdge = thumbTwo.getBoundingClientRect().left - sliderLeft;
-      topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom;
+      topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom + (thumbOne.offsetHeight - slider.offsetWidth);
     } else {
       topEdge = sliderHeight;
     }
@@ -220,7 +220,7 @@ export class Presenter {
     let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
     let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two');
     let newBottom: number = sliderBottom - event.clientY;
-    let bottomEdge: number = sliderBottom - thumbOne.getBoundingClientRect().bottom + thumbOne.offsetHeight;
+    let bottomEdge: number = sliderBottom - thumbOne.getBoundingClientRect().bottom + (thumbOne.offsetHeight - slider.offsetWidth)/2;
 
     if(newBottom > sliderHeight) newBottom = sliderHeight;
     if(newBottom < bottomEdge) newBottom = bottomEdge;
