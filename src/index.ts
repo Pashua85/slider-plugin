@@ -9,7 +9,7 @@ const config2 = {
   valueOne: 45,
   valueTwo: 60,
   // scaleStep: 1,
-  isVertical: true,
+  // isVertical: true,
   // step: 1,
   // valueTwo: 'f',
   // values: wordsArray
