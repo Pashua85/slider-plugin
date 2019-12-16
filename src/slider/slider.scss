@@ -23,7 +23,7 @@
   border-radius: 50%;
   background-color: rgba(#4db6ac, .9);
 
-  &:active {
+  &:active, &--touched {
     background-color: darken(rgba(#4db6ac, .9), 10%);
   }
 }
@@ -64,7 +64,8 @@
 }
 
 .slider__thumb:hover .slider__label,
-.slider__thumb:active .slider__label {
+.slider__thumb:active .slider__label,
+.slider__thumb--touched .slider__label {
   visibility: visible;
   opacity: 1;
   transition: opacity .4s;

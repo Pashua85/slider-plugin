@@ -73,6 +73,7 @@ import { Value } from './Model';
         this.onThumbTwoMouseDown(event);
       });
       thumbTwo.addEventListener('touchstart', event => {
+        console.log('touched from view');
         event.preventDefault();
         this.onThumbTwoTouchStart(event);
       })
@@ -139,7 +140,6 @@ import { Value } from './Model';
       const mark: HTMLElement = slider.querySelector('.slider__mark--' + (i + 1).toString());
       if(this.params.isVertical) {
         mark.classList.add('slider__mark--vertical');
-        // const markBottom = slider.offsetHeight * (i+1) * this.params.scaleStep/ this.range - (thumb.offsetHeight + mark.offsetHeight) / 2;
         const markBottom = (i+1) * this.params.scaleStep * (slider.offsetHeight - (thumb.offsetHeight - slider.offsetWidth) / 2)
           / this.range + slider.offsetWidth/2 - mark.offsetHeight/2;
         mark.style.bottom = markBottom.toString() + 'px';
@@ -210,7 +210,6 @@ import { Value } from './Model';
       thumb.style.left = newCoords.toString() + 'px';
     }
     this.renderIntervalBar();
-    console.log('render 2');
   }
 
   updateParams(newParams: IParams): void {
