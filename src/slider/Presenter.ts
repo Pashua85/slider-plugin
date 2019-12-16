@@ -72,11 +72,37 @@ export class Presenter {
   }
 
   updateValueOne(newValue: Value): void {
-    this.model.updateValueOne(newValue);
+    if(this.validateValueOne(newValue)) {
+      this.model.updateValueOne(newValue);
+    }
   }
 
   updateValueTwo(newValue: Value): void {
     this.model.updateValueTwo(newValue);
+  }
+
+  validateValueOne(newValue: Value): boolean {
+    if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueTwo === undefined) {
+
+      return this.params.values.indexOf(newValue) !== -1;
+      
+    } else if(this.isWithStrings && typeof newValue == 'string' && this.model.state.valueTwo !== undefined) {
+
+      const newIndex = this.params.values.indexOf(newValue);
+      const indexTwo = this.params.values.indexOf(String(this.model.state.valueTwo));
+      return newIndex !== -1 && newIndex <= indexTwo;
+
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueTwo === undefined) {
+
+      return newValue >= this.params.minValue && newValue <= this.params.maxValue;
+
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueTwo !== undefined) {
+
+      return newValue >= this.params.minValue && newValue <= this.model.state.valueTwo;
+
+    } else {
+      return false;
+    }
   }
 
   onValueOneChange(): void {
@@ -282,10 +308,9 @@ export class Presenter {
 
   handleInputOneBlur(event: Event) {
     const inputValue = (<HTMLInputElement>event.target).value;
-    if(this.validateInputValue(inputValue)) {
-      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
-      this.updateValueOne(newValue);
-    }
+    const newValue = this.isWithStrings ? inputValue : Number(inputValue);
+    this.updateValueOne(newValue);
+  
   }
 
   handleInputTwoBlur(event: Event) {

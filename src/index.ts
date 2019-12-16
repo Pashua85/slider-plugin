@@ -6,8 +6,8 @@ const wordsArray = [ 'a', 'b','c', 'd', 'e', 'f', 'j'];
 const config2 = {
   minValue: 0,
   maxValue: 100,
-  valueOne: 15,
-  valueTwo: 39,
+  valueOne: 45,
+  valueTwo: 60,
   // scaleStep: 1,
   isVertical: true,
   // step: 1,
