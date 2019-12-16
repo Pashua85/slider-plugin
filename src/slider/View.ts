@@ -44,6 +44,10 @@ import { Value } from './Model';
       event.preventDefault();
       this.onThumbOneMouseDown(event);
     });
+    thumbOne.addEventListener('touchstart', event => {
+      event.preventDefault();
+      this.onThumbOneTouchStart(event);
+    })
     let valueLabelOne = document.createElement('div');
     valueLabelOne.classList.add('slider__label');
 
@@ -68,6 +72,10 @@ import { Value } from './Model';
         event.preventDefault();
         this.onThumbTwoMouseDown(event);
       });
+      thumbTwo.addEventListener('touchstart', event => {
+        event.preventDefault();
+        this.onThumbTwoTouchStart(event);
+      })
       let valueLabelTwo = document.createElement('div');
       valueLabelTwo.classList.add('slider__label');
       let intervalBar = document.createElement('div');
@@ -219,6 +227,10 @@ import { Value } from './Model';
   onThumbOneMouseDown(event: MouseEvent): void {};
   
   onThumbTwoMouseDown(event: MouseEvent): void {};
+
+  onThumbOneTouchStart(event: TouchEvent): void {};
+
+  onThumbTwoTouchStart(event: TouchEvent): void {};
 };
 
 
