@@ -78,14 +78,16 @@ export class Presenter {
   }
 
   updateValueTwo(newValue: Value): void {
-    this.model.updateValueTwo(newValue);
+    if(this.validateValueTwo(newValue)) {
+      this.model.updateValueTwo(newValue);
+    }
   }
 
   validateValueOne(newValue: Value): boolean {
     if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueTwo === undefined) {
 
       return this.params.values.indexOf(newValue) !== -1;
-      
+
     } else if(this.isWithStrings && typeof newValue == 'string' && this.model.state.valueTwo !== undefined) {
 
       const newIndex = this.params.values.indexOf(newValue);
@@ -99,6 +101,30 @@ export class Presenter {
     } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueTwo !== undefined) {
 
       return newValue >= this.params.minValue && newValue <= this.model.state.valueTwo;
+
+    } else {
+      return false;
+    }
+  }
+
+  validateValueTwo(newValue: Value): boolean {
+    if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueOne === undefined) {
+
+      return this.params.values.indexOf(newValue) !== -1;
+      
+    } else if(this.isWithStrings && typeof newValue == 'string' && this.model.state.valueOne !== undefined) {
+
+      const newIndex = this.params.values.indexOf(newValue);
+      const indexOne = this.params.values.indexOf(String(this.model.state.valueOne));
+      return newIndex !== -1 && newIndex >= indexOne;
+
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueOne === undefined) {
+
+      return newValue >= this.params.minValue && newValue <= this.params.maxValue;
+
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueOne !== undefined) {
+
+      return newValue >= this.model.state.valueOne && newValue <= this.params.maxValue;
 
     } else {
       return false;
@@ -308,9 +334,10 @@ export class Presenter {
 
   handleInputOneBlur(event: Event) {
     const inputValue = (<HTMLInputElement>event.target).value;
-    const newValue = this.isWithStrings ? inputValue : Number(inputValue);
-    this.updateValueOne(newValue);
-  
+    if(this.validateInputValue(inputValue)) {
+      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
+      this.updateValueOne(newValue);
+    }
   }
 
   handleInputTwoBlur(event: Event) {
