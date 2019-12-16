@@ -21,10 +21,10 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: rgba(red, .4);
+  background-color: rgba(#4db6ac, .9);
 
   &:active {
-    // background-color: darken(red, 5%);
+    background-color: darken(rgba(#4db6ac, .9), 10%);
   }
 }
 
@@ -84,7 +84,7 @@
 
 .slider__interval {
   position: absolute;
-  background-color: green;
+  background-color: rgba(#4db6ac, .9);
   z-index: 2;
 }
 
