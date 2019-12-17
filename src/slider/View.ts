@@ -17,7 +17,7 @@ import { Value } from './Model';
     this.setUpRange();
 
     if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
-      this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
+      this.setMarksAmount();
       this.initScale(this.renderScale.bind(this));
     }
   }
@@ -32,6 +32,10 @@ import { Value } from './Model';
     } else {
       this.range = this.params.values.length - 1;
     }
+  }
+
+  setMarksAmount(): void {
+    this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
   }
 
   initSlider():void {
@@ -216,11 +220,17 @@ import { Value } from './Model';
     this.params = newParams;
     this.setUpIsWithStrings();
     this.setUpRange();
+    if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
+      this.setMarksAmount();
+    }
   }
 
   rebootSliderView(): void {
     this.root.innerHTML = '';
     this.initSlider();
+    if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
+      this.initScale(this.renderScale.bind(this));
+    }
   };
 
   onThumbOneMouseDown(event: MouseEvent): void {};

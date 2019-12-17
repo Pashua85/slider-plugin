@@ -19,7 +19,23 @@
   justify-content: center;
 }
 
-.outer-input {
+.input-row__bar {
+  width: .2rem;
+  height: 2rem;
+  background-color: rgba(teal, .6);
+  margin-right: 2rem;
+}
+
+.input-row__group {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-child) {
+    margin-right: 2rem; 
+  }
+}
+
+.input-row__input {
   outline: none;
   border: 1px solid #532412;
   border-radius: 4px;
@@ -29,9 +45,7 @@
   padding-right: .5rem;
   padding-left: .5rem;
 
-  &:not(:last-child) {
-    margin-right: 2rem; 
-  }
+  
 }
 
 .root {

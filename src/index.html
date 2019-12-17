@@ -8,12 +8,34 @@
 </head>
 <body>
   <main class="main">
-    <div class="input-row">
-      <input id="outer-input-1" class="outer-input" type="text"/>
-      <input id="outer-input-2" class="outer-input" type="text">
+    <div class="example example--1">
+      <div class="column--left">
+        <div class="input-row">
+          <div class="input-row__group">
+            <input id="outer-input-1" class="input-row__input" type="text"/>
+            <input type="checkbox" checked id="checkbox-1" class="input-row__checkbox" />
+          </div>
+          <div class="input-row__group">
+            <input id="outer-input-2" class="input-row__input" type="text"/>
+            <input type="checkbox" checked id="checkbox-2" class="input-row__checkbox" />
+          </div>
+          <div class="input-row__bar"></div>
+          <div class="input-row__group">
+            <input id="outer-input-3" class="input-row__input" type="text"/>
+            <input type="checkbox" checked id="checkbox-3" class="input-row__checkbox" />
+          </div>
+          <div class="input-row__group">
+            <input id="outer-input-4" class="input-row__input" type="text"/>
+            <input type="checkbox" checked id="checkbox-4" class="input-row__checkbox" />
+          </div>
+
+        </div>
+        <div id="container-1" class="container--one"></div>
+      </div>
     </div>
-    <div id="root" class="root"></div>
-    <button id="btn">change params</button>
+    <form class="configuration configuration--one">
+
+    </form>
   </main>
   
 </body>
