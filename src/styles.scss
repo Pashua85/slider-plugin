@@ -1,90 +1,10 @@
 
+
+
 .main {
   width: 80%;
   margin: 0 auto;
   padding-top: 3rem;
 }
 
-.header {
-  color: mediumslateblue;
-  font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
-  font-weight: 200;
-  text-align: center;
-}
-
-.input-row {
-  display: flex;
-  margin-bottom: 2rem;
-  justify-content: center;
-}
-
-.input-row__bar {
-  width: .2rem;
-  height: 2rem;
-  background-color: rgba(teal, .6);
-  margin-right: 2rem;
-}
-
-.input-row__group {
-  display: flex;
-  flex-direction: column;
-
-  &:not(:last-child) {
-    margin-right: 2rem; 
-  }
-}
-
-.input-row__input {
-  outline: none;
-  border: 1px solid #532412;
-  border-radius: 4px;
-  height: 2rem;
-  text-align: right;
-  width: 4rem;
-  padding-right: .5rem;
-  padding-left: .5rem;
-
-  
-}
-
-.root {
-  width: 30rem;
-  margin: 0 auto;
-  margin-bottom: 4rem;
-  height: 15rem;
-}
-
-.row {
-  width: 70%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 3rem;
-}
-
-.root1 {
-  height: 10rem;
-}
-
-.root2 {
-  width: 30rem;
-  margin: 0 auto;
-  margin-bottom: 5rem;
-}
-
-.root3 {
-  height: 12rem;
-}
-
-.root5 {
-  width: 40rem;
-  margin: 0 auto;
-  margin-bottom: 3rem;
-}
-
-.root6 {
-  width: 20rem;
-  margin: 0 auto;
-}
 

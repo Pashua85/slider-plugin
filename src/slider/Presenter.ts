@@ -299,7 +299,6 @@ export class Presenter {
     let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
     let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two')
     let rightEdge: number = sliderWidth;
-    // topEdge = sliderBottom - thumbTwo.getBoundingClientRect().bottom + (thumbOne.offsetHeight - slider.offsetWidth);
     let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + (thumbOne.offsetHeight - slider.offsetWidth);
 
     if(newLeft < leftEdge) { newLeft = leftEdge };
