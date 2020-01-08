@@ -1,0 +1,42 @@
+.example {
+  background-color: green;
+  display: flex;
+  justify-content: space-between;
+}
+
+.example__column--left {
+  background-color: yellow;
+  width: 65%;
+}
+
+.example__column--right {
+  width: 30%;
+  background-color: red;
+}
+
+.example__input-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.example__input {
+  font-size: 1.6rem;
+  border-radius: .4rem;
+  width: 10rem;
+  padding: .5rem;
+  text-align: right;
+  border: 1px solid grey;
+
+  &:not(:last-child) {
+    margin-right: 4rem;
+  }
+}
+
+.slider-container {
+  height: 20rem;
+}
+
+
+
+  

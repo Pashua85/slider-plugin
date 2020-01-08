@@ -1,10 +1,35 @@
+@import './components/example-common/example-common.scss';
+@import './components/example-one/example-one.scss';
 
 
+*, 
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-y: overlay;
+  height: 100%;
+
+  @media only screen and (min-width: 112.5em) {
+    font-size: 75%;
+  }
+}
+
+body {
+  font-size: 1.4rem;
+}
 
 .main {
   width: 80%;
   margin: 0 auto;
   padding-top: 3rem;
 }
+
+
 
 

@@ -77,7 +77,6 @@ import { Value } from './Model';
         this.onThumbTwoMouseDown(event);
       });
       thumbTwo.addEventListener('touchstart', event => {
-        console.log('touched from view');
         event.preventDefault();
         this.onThumbTwoTouchStart(event);
       })
