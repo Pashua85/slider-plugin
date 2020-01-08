@@ -1,0 +1,13 @@
+mixin form(index)
+  - var formClass = 'form--' + index;
+  - var id1 = 'radio-button-' + index + '-1';
+  - var id2 = 'radio-button-' + index + '-2';
+  form(class=formClass)
+    .form__header Опции слайдера
+    .form__row
+      .form__group 
+        input(class="form__input" type="radio" name="isVertical" value="true" id=id1 checked)
+        label.form__label(for=id1) Горизонтальный
+      .form__group
+        input(class="form__input" type="radio" name="isVertical" value="false" id=id2)
+        label.form__label(for=id2) Вертикальный

@@ -1,5 +1,6 @@
 @import './components/example-common/example-common.scss';
 @import './components/example-one/example-one.scss';
+@import './components/form/form.scss';
 
 
 *, 
@@ -11,6 +12,7 @@
 }
 
 html {
+  font-family: 'Montserrat', sans-serif;
   font-size: 62.5%;
   overflow-y: overlay;
   height: 100%;

@@ -1,17 +1,14 @@
 .example {
-  background-color: green;
   display: flex;
   justify-content: space-between;
 }
 
 .example__column--left {
-  background-color: yellow;
   width: 65%;
 }
 
 .example__column--right {
   width: 30%;
-  background-color: red;
 }
 
 .example__input-row {

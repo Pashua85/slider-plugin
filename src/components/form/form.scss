@@ -1,0 +1,19 @@
+.form__header {
+	text-transform: uppercase;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.form__row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.form__group {
+	display: flex;
+	align-items: center;
+}
+
+.form__input {
+	margin-right: 1rem;
+}
