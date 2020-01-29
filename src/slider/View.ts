@@ -7,6 +7,7 @@ import { Value } from './Model';
   isWithStrings: boolean;
   range: number;
   marksAmount?: number;
+  // borderWidth: number;
 
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
@@ -15,6 +16,7 @@ import { Value } from './Model';
     this.initSlider();
     this.setUpIsWithStrings();
     this.setUpRange();
+    this.setUpBoderWidth();
 
     if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
       this.setMarksAmount();
@@ -36,6 +38,11 @@ import { Value } from './Model';
 
   setMarksAmount(): void {
     this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
+  }
+
+  setUpBoderWidth(): void {
+    // this.borderWidth = parseInt(window.getComputedStyle(this.root, null).getPropertyValue("border-left-width"), 10);
+
   }
 
   initSlider():void {

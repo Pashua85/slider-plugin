@@ -4,7 +4,7 @@ import * as $ from 'jquery';
 const config1 = {
   minValue: 0,
   maxValue: 100,
-  valueOne: 45,
+  valueOne: 0,
   valueTwo: 60
 };
 
@@ -32,6 +32,8 @@ button2.addEventListener('change', (event: Event) => {
     })
   };
 });
+
+
 
 
 
