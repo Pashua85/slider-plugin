@@ -9,11 +9,15 @@
 	justify-content: space-between;
 }
 
-.form__group {
+.form__input-group {
 	display: flex;
 	align-items: center;
 }
 
 .form__input {
 	margin-right: 1rem;
+}
+
+.form__group:not(:last-child) {
+	margin-bottom: 3rem;
 }

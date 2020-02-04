@@ -2,12 +2,26 @@ mixin form(index)
   - var formClass = 'form--' + index;
   - var id1 = 'radio-button-' + index + '-1';
   - var id2 = 'radio-button-' + index + '-2';
+  - var id3 = 'radio-button-' + index + '-3';
+  - var id4 = 'radio-button-' + index + '-4';
   form(class=formClass)
-    .form__header Опции слайдера
-    .form__row
-      .form__group 
-        input(class="form__input" type="radio" name="isVertical" value="true" id=id1 checked)
-        label.form__label(for=id1) Горизонтальный
-      .form__group
-        input(class="form__input" type="radio" name="isVertical" value="false" id=id2)
-        label.form__label(for=id2) Вертикальный
+    .form__group
+      .form__header Направаление слайдера
+      .form__row
+        .form__input-group 
+          input(class="form__input" type="radio" name="isVertical" value="true" id=id1 checked)
+          label.form__label(for=id1) Горизонтальное
+        .form__input-group
+          input(class="form__input" type="radio" name="isVertical" value="false" id=id2)
+          label.form__label(for=id2) Вертикальное
+    .form__group
+      .form__header Количество значений
+      .form__row
+        .form__input-group 
+          input(class="form__input" type="radio" name="isVertical" value="true" id=id3 checked)
+          label.form__label(for=id3) Два
+        .form__input-group
+          input(class="form__input" type="radio" name="isVertical" value="false" id=id4)
+          label.form__label(for=id4) Одно
+
+      
