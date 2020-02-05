@@ -5,7 +5,6 @@ import * as $ from 'jquery';
   const latinAlphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
   const emptyStringArray: string[] = [];
   const config1 = {
-    // values: latinAlphabet,
     minValue: 0,
     maxValue: 100,
     valueOne: 40,
@@ -24,6 +23,10 @@ import * as $ from 'jquery';
   const button6: HTMLInputElement = document.querySelector('#radio-button-1-6');
   const button7: HTMLInputElement = document.querySelector('#radio-button-1-7');
   const button8: HTMLInputElement = document.querySelector('#radio-button-1-8');
+  const button9: HTMLInputElement = document.querySelector('#radio-button-1-9');
+  const button10: HTMLInputElement = document.querySelector('#radio-button-1-10');
+  const button11: HTMLInputElement = document.querySelector('#radio-button-1-11');
+
   const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-numbers'));
 
   slider1.addOuterInputOne(outerInput1_1);
@@ -125,6 +128,30 @@ import * as $ from 'jquery';
       slider1.updateOptions({
         minValue: -60,
         maxValue: 120
+      });
+    }
+  });
+
+  button9.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        step: 1
+      });
+    }
+  });
+
+  button10.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        step: 5
+      });
+    }
+  });
+
+  button11.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        step: 0.2
       });
     }
   });

@@ -10,6 +10,8 @@ mixin form(index)
   - var id8 = 'radio-button-' + index + '-8';
   - var id9 = 'radio-button-' + index + '-9';
   - var id10 = 'radio-button-' + index + '-10';
+  - var id11 = 'radio-button-' + index + '-11';
+  - var id12 = 'radio-button-' + index + '-12';
   form(class=formClass)
     .form__group
       .form__header Направление слайдера
@@ -43,10 +45,23 @@ mixin form(index)
       .form__row
         .form__input-group 
           input(class="form__input form__input--for-numbers" type="radio" name="range" value="0-100" id=id7 checked)
-          label.form__label.form__label--for-numbers(for=id7) 0 - 100
+          label.form__label(for=id7) 0 - 100
         .form__input-group
           input(class="form__input form__input--for-numbers" type="radio" name="range" value="-60-120" id=id8)
-          label.form__label.form__label--for-labels(for=id8) -60 - 120
+          label.form__label(for=id8) -60 - 120
+    .form__group
+      .form__header Шаг слайдера (для чисел)
+      .form__row
+        .form__input-group 
+          input(class="form__input form__input--for-numbers" type="radio" name="step" value="1" id=id9 checked)
+          label.form__label(for=id9) 1
+        .form__input-group
+          input(class="form__input form__input--for-numbers" type="radio" name="step" value="5" id=id10)
+          label.form__label(for=id10) 5
+        .form__input-group
+          input(class="form__input form__input--for-numbers" type="radio" name="step" value="0.2" id=id11)
+          label.form__label(for=id11) 0.2
+    
         
 
 
