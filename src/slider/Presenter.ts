@@ -164,8 +164,9 @@ export class Presenter {
   }
 
   onValueTwoChange(): void {
-
-    this.view.renderThumbTwo(this.model.state.valueTwo, this.range, this.shift);
+    if(this.params.valueTwo !== undefined) {
+      this.view.renderThumbTwo(this.model.state.valueTwo, this.range, this.shift);
+    } 
   
     if(this.outerInputsTwo.length > 0) {
       this.outerInputsTwo.forEach(input => {
@@ -445,6 +446,9 @@ export class Presenter {
     this.updateValueOne(this.params.valueOne);
     if(this.params.valueTwo !== undefined) {
       this.updateValueTwo(this.params.valueTwo);
+    } else {
+      //для случая переключения работы слайдера с 2х значений на 1 "на лету"
+      this.model.updateValueTwo(this.params.valueTwo);
     }
   }
 

@@ -12,7 +12,7 @@ mixin form(index)
   - var id10 = 'radio-button-' + index + '-10';
   form(class=formClass)
     .form__group
-      .form__header Направаление слайдера
+      .form__header Направление слайдера
       .form__row
         .form__input-group 
           input(class="form__input" type="radio" name="isVertical" value="true" id=id1 checked)
@@ -33,23 +33,21 @@ mixin form(index)
       .form__header Работа с числами / строками
       .form__row
         .form__input-group 
-          input(class="form__input" type="radio" name="range" value="0-100" id=id5 checked)
+          input(class="form__input" type="radio" name="data-type" value="strings" id=id5 checked)
           label.form__label(for=id5) числа
         .form__input-group
-          input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
+          input(class="form__input" type="radio" name="data-type" value="numbers" id=id6)
           label.form__label(for=id6) строки
-    //- .form__group
-    //-   .form__header Диапазон значений чисел
-    //-   .form__row
-    //-     .form__input-group 
-    //-       input(class="form__input" type="radio" name="range" value="0-100" id=id5 checked)
-    //-       label.form__label(for=id5) 0 - 100
-    //-     .form__input-group
-    //-       input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
-    //-       label.form__label(for=id6) -60 - 120
-    //-     .form__input-group
-    //-       input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
-    //-       label.form__label(for=id6) -40 - 40
+    .form__group
+      .form__header Диапазон значений чисел
+      .form__row
+        .form__input-group 
+          input(class="form__input" type="radio" name="range" value="0-100" id=id7 checked)
+          label.form__label(for=id7) 0 - 100
+        .form__input-group
+          input(class="form__input" type="radio" name="range" value="-60-120" id=id8)
+          label.form__label(for=id8) -60 - 120
+        
 
 
       
