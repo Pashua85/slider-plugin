@@ -4,6 +4,12 @@ mixin form(index)
   - var id2 = 'radio-button-' + index + '-2';
   - var id3 = 'radio-button-' + index + '-3';
   - var id4 = 'radio-button-' + index + '-4';
+  - var id5 = 'radio-button-' + index + '-5';
+  - var id6 = 'radio-button-' + index + '-6';
+  - var id7 = 'radio-button-' + index + '-7';
+  - var id8 = 'radio-button-' + index + '-8';
+  - var id9 = 'radio-button-' + index + '-9';
+  - var id10 = 'radio-button-' + index + '-10';
   form(class=formClass)
     .form__group
       .form__header Направаление слайдера
@@ -18,10 +24,32 @@ mixin form(index)
       .form__header Количество значений
       .form__row
         .form__input-group 
-          input(class="form__input" type="radio" name="isVertical" value="true" id=id3 checked)
+          input(class="form__input" type="radio" name="valueAmount" value="two" id=id3 checked)
           label.form__label(for=id3) Два
         .form__input-group
-          input(class="form__input" type="radio" name="isVertical" value="false" id=id4)
+          input(class="form__input" type="radio" name="valueAmount" value="one" id=id4)
           label.form__label(for=id4) Одно
+    .form__group
+      .form__header Работа с числами / строками
+      .form__row
+        .form__input-group 
+          input(class="form__input" type="radio" name="range" value="0-100" id=id5 checked)
+          label.form__label(for=id5) числа
+        .form__input-group
+          input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
+          label.form__label(for=id6) строки
+    //- .form__group
+    //-   .form__header Диапазон значений чисел
+    //-   .form__row
+    //-     .form__input-group 
+    //-       input(class="form__input" type="radio" name="range" value="0-100" id=id5 checked)
+    //-       label.form__label(for=id5) 0 - 100
+    //-     .form__input-group
+    //-       input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
+    //-       label.form__label(for=id6) -60 - 120
+    //-     .form__input-group
+    //-       input(class="form__input" type="radio" name="range" value="-60-120" id=id6)
+    //-       label.form__label(for=id6) -40 - 40
+
 
       
