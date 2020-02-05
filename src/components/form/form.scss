@@ -18,6 +18,10 @@
 	margin-right: 1rem;
 }
 
+.form__input:disabled + label {
+	color: grey;
+}
+
 .form__group:not(:last-child) {
 	margin-bottom: 3rem;
 }

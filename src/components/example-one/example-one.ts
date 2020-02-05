@@ -13,6 +13,7 @@ import * as $ from 'jquery';
   };
 
   const slider1 = $('.slider-container--one').customSlider(config1);
+  const exampleOne = document.querySelector('.example--one');
   const outerInput1_1: HTMLInputElement = document.querySelector('#input-1-1');
   const outerInput1_2: HTMLInputElement = document.querySelector('#input-1-2');
   const button1: HTMLInputElement = document.querySelector('#radio-button-1-1');
@@ -21,6 +22,9 @@ import * as $ from 'jquery';
   const button4: HTMLInputElement = document.querySelector('#radio-button-1-4');
   const button5: HTMLInputElement = document.querySelector('#radio-button-1-5');
   const button6: HTMLInputElement = document.querySelector('#radio-button-1-6');
+  const button7: HTMLInputElement = document.querySelector('#radio-button-1-7');
+  const button8: HTMLInputElement = document.querySelector('#radio-button-1-8');
+  const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-numbers'));
 
   slider1.addOuterInputOne(outerInput1_1);
   slider1.addOuterInputTwo(outerInput1_2);
@@ -80,6 +84,9 @@ import * as $ from 'jquery';
           valueOne: 40
         });
       }
+      numberButtons.forEach(button => {
+        button.disabled = false;
+      });
     };
   });
 
@@ -98,10 +105,29 @@ import * as $ from 'jquery';
           valueTwo: undefined
         });
       };
+      numberButtons.forEach(button => {
+        button.disabled = true;
+      });
     };
   });
 
+  button7.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        minValue: 0,
+        maxValue: 100
+      })
+    }
+  });
 
+  button8.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        minValue: -60,
+        maxValue: 120
+      });
+    }
+  });
 
 })();
 
