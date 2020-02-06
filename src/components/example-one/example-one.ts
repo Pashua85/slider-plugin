@@ -26,8 +26,14 @@ import * as $ from 'jquery';
   const button9: HTMLInputElement = document.querySelector('#radio-button-1-9');
   const button10: HTMLInputElement = document.querySelector('#radio-button-1-10');
   const button11: HTMLInputElement = document.querySelector('#radio-button-1-11');
+  const button12: HTMLInputElement = document.querySelector('#radio-button-1-12');
+  const button13: HTMLInputElement = document.querySelector('#radio-button-1-13');
+  const button14: HTMLInputElement = document.querySelector('#radio-button-1-14');
+  const button15: HTMLInputElement = document.querySelector('#radio-button-1-15');
+
 
   const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-numbers'));
+  const stringButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-strings'));
 
   slider1.addOuterInputOne(outerInput1_1);
   slider1.addOuterInputTwo(outerInput1_2);
@@ -90,6 +96,15 @@ import * as $ from 'jquery';
       numberButtons.forEach(button => {
         button.disabled = false;
       });
+      stringButtons.forEach(button => {
+        button.disabled = true;
+      });
+      if(button15.checked) { 
+        slider1.updateOptions({
+          scaleStep: undefined
+        });
+        button12.checked = true; 
+      };
     };
   });
 
@@ -111,6 +126,16 @@ import * as $ from 'jquery';
       numberButtons.forEach(button => {
         button.disabled = true;
       });
+      stringButtons.forEach(button => {
+        button.disabled = false;
+      });
+
+      if(button13.checked || button14.checked) {
+        slider1.updateOptions({
+          scaleStep: 1
+        });
+        button15.checked = true;
+      }
     };
   });
 
@@ -152,6 +177,38 @@ import * as $ from 'jquery';
     if((<HTMLInputElement>event.target).checked) {
       slider1.updateOptions({
         step: 0.2
+      });
+    }
+  });
+
+  button12.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        scaleStep: undefined
+      });
+    }
+  });
+
+  button13.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        scaleStep: 10
+      });
+    }
+  });
+
+  button14.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        scaleStep: 20
+      });
+    }
+  });
+
+  button15.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        scaleStep: 1
       });
     }
   });
