@@ -8,7 +8,8 @@ import * as $ from 'jquery';
     minValue: 0,
     maxValue: 100,
     valueOne: 40,
-    valueTwo: 60
+    valueTwo: 60,
+    isValueAlwaysShown: true
   };
 
   const slider1 = $('.slider-container--one').customSlider(config1);

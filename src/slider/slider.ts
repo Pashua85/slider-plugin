@@ -11,7 +11,9 @@ const defaultOptions = {
   values: emptyStringArray,
   isVertical: false,
   minValue: 0,
-  maxValue: 10000
+  maxValue: 10000,
+  isValueAlwaysShown: false,
+  isValueOnHoverShown: false
 };
 
 (function(jquery) {
@@ -32,6 +34,8 @@ export interface IOptions {
   step?: number;
   values?: string[];
   scaleStep?: number;
+  isValueAlwaysShown?: boolean;
+  isValueOnHoverShown?: boolean;
 };
 
 export interface IAdditionalOptions {
@@ -42,6 +46,8 @@ export interface IAdditionalOptions {
   minValue?: number;
   step?: number;
   values?: string[];
+  isValueOnHoverShown?: boolean;
+  isValueAlwaysShown?: boolean;
 };
 
 export interface IParams {
@@ -53,6 +59,8 @@ export interface IParams {
   step: number;
   values: string[];
   scaleStep?: number;
+  isValueAlwaysShown: boolean;
+  isValueOnHoverShown: boolean;
 };
 
 

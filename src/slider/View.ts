@@ -7,7 +7,6 @@ import { Value } from './Model';
   isWithStrings: boolean;
   range: number;
   marksAmount?: number;
-  // borderWidth: number;
 
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
@@ -16,7 +15,6 @@ import { Value } from './Model';
     this.initSlider();
     this.setUpIsWithStrings();
     this.setUpRange();
-    this.setUpBoderWidth();
 
     if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
       this.setMarksAmount();
@@ -40,15 +38,10 @@ import { Value } from './Model';
     this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
   }
 
-  setUpBoderWidth(): void {
-    // this.borderWidth = parseInt(window.getComputedStyle(this.root, null).getPropertyValue("border-left-width"), 10);
-
-  }
-
   initSlider():void {
-    let slider = document.createElement('div');
+    const slider = document.createElement('div');
     slider.classList.add('slider');
-    let thumbOne = document.createElement('div');
+    const thumbOne = document.createElement('div');
     thumbOne.classList.add('slider__thumb');
     thumbOne.classList.add('slider__thumb--one');
     thumbOne.addEventListener('mousedown',event => {
@@ -58,21 +51,31 @@ import { Value } from './Model';
     thumbOne.addEventListener('touchstart', event => {
       event.preventDefault();
       this.onThumbOneTouchStart(event);
-    })
-    let valueLabelOne = document.createElement('div');
-    valueLabelOne.classList.add('slider__label');
+    });
 
     if(this.params.isVertical) {
       slider.classList.add('slider--vertical');
       thumbOne.classList.add('slider__thumb--vertical');
-      valueLabelOne.classList.add('slider__label--vertical');
     } else {
       slider.classList.add('slider--horizontal');
       thumbOne.classList.add('slider__thumb--horizontal');
-      valueLabelOne.classList.add('slider__label--horizontal');
     };
 
-    thumbOne.appendChild(valueLabelOne);
+    if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
+      const valueLabelOne = document.createElement('div');
+      valueLabelOne.classList.add('slider__label');
+      if(this.params.isVertical) {
+        valueLabelOne.classList.add('slider__label--vertical');
+      } else {
+        valueLabelOne.classList.add('slider__label--horizontal');
+      };
+      
+      if(this.params.isValueAlwaysShown) { valueLabelOne.classList.add('slider__label--always-shown') };
+      if(this.params.isValueOnHoverShown) { valueLabelOne.classList.add('slider__label--hover-shown') };
+
+      thumbOne.appendChild(valueLabelOne);
+    };
+    
     slider.appendChild(thumbOne);
 
     if(this.params.valueTwo !== undefined) {
@@ -86,23 +89,36 @@ import { Value } from './Model';
       thumbTwo.addEventListener('touchstart', event => {
         event.preventDefault();
         this.onThumbTwoTouchStart(event);
-      })
-      let valueLabelTwo = document.createElement('div');
-      valueLabelTwo.classList.add('slider__label');
+      });
+      
       let intervalBar = document.createElement('div');
       intervalBar.classList.add('slider__interval');
 
       if(this.params.isVertical) {
         thumbTwo.classList.add('slider__thumb--vertical');
-        valueLabelTwo.classList.add('slider__label--vertical');
         intervalBar.classList.add('slider__interval--vertical');
       } else {
         thumbTwo.classList.add('slider__thumb--horizontal');
-        valueLabelTwo.classList.add('slider__label--horizontal');
         intervalBar.classList.add('slider__interval--horizontal');
+      };
+
+      if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
+        let valueLabelTwo = document.createElement('div');
+        valueLabelTwo.classList.add('slider__label');
+
+        if(this.params.isVertical) {
+          valueLabelTwo.classList.add('slider__label--vertical');
+        } else {
+          valueLabelTwo.classList.add('slider__label--horizontal');
+        };
+
+        if(this.params.isValueAlwaysShown) { valueLabelTwo.classList.add('slider__label--always-shown') };
+        if(this.params.isValueOnHoverShown) { valueLabelTwo.classList.add('slider__label--hover-shown') };
+
+        thumbTwo.appendChild(valueLabelTwo);
       }
       
-      thumbTwo.appendChild(valueLabelTwo);
+      
       slider.appendChild(thumbTwo);
       slider.appendChild(intervalBar);
     };
@@ -175,8 +191,7 @@ import { Value } from './Model';
         newBottom = valueIndex * height / range - thumbHeight/2;
       } else {
         newBottom = (Number(value) - shift) * (height - (thumbHeight - slider.offsetWidth)/2) / range - (thumbHeight - slider.offsetWidth)/2;
-      }
-      // if (newBottom < 0) newBottom = 0;
+      };
       return newBottom;
     } else {
       const thumbWidth = thumb.offsetWidth;
@@ -187,15 +202,18 @@ import { Value } from './Model';
         newLeft = valueIndex * (width - (thumbWidth - slider.offsetHeight)/2) / range - (thumbWidth - slider.offsetHeight)/2;
       } else {
         newLeft = (Number(value) - shift) * (width - (thumbWidth - slider.offsetHeight)/2) / range - (thumbWidth - slider.offsetHeight)/2;
-      }
+      };
       return newLeft;
     }
   }
 
   renderThumbOne (value: Value, range: number, shift: number): void {
     const thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
-    const label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = String(value);
+    if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
+      const label: HTMLElement = thumb.querySelector('.slider__label');
+      label.innerHTML = String(value);
+    };
+    
     const newCoords = this.defineCoords(thumb, value, range, shift);
 
     if(this.params.isVertical) {
@@ -210,8 +228,10 @@ import { Value } from './Model';
 
   renderThumbTwo (value: Value, range: number, shift: number): void {
     const thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
-    const label: HTMLElement = thumb.querySelector('.slider__label');
-    label.innerHTML = String(value);
+    if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
+      const label: HTMLElement = thumb.querySelector('.slider__label');
+      label.innerHTML = String(value);
+    };
     const newCoords = this.defineCoords(thumb, value, range, shift);
 
     if(this.params.isVertical) {

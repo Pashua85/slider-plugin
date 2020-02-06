@@ -67,12 +67,17 @@
   transition: opacity .4s;
 }
 
-.slider__thumb:hover .slider__label,
-.slider__thumb:active .slider__label,
-.slider__thumb--touched .slider__label {
+.slider__thumb:hover .slider__label--hover-shown,
+.slider__thumb:active .slider__label--hover-shown,
+.slider__thumb--touched .slider__label--hover-shown {
   visibility: visible;
   opacity: 1;
   transition: opacity .4s;
+}
+
+.slider__label--always-shown {
+  visibility: visible;
+  opacity: 1;
 }
 
 .slider__label--horizontal {

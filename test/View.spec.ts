@@ -16,7 +16,9 @@ describe( 'View', () => {
     isVertical: false,
     step: 1,
     values: emptyArray,
-    scaleStep: 1
+    scaleStep: 1,
+    isValueAlwaysShown: false,
+    isValueOnHoverShown: true
   };
 
   const params2 = {
@@ -25,7 +27,9 @@ describe( 'View', () => {
     valueOne: 4,
     isVertical: true,
     step: 1,
-    values: emptyArray
+    values: emptyArray,
+    isValueAlwaysShown: false,
+    isValueOnHoverShown: true
   };
 
   const params3 = {
@@ -35,7 +39,9 @@ describe( 'View', () => {
     valueTwo: 5,
     isVertical: true,
     step: 1,
-    values: emptyArray
+    values: emptyArray,
+    isValueAlwaysShown: false,
+    isValueOnHoverShown: true
   };
 
   const params4 = {
@@ -44,7 +50,9 @@ describe( 'View', () => {
     step: 1,
     valueOne: 'a',
     isVertical: false,
-    values: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    values: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+    isValueAlwaysShown: false,
+    isValueOnHoverShown: true
   }
 
   beforeEach(() => {
