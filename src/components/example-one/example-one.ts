@@ -9,7 +9,7 @@ import * as $ from 'jquery';
     maxValue: 100,
     valueOne: 40,
     valueTwo: 60,
-    isValueAlwaysShown: true
+    isValueOnHoverShown: true
   };
 
   const slider1 = $('.slider-container--one').customSlider(config1);
@@ -31,6 +31,9 @@ import * as $ from 'jquery';
   const button13: HTMLInputElement = document.querySelector('#radio-button-1-13');
   const button14: HTMLInputElement = document.querySelector('#radio-button-1-14');
   const button15: HTMLInputElement = document.querySelector('#radio-button-1-15');
+  const button16: HTMLInputElement = document.querySelector('#radio-button-1-16');
+  const button17: HTMLInputElement = document.querySelector('#radio-button-1-17');
+  const button18: HTMLInputElement = document.querySelector('#radio-button-1-18');
 
 
   const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-numbers'));
@@ -210,6 +213,33 @@ import * as $ from 'jquery';
     if((<HTMLInputElement>event.target).checked) {
       slider1.updateOptions({
         scaleStep: 1
+      });
+    }
+  });
+
+  button16.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        isValueOnHoverShown: true,
+        isValueAlwaysShown: false
+      });
+    }
+  });
+
+  button17.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        isValueOnHoverShown: false,
+        isValueAlwaysShown: false
+      });
+    }
+  });
+
+  button18.addEventListener('change', (event: Event) => {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        isValueOnHoverShown: false,
+        isValueAlwaysShown: true
       });
     }
   });

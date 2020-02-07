@@ -15,6 +15,9 @@ mixin form(index)
   - var id13 = 'radio-button-' + index + '-13';
   - var id14 = 'radio-button-' + index + '-14';
   - var id15 = 'radio-button-' + index + '-15';
+  - var id16 = 'radio-button-' + index + '-16';
+  - var id17 = 'radio-button-' + index + '-17';
+  - var id18 = 'radio-button-' + index + '-18';
 
   form(class=formClass)
     .form__group
@@ -44,7 +47,7 @@ mixin form(index)
         .form__input-group
           input(class="form__input" type="radio" name="data-type" value="numbers" id=id6)
           label.form__label(for=id6) строки
-    .form__group
+    form__group
       .form__header Диапазон значений чисел
       .form__row
         .form__input-group 
@@ -72,17 +75,27 @@ mixin form(index)
           input(class="form__input" type="radio" name="scaleStep" value="0" id=id12 checked)
           label.form__label(for=id12) без шкалы
         .form__input-group
-          input(class="form__input form__input--for-numbers" type="radio" name="scaleStep" value="-60-120" id=id13)
+          input(class="form__input form__input--for-numbers" type="radio" name="scaleStep" value="10" id=id13)
           label.form__label(for=id13) 10
         .form__input-group
-          input(class="form__input form__input--for-numbers" type="radio" name="scaleStep" value="-60-120" id=id14)
+          input(class="form__input form__input--for-numbers" type="radio" name="scaleStep" value="20" id=id14)
           label.form__label(for=id14) 20
         .form__input-group
-          input(class="form__input form__input--for-strings" type="radio" name="scaleStep" value="-60-120" id=id15 disabled=true)
+          input(class="form__input form__input--for-strings" type="radio" name="scaleStep" value="1" id=id15 disabled=true)
           label.form__label(for=id15) 1 (для строк)
             p.form__details это значение в данном примере используется только для работы с диапазоном "a-z" 
-    
-        
+    form__group
+      .form__header Отображение значения над ползунком
+      .form__row
+        .form__input-group 
+          input(class="form__input" type="radio" name="range" value="hover" id=id16 checked)
+          label.form__label(for=id16) при наведении курсора
+        .form__input-group
+          input(class="form__input" type="radio" name="range" value="never" id=id17)
+          label.form__label(for=id17) никогда   
+        .form__input-group
+          input(class="form__input" type="radio" name="range" value="always" id=id18)
+          label.form__label(for=id18) всегда
 
 
       
