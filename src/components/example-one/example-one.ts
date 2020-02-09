@@ -42,23 +42,23 @@ import * as $ from 'jquery';
   slider1.addOuterInputOne(outerInput1_1);
   slider1.addOuterInputTwo(outerInput1_2);
 
-  button1.addEventListener('change', (event: Event) => {
+  // НАПРАВЛЕНИЕ СЛАЙДЕРА
+
+  function changeSliderDirection(event: Event, value: Boolean) {
     if((<HTMLInputElement>event.target).checked) {
       slider1.updateOptions ({
-        isVertical: false
-      })
+        isVertical: value
+      });
     };
-  });
+  };
 
-  button2.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions ({
-        isVertical: true
-      })
-    };
-  });
+  button1.addEventListener('change', (event: Event) => { changeSliderDirection(event, false)});
 
-  button3.addEventListener('change', (event: Event) => {
+  button2.addEventListener('change', (event: Event) => { changeSliderDirection(event, true)});
+
+  // КОЛИЧЕСТВО ЗНАЧЕНИЙ
+
+  function addSecondValue(event: Event) {
     if((<HTMLInputElement>event.target).checked) {
       slider1.addOuterInputTwo(outerInput1_2);
       if(slider1.isWithStrings) {
@@ -69,21 +69,45 @@ import * as $ from 'jquery';
         slider1.updateOptions({
           valueTwo: 60
         });
-      }
+      }      
     }
-  });
+  };
 
-  button4.addEventListener('change', (event: Event) => {
+  function removeSecondValue(event: Event) {
     if((<HTMLInputElement>event.target).checked) {
       outerInput1_2.value = '';
       slider1.removeAllOuterInputsTwo();
       slider1.updateOptions ({
         valueTwo: undefined
       });
-    };
-  });
+    }
+  }
 
-  button5.addEventListener('change', (event: Event) => {
+  button3.addEventListener('change', (event: Event) => { addSecondValue(event)});
+
+  button4.addEventListener('change', (event: Event) => { removeSecondValue(event)});
+
+  // РАБОТА С ЧИСЛАМИ/СТРОКАМИ
+
+  function setUpNumberButtons() {
+    numberButtons.forEach(button => {
+      button.disabled = false;
+    });
+    stringButtons.forEach(button => {
+      button.disabled = true;
+    });
+  };
+
+  function setUpStringButtons() {
+    numberButtons.forEach(button => {
+      button.disabled = true;
+    });
+    stringButtons.forEach(button => {
+      button.disabled = false;
+    });
+  };
+
+  function setUpSliderWithNumbers(event: Event) {
     if((<HTMLInputElement>event.target).checked) {
       if(button3.checked) {
         slider1.updateOptions({
@@ -96,13 +120,10 @@ import * as $ from 'jquery';
           values: emptyStringArray,
           valueOne: 40
         });
-      }
-      numberButtons.forEach(button => {
-        button.disabled = false;
-      });
-      stringButtons.forEach(button => {
-        button.disabled = true;
-      });
+      };
+
+      setUpNumberButtons();
+
       if(button15.checked) { 
         slider1.updateOptions({
           scaleStep: undefined
@@ -110,9 +131,9 @@ import * as $ from 'jquery';
         button12.checked = true; 
       };
     };
-  });
+  };
 
-  button6.addEventListener('change', (event: Event) => {
+  function setUpSliderWithStrings(event: Event) {
     if((<HTMLInputElement>event.target).checked) {
       if(button3.checked) {
         slider1.updateOptions({
@@ -127,12 +148,8 @@ import * as $ from 'jquery';
           valueTwo: undefined
         });
       };
-      numberButtons.forEach(button => {
-        button.disabled = true;
-      });
-      stringButtons.forEach(button => {
-        button.disabled = false;
-      });
+      
+      setUpStringButtons();
 
       if(button13.checked || button14.checked) {
         slider1.updateOptions({
@@ -141,108 +158,71 @@ import * as $ from 'jquery';
         button15.checked = true;
       }
     };
-  });
+  }
 
-  button7.addEventListener('change', (event: Event) => {
+  button5.addEventListener('change', (event: Event) => { setUpSliderWithNumbers(event)});
+
+  button6.addEventListener('change', (event: Event) => { setUpSliderWithStrings(event)});
+
+  // ДИАПАЗОН ЗНАЧЕНИЙ ЧИСЕЛ 
+
+  function changeSliderRange(event: Event, minValue: number, maxValue: number) {
     if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        minValue: 0,
-        maxValue: 100
-      })
+      slider1.updateOptions({ minValue, maxValue })
     }
-  });
+  }
 
-  button8.addEventListener('change', (event: Event) => {
+  button7.addEventListener('change', (event: Event) => { changeSliderRange(event, 0, 100)});
+
+  button8.addEventListener('change', (event: Event) => { changeSliderRange(event, -60, 120)});
+
+  // ШАГ СЛАЙДЕРА (ДЛЯ ЧИСЕЛ)
+
+  function changeSliderStep(event: Event, value: number) {
     if((<HTMLInputElement>event.target).checked) {
       slider1.updateOptions({
-        minValue: -60,
-        maxValue: 120
+        step: value
+      });
+    } 
+  };
+
+  button9.addEventListener('change', (event: Event) => { changeSliderStep(event, 1)});
+
+  button10.addEventListener('change', (event: Event) => { changeSliderStep(event, 5)});
+
+  button11.addEventListener('change', (event: Event) => { changeSliderStep(event, 0.2)});
+  
+  //  ШАГ ШКАЛЫ СЛАЙДЕРА
+
+  function changeScaleStep(event: Event, value: number) {
+    if((<HTMLInputElement>event.target).checked) {
+      slider1.updateOptions({
+        scaleStep: value
       });
     }
-  });
+  };
 
-  button9.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        step: 1
-      });
-    }
-  });
+  button12.addEventListener('change', (event: Event) => { changeScaleStep(event, 0)});
 
-  button10.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        step: 5
-      });
-    }
-  });
+  button13.addEventListener('change', (event: Event) => { changeScaleStep(event, 10)});
 
-  button11.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        step: 0.2
-      });
-    }
-  });
+  button14.addEventListener('change', (event: Event) => { changeScaleStep(event, 20)});
 
-  button12.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        scaleStep: undefined
-      });
-    }
-  });
+  button15.addEventListener('change', (event: Event) => { changeScaleStep(event, 1)});
 
-  button13.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        scaleStep: 10
-      });
-    }
-  });
+  // ОТОБРАЖЕНИЕ ЗНАЧЕНИЯ НАД ПОДЗУНКОМ
 
-  button14.addEventListener('change', (event: Event) => {
+  function changeValueShowing(event: Event, isValueOnHoverShown: boolean, isValueAlwaysShown: boolean) {
     if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        scaleStep: 20
-      });
-    }
-  });
+      slider1.updateOptions({ isValueOnHoverShown, isValueAlwaysShown });
+    } 
+  }
 
-  button15.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        scaleStep: 1
-      });
-    }
-  });
+  button16.addEventListener('change', (event: Event) => { changeValueShowing(event, true, false)});
 
-  button16.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        isValueOnHoverShown: true,
-        isValueAlwaysShown: false
-      });
-    }
-  });
+  button17.addEventListener('change', (event: Event) => { changeValueShowing(event, false, false)});
 
-  button17.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        isValueOnHoverShown: false,
-        isValueAlwaysShown: false
-      });
-    }
-  });
-
-  button18.addEventListener('change', (event: Event) => {
-    if((<HTMLInputElement>event.target).checked) {
-      slider1.updateOptions({
-        isValueOnHoverShown: false,
-        isValueAlwaysShown: true
-      });
-    }
-  });
+  button18.addEventListener('change', (event: Event) => { changeValueShowing(event, false, true)});
 
 })();
 

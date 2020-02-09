@@ -19,7 +19,7 @@ mixin form(index)
   - var id17 = 'radio-button-' + index + '-17';
   - var id18 = 'radio-button-' + index + '-18';
 
-  form(class=formClass)
+  form(class=`${formClass} example-form`)
     .form__group
       .form__header Направление слайдера
       .form__row
@@ -47,7 +47,7 @@ mixin form(index)
         .form__input-group
           input(class="form__input" type="radio" name="data-type" value="numbers" id=id6)
           label.form__label(for=id6) строки
-    form__group
+    .form__group
       .form__header Диапазон значений чисел
       .form__row
         .form__input-group 
@@ -84,17 +84,17 @@ mixin form(index)
           input(class="form__input form__input--for-strings" type="radio" name="scaleStep" value="1" id=id15 disabled=true)
           label.form__label(for=id15) 1 (для строк)
             p.form__details это значение в данном примере используется только для работы с диапазоном "a-z" 
-    form__group
+    .form__group
       .form__header Отображение значения над ползунком
       .form__row
         .form__input-group 
-          input(class="form__input" type="radio" name="range" value="hover" id=id16 checked)
+          input(class="form__input" type="radio" name="showing-value" value="hover" id=id16 checked)
           label.form__label(for=id16) при наведении курсора
         .form__input-group
-          input(class="form__input" type="radio" name="range" value="never" id=id17)
+          input(class="form__input" type="radio" name="showing-value" value="never" id=id17)
           label.form__label(for=id17) никогда   
         .form__input-group
-          input(class="form__input" type="radio" name="range" value="always" id=id18)
+          input(class="form__input" type="radio" name="showing-value" value="always" id=id18)
           label.form__label(for=id18) всегда
 
 
