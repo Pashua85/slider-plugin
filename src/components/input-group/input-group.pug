@@ -1,0 +1,6 @@
+mixin input-group(title, id, className, name, value, isChecked, isDisabled)
+  - isChecked = isChecked || false;
+  - isDisabled = isDisabled || false;
+  .input-group 
+    input(class=className type="radio" name=name value=value id=id checked=isChecked disabled=isDisabled)
+    label.input-group__label(for=id)= title

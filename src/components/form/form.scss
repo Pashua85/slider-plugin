@@ -16,41 +16,7 @@
 }
 
 .form__input-group {
-	display: flex;
-	align-items: center;
-	margin-bottom: 1rem;
-}
-
-.form__input {
-	margin-right: 1rem;
-}
-
-.form__label {
-	position: relative;
-}
-
-.form__details {
-	position: absolute;
-	bottom: 100%;
-	margin-bottom: .5rem;
-	left: 10%;
-	width: 100%;
-	background: rgba(black, .05);
-	font-size: .9rem;
-	color: darkgrey;
-	opacity: 0;
-	visibility: hidden;
-}
-
-.form__input:disabled + .form__label:hover .form__details {
-	visibility: visible;
-	opacity: 1;
-	transition-delay: .8s;
-	transition: all ease-in 1s;
-}
-
-.form__input:disabled + label {
-	color: lightgrey;
+  margin-bottom: 1rem;
 }
 
 .form__group:not(:last-child) {

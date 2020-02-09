@@ -36,8 +36,8 @@ import * as $ from 'jquery';
   const button18: HTMLInputElement = document.querySelector('#radio-button-1-18');
 
 
-  const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-numbers'));
-  const stringButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.form__input--for-strings'));
+  const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.input-group__input--for-numbers'));
+  const stringButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.input-group__input--for-strings'));
 
   slider1.addOuterInputOne(outerInput1_1);
   slider1.addOuterInputTwo(outerInput1_2);

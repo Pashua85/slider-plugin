@@ -1,0 +1,13 @@
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group__input {
+  margin-right: 1rem;
+}
+
+.input-group__input:disabled + label {
+	color: lightgrey;
+}
+
