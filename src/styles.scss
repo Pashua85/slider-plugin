@@ -31,7 +31,13 @@ body {
   width: 80%;
   margin: 0 auto;
   padding-top: 6rem;
+  padding-bottom: 6rem;
 }
+
+.main__item:first-child {
+  margin-bottom: 3rem;
+}
+
 
 
 

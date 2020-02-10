@@ -1,0 +1,64 @@
+include ../input-group/input-group
+
+form.form.form--one
+  .form__group
+    .form__header Направление слайдера
+    .form__row
+      .form__input-group 
+        + input-group("горизонтальное", "radio-button-2-1", "input-group__input", "isVertical", "true", true)
+      .form__input-group
+        + input-group("вертикальное", "radio-button-2-2", "input-group__input", "isVertical", "false")
+  .form__group
+    .form__header Количество значений
+    .form__row
+      .form__input-group 
+        + input-group("два", "radio-button-2-3", "input-group__input", "valueAmount", "two", true)
+      .form__input-group
+        + input-group("одно", "radio-button-2-4", "input-group__input", "valueAmount", "one")
+  .form__group
+    .form__header Работа с числами / строками
+    .form__row
+      .form__input-group 
+        + input-group("числа", "radio-button-2-5", "input-group__input", "data-type", "numbers", true)
+      .form__input-group
+        + input-group("строки", "radio-button-2-6", "input-group__input", "data-type", "strings")
+  .form__group
+    .form__header Диапазон значений чисел
+    .form__row
+      .form__input-group 
+        + input-group("0 - 30", "radio-button-2-7", "input-group__input input-group__input--for-numbers", "range", "0-30", true)
+      .form__input-group
+        + input-group("-5 - 25", "radio-button-2-8", "input-group__input input-group__input--for-numbers", "range", "-5 - 25")
+  .form__group
+    .form__header Шаг слайдера (для чисел)
+    .form__row
+      .form__input-group 
+        + input-group("0.1", "radio-button-2-9", "input-group__input input-group__input--for-numbers", "step", "0.1", true)
+      .form__input-group
+        + input-group("0.5", "radio-button-2-10", "input-group__input input-group__input--for-numbers", "step", "0.5")
+      .form__input-group
+        + input-group("1", "radio-button-2-11", "input-group__input input-group__input--for-numbers", "step", "1")
+  .form__group
+    .form__header Шаг шкалы слайдера
+    .form__row
+      .form__input-group 
+        + input-group("без шкалы", "radio-button-2-12", "input-group__input", "scale-step", "0", true)
+      .form__input-group
+        + input-group("1.5", "radio-button-2-13", "input-group__input input-group__input--for-numbers", "scale-step", "1.5")
+      .form__input-group
+        + input-group("3", "radio-button-2-14", "input-group__input input-group__input--for-numbers", "scale-step", "3")
+      .form__input-group
+        + input-group("1 (для строк)", "radio-button-2-15", "input-group__input input-group__input--for-strings", "scale-step", "1") 
+  .form__group
+    .form__header Отображение значения над ползунком
+    .form__row
+      .form__input-group 
+        + input-group("при наведении курсора", "radio-button-2-16", "input-group__input", "showing-value", "hover", true) 
+      .form__input-group
+        + input-group("никогда", "radio-button-2-17", "input-group__input", "showing-value", "never") 
+      .form__input-group
+        + input-group("всегда", "radio-button-2-18", "input-group__input", "showing-value", "always") 
+    
+
+
+      
