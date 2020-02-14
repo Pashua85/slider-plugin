@@ -63,6 +63,8 @@ export interface IParams {
   isValueOnHoverShown: boolean;
 };
 
+export { Presenter };
+
 
 
 
