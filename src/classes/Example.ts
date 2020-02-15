@@ -111,13 +111,11 @@ export class Example {
       };
 
       this.setUpNumberButtons();
-
-      // if(this.button15.checked) { 
-      //   this.slider.updateOptions({
-      //     scaleStep: undefined
-      //   });
-      //   this.button12.checked = true; 
-      // };
+      
+      this.slider.updateOptions({
+        scaleStep: undefined
+      });
+      this.button12.checked = true;
     };
   };
 
@@ -139,12 +137,10 @@ export class Example {
       
       this.setUpStringButtons();
 
-      // if(this.button13.checked || this.button14.checked) {
-      //   this.slider.updateOptions({
-      //     scaleStep: 1
-      //   });
-      //   this.button15.checked = true;
-      // }
+      this.slider.updateOptions({
+        scaleStep: undefined
+      });
+      this.button12.checked = true;
     };
   };
 
@@ -152,6 +148,28 @@ export class Example {
     if((<HTMLInputElement>event.target).checked) {
       this.slider.updateOptions({ minValue, maxValue })
     }
+  };
+
+  changeSliderStep(event: Event, value: number) {
+    if((<HTMLInputElement>event.target).checked) {
+      this.slider.updateOptions({
+        step: value
+      });
+    } 
+  };
+
+  changeScaleStep(event: Event, value: number) {
+    if((<HTMLInputElement>event.target).checked) {
+      this.slider.updateOptions({
+        scaleStep: value
+      });
+    }
+  };
+
+  changeValueShowing(event: Event, isValueOnHoverShown: boolean, isValueAlwaysShown: boolean) {
+    if((<HTMLInputElement>event.target).checked) {
+      this.slider.updateOptions({ isValueOnHoverShown, isValueAlwaysShown });
+    } 
   };
 }
 
