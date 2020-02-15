@@ -19,13 +19,8 @@
 //   const outerInput1_1: HTMLInputElement = document.querySelector('#input-1-1');
 //   const outerInput1_2: HTMLInputElement = document.querySelector('#input-1-2');
 //   const button3: HTMLInputElement = document.querySelector('#radio-button-1-3');
-//   const button12: HTMLInputElement = document.querySelector('#radio-button-1-12');
-//   const button13: HTMLInputElement = document.querySelector('#radio-button-1-13');
-//   const button14: HTMLInputElement = document.querySelector('#radio-button-1-14');
-//   const button15: HTMLInputElement = document.querySelector('#radio-button-1-15');
 
-//   const numberButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.input-group__input--for-numbers'));
-//   const stringButtons: HTMLInputElement[] = Array.from(exampleOne.querySelectorAll('.input-group__input--for-strings'));
+
 
 //   slider1.addOuterInputOne(outerInput1_1);
 //   slider1.addOuterInputTwo(outerInput1_2);
@@ -36,82 +31,13 @@
 
 
 
-//   function setUpNumberButtons() {
-//     numberButtons.forEach(button => {
-//       button.disabled = false;
-//     });
-//     stringButtons.forEach(button => {
-//       button.disabled = true;
-//     });
-//   };
 
-//   function setUpStringButtons() {
-//     numberButtons.forEach(button => {
-//       button.disabled = true;
-//     });
-//     stringButtons.forEach(button => {
-//       button.disabled = false;
-//     });
-//   };
 
-//   function setUpSliderWithNumbers(event: Event) {
-//     if((<HTMLInputElement>event.target).checked) {
-//       if(button3.checked) {
-//         slider1.updateOptions({
-//           values: emptyStringArray,
-//           valueOne: 40,
-//           valueTwo: 60,
-//         });
-//       } else {
-//         slider1.updateOptions({
-//           values: emptyStringArray,
-//           valueOne: 40
-//         });
-//       };
 
-//       setUpNumberButtons();
 
-//       if(button15.checked) { 
-//         slider1.updateOptions({
-//           scaleStep: undefined
-//         });
-//         button12.checked = true; 
-//       };
-//     };
-//   };
 
-//   function setUpSliderWithStrings(event: Event) {
-//     if((<HTMLInputElement>event.target).checked) {
-//       if(button3.checked) {
-//         slider1.updateOptions({
-//           values: latinAlphabet,
-//           valueOne: 'f',
-//           valueTwo: 's'
-//         });
-//       } else {
-//         slider1.updateOptions({
-//           values: latinAlphabet,
-//           valueOne: 'f',
-//           valueTwo: undefined
-//         });
-//       };
-      
-//       setUpStringButtons();
 
-//       if(button13.checked || button14.checked) {
-//         slider1.updateOptions({
-//           scaleStep: 1
-//         });
-//         button15.checked = true;
-//       }
-//     };
-//   };
 
-//   function changeSliderRange(event: Event, minValue: number, maxValue: number) {
-//     if((<HTMLInputElement>event.target).checked) {
-//       slider1.updateOptions({ minValue, maxValue })
-//     }
-//   };
 
 //   function changeSliderStep(event: Event, value: number) {
 //     if((<HTMLInputElement>event.target).checked) {
@@ -203,6 +129,14 @@ import { Example } from '../../classes/Example';
       example1.addSecondValue(event, 's', 60);
     } else if ((<HTMLElement>event.target).closest('#radio-button-1-4')) {
       example1.removeSecondValue(event);
+    } else if ((<HTMLInputElement>event.target).closest('#radio-button-1-5')) {
+      example1.setUpSliderWithNumbers(event, 40, 60);
+    } else if ((<HTMLInputElement>event.target).closest('#radio-button-1-6')) {
+      example1.setUpSliderWithStrings(event, latinAlphabet, 'h', 't');
+    }  else if ((<HTMLElement>event.target).closest('#radio-button-1-7')) {
+      example1.changeSliderRange(event, 0, 100);
+    } else if ((<HTMLElement>event.target).closest('#radio-button-1-8')) {
+      example1.changeSliderRange(event, -60,120);
     } 
   })
 

@@ -45,6 +45,7 @@ export interface IAdditionalOptions {
   maxValue?: number;
   minValue?: number;
   step?: number;
+  scaleStep?: number;
   values?: string[];
   isValueOnHoverShown?: boolean;
   isValueAlwaysShown?: boolean;
