@@ -12,6 +12,7 @@ export class Presenter {
   shift: number;
   outerInputsOne: HTMLInputElement[];
   outerInputsTwo: HTMLInputElement[];
+  fractionChars: number;
   horizontalMouseMoveOneHandler: () => void;
   horizontalMouseMoveTwoHandler: () => void;
   horizontalTouchMoveOneHandler: () => void;
@@ -37,6 +38,7 @@ export class Presenter {
     this.setUpIsWithStrings();
     this.setUpRange();
     this.setUpShift();
+    this.setUpFractionChars();
 
     this.model.onValueOneChange = this.onValueOneChange.bind(this);
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
@@ -84,6 +86,11 @@ export class Presenter {
     } else {
       this.range = this.params.values.length - 1;
     }
+  }
+
+  setUpFractionChars(): void {
+    const stepArray = this.params.step.toString().split('.');
+    this.fractionChars = stepArray.length > 1 ? stepArray[1].length : 0;
   }
 
   updateValueOne(newValue: Value): void {
@@ -153,26 +160,35 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-
-    this.view.renderThumbOne(this.model.state.valueOne, this.range, this.shift);
+    const valueOneString = this.makeValueString(this.model.state.valueOne);
+    this.view.renderThumbOne(this.model.state.valueOne, valueOneString, this.range, this.shift);
 
     if(this.outerInputsOne.length > 0) {
       this.outerInputsOne.forEach(input => {
-        this.updateOuterInput(input, String(this.model.state.valueOne));
+        this.updateOuterInput(input, valueOneString);
       })
     };
   }
 
   onValueTwoChange(): void {
     if(this.params.valueTwo !== undefined) {
-      this.view.renderThumbTwo(this.model.state.valueTwo, this.range, this.shift);
+      const valueTwoString = this.makeValueString(this.model.state.valueTwo)
+      this.view.renderThumbTwo(this.model.state.valueTwo, valueTwoString, this.range, this.shift);
+
+      if(this.outerInputsTwo.length > 0) {
+        this.outerInputsTwo.forEach(input => {
+          this.updateOuterInput(input, valueTwoString);
+        })
+      };
     } 
-  
-    if(this.outerInputsTwo.length > 0) {
-      this.outerInputsTwo.forEach(input => {
-        this.updateOuterInput(input, String(this.model.state.valueTwo));
-      })
-    };
+  }
+
+  makeValueString(value: Value): string {
+    if (typeof value === 'number') {
+      return value.toFixed(this.fractionChars);
+    } else {
+      return value;
+    }
   }
 
   onThumbOneMouseDown(event: MouseEvent): void {
@@ -242,10 +258,8 @@ export class Presenter {
   }
 
   roundToStep(number: number, step: number): number {
-    let roundNumber = Math.round(number/step)*step;
-    let stepArray = step.toString().split('.');
-    let fractionChars = stepArray.length > 1 ? stepArray[1].length : 0;
-    return Number(roundNumber.toFixed(fractionChars));
+    const roundNumber = Math.round(number/step)*step;
+    return Number(roundNumber.toFixed(this.fractionChars));
   }
 
   handleHorizontalMouseMoveOne(event: MouseEvent): void {
@@ -441,6 +455,7 @@ export class Presenter {
     this.setUpIsWithStrings();
     this.setUpRange();
     this.setUpShift();
+    this.setUpFractionChars();
     this.view.updateParams(newParams);
     this.view.rebootSliderView();
     this.updateValueOne(this.params.valueOne);
@@ -516,6 +531,6 @@ export class Presenter {
   }
 
   updateOuterInput(input: HTMLInputElement, valueString: string) {
-    input.value = String(valueString);
+      input.value = valueString;
   }
 }

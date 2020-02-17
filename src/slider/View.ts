@@ -207,11 +207,11 @@ import { Value } from './Model';
     }
   }
 
-  renderThumbOne (value: Value, range: number, shift: number): void {
+  renderThumbOne (value: Value, valueString: string, range: number, shift: number): void {
     const thumb: HTMLElement = this.root.querySelector('.slider__thumb--one');
     if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
       const label: HTMLElement = thumb.querySelector('.slider__label');
-      label.innerHTML = String(value);
+      label.innerHTML = valueString;
     };
     
     const newCoords = this.defineCoords(thumb, value, range, shift);
@@ -226,11 +226,11 @@ import { Value } from './Model';
     }
   }
 
-  renderThumbTwo (value: Value, range: number, shift: number): void {
+  renderThumbTwo (value: Value, valueString: string, range: number, shift: number): void {
     const thumb: HTMLElement = this.root.querySelector('.slider__thumb--two');
     if(this.params.isValueAlwaysShown || this.params.isValueOnHoverShown) {
       const label: HTMLElement = thumb.querySelector('.slider__label');
-      label.innerHTML = String(value);
+      label.innerHTML = valueString;
     };
     const newCoords = this.defineCoords(thumb, value, range, shift);
 
