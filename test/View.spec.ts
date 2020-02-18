@@ -218,5 +218,4 @@ describe( 'View', () => {
       expect(scaleMarks.length).toBe(0);
     })
   });
-
 });
