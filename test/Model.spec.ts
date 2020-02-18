@@ -16,4 +16,4 @@ describe('Model', () => {
       expect(model.state.valueTwo).toBe('Prince of Persia');
     });
   });
-})
+});

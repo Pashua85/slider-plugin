@@ -35,7 +35,11 @@ import { Value } from './Model';
   }
 
   setMarksAmount(): void {
-    this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
+    if(this.isWithStrings) {
+      this.marksAmount = this.range - 1;
+    } else {
+      this.marksAmount = Math.ceil(this.range / this.params.scaleStep) - 1;
+    }
   }
 
   initSlider():void {

@@ -8,110 +8,215 @@ describe( 'View', () => {
   document.body.appendChild(container);
   
   const emptyArray: string[] = [];
-  const params1 = {
-    minValue: 0,
-    maxValue: 10,
-    valueOne: 3,
-    valueTwo: 6,
-    isVertical: false,
-    step: 1,
-    values: emptyArray,
-    scaleStep: 1,
-    isValueAlwaysShown: false,
-    isValueOnHoverShown: true
-  };
-
-  const params2 = {
-    minValue: 0,
-    maxValue: 10,
-    valueOne: 4,
-    isVertical: true,
-    step: 1,
-    values: emptyArray,
-    isValueAlwaysShown: false,
-    isValueOnHoverShown: true
-  };
-
-  const params3 = {
-    minValue: 0,
-    maxValue: 10,
-    valueOne: 2,
-    valueTwo: 5,
-    isVertical: true,
-    step: 1,
-    values: emptyArray,
-    isValueAlwaysShown: false,
-    isValueOnHoverShown: true
-  };
-
-  const params4 = {
-    minValue: 0,
-    maxValue: 100,
-    step: 1,
-    valueOne: 'a',
-    isVertical: false,
-    values: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-    isValueAlwaysShown: false,
-    isValueOnHoverShown: true
-  }
 
   beforeEach(() => {
     container.innerHTML = '';
+  });
+
+  describe('Creating elements for slider', () => {
+    test('When View is created with one value in params, it should render slider with one thumb', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const sliderElement = container.querySelector('.slider');
+      const thumbOne = sliderElement.querySelector('.slider__thumb--one');
+      const thumbTwo = sliderElement.querySelector('.slider__thumb--two');
+      const intervalBar = sliderElement.querySelector('.slider__interval');
+
+      expect(sliderElement).not.toBe(null);
+      expect(thumbOne).not.toBe(null);
+      expect(thumbTwo).toBe(null);
+      expect(intervalBar).toBe(null);
+    });
+
+    test('When View is created with two values in params, it should render slider with two thumbs and interval bar', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 7,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const sliderElement = container.querySelector('.slider');
+      const thumbOne = sliderElement.querySelector('.slider__thumb--one');
+      const thumbTwo = sliderElement.querySelector('.slider__thumb--two');
+      const intervalBar = sliderElement.querySelector('.slider__interval');
+
+      expect(sliderElement).not.toBe(null);
+      expect(thumbOne).not.toBe(null);
+      expect(thumbTwo).not.toBe(null);
+      expect(intervalBar).not.toBe(null);
+    });
+
+    test('When View is created for vertical slider, it should render slider, thumbs, labels and interval bar with "vertical" classes', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 7,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const sliderElement = container.querySelector('.slider');
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const labelOne = container.querySelector('.slider__thumb--one .slider__label');
+      const labelTwo = container.querySelector('.slider__thumb--two .slider__label');
+      const intervalBar = sliderElement.querySelector('.slider__interval');
+
+      expect(sliderElement.classList).toContain('slider--vertical');
+      expect(sliderElement.classList).not.toContain('slider--horizontal');
+      expect(thumbOne.classList).toContain('slider__thumb--vertical');
+      expect(thumbOne.classList).not.toContain('slider__thumb--horizontal');
+      expect(thumbTwo.classList).toContain('slider__thumb--vertical');
+      expect(thumbTwo.classList).not.toContain('slider__thumb--horizontal');
+      expect(labelOne.classList).toContain('slider__label--vertical');
+      expect(labelOne.classList).not.toContain('slider__label--horizontal');
+      expect(labelTwo.classList).toContain('slider__label--vertical');
+      expect(labelTwo.classList).not.toContain('slider__label--horizontal');
+      expect(intervalBar.classList).toContain('slider__interval--vertical');
+      expect(intervalBar.classList).not.toContain('slider__interval--horizontal');
+    });
+
+    test('When View is created for horizontal slider, it should render slider, thumbs, labels and interval bar with "horizontal" classes', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 7,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const sliderElement = container.querySelector('.slider');
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const labelOne = container.querySelector('.slider__thumb--one .slider__label');
+      const labelTwo = container.querySelector('.slider__thumb--two .slider__label');
+      const intervalBar = sliderElement.querySelector('.slider__interval');
+
+      expect(sliderElement.classList).not.toContain('slider--vertical');
+      expect(sliderElement.classList).toContain('slider--horizontal');
+      expect(thumbOne.classList).not.toContain('slider__thumb--vertical');
+      expect(thumbOne.classList).toContain('slider__thumb--horizontal');
+      expect(thumbTwo.classList).not.toContain('slider__thumb--vertical');
+      expect(thumbTwo.classList).toContain('slider__thumb--horizontal');
+      expect(labelOne.classList).not.toContain('slider__label--vertical');
+      expect(labelOne.classList).toContain('slider__label--horizontal');
+      expect(labelTwo.classList).not.toContain('slider__label--vertical');
+      expect(labelTwo.classList).toContain('slider__label--horizontal');
+      expect(intervalBar.classList).not.toContain('slider__interval--vertical');
+      expect(intervalBar.classList).toContain('slider__interval--horizontal');
+    });
+  });
+
+  describe('Setting up isWithStings property', () => {
+    test('When View is created with empty array as values in params, it should set up isWithStrings property to false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 7,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      expect(view.isWithStrings).toBe(false);
+    });
+
+    test('When View is created with array of strings as values in params, it should set up isWithStrings property to true', () => {
+      const params = {
+        minValue: 1,
+        maxValue: 10,
+        valueOne: 'a',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      expect(view.isWithStrings).toBe(true);
+    }); 
+  });
+
+  describe('Setting up range property', () => {
+    test('When View is created working with numbers and min is equal 5 and max is equal 25, range should set up to 20', () => {
+      const params = {
+        minValue: 5,
+        maxValue: 25,
+        valueOne: 10,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      expect(view.range).toBe(20);
+    });
+
+    test('When View is created working with values ["a", "b", "c", "d", "e", "f", "g"], range should set up to 6', () => {
+      const params = {
+        minValue: 5,
+        maxValue: 25,
+        valueOne: "d",
+        isVertical: false,
+        step: 1,
+        values: ["a", "b", "c", "d", "e", "f", "g"],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      expect(view.range).toBe(6);
+    });
+  });
+
+  describe('Rendering scale', () => {
+    test('When View is created with no scaleStep params, it should not rendering scale marks', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const scaleMarks = container.querySelectorAll('.slider__mark');
+      expect(scaleMarks.length).toBe(0);
+    })
   })
 
-  it('should add slider with interval to root', () => {
-    new View(container, params1);
-    const sliderElement = container.querySelector('.slider');
-    const thumbOne = sliderElement.querySelector('.slider__thumb--one');
-    const thumbTwo = sliderElement.querySelector('.slider__thumb--two');
-    const intervalBar = sliderElement.querySelector('.slider__interval');
-    expect(sliderElement).not.toBe(null);
-    expect(thumbOne).not.toBe(null);
-    expect(thumbTwo).not.toBe(null);
-    expect(intervalBar).not.toBe(null);
-  });
-
-  it('should render slider with one value', () => {
-    new View(container, params2);
-    const sliderElement = container.querySelector('.slider');
-    const thumbOne = sliderElement.querySelector('.slider__thumb--one');
-    const thumbTwo = sliderElement.querySelector('.slider__thumb--two');
-    const intervalBar = sliderElement.querySelector('.slider__interval');
-    expect(sliderElement).not.toBe(null);
-    expect(thumbOne).not.toBe(null);
-    expect(thumbTwo).toBe(null);
-    expect(intervalBar).toBe(null);
-  });
-
-  it('should add different classes to vertical and horizontal sliders', () => {
-    new View(container, params1);
-    const sliderElement1 = container.querySelector('.slider');
-    const intervalBar1 = sliderElement1.querySelector('.slider__interval');
-    expect(sliderElement1.classList).not.toContain('slider--vertical');
-    expect(sliderElement1.classList).toContain('slider--horizontal');
-    expect(intervalBar1.classList).not.toContain('slider__interval--vertical');
-    expect(intervalBar1.classList).toContain('slider__interval--horizontal');
-    
-    container.innerHTML = '';
-    new View(container, params3);
-    const sliderElement2  = container.querySelector('.slider');
-    const intervalBar2 = sliderElement2.querySelector('.slider__interval');
-    expect(sliderElement2.classList).toContain('slider--vertical');
-    expect(sliderElement2.classList).not.toContain('slider--horizontal');
-    expect(intervalBar2.classList).toContain('slider__interval--vertical');
-    expect(intervalBar2.classList).not.toContain('slider__interval--horizontal');
-  });
-
-  it('should set up range, root and isWithStrings values on initialisation', () => {
-    const view = new View(container, params1);
-    expect(view.root).toEqual(container);
-    expect(view.range).toBe(10);
-    expect(view.isWithStrings).toBe(false);
-  });
-
-  it('should set up range and isWithStings values for slider working with stings', () => {
-    const view = new View(container, params4);
-    expect(view.isWithStrings).toBe(true);
-    expect(view.range).toBe(7);
-  });
 });
