@@ -217,6 +217,6 @@ describe( 'View', () => {
       const scaleMarks = container.querySelectorAll('.slider__mark');
       expect(scaleMarks.length).toBe(0);
     })
-  })
+  });
 
 });
