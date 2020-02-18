@@ -77,21 +77,29 @@ export class Example {
   };
 
   setUpNumberButtons() {
-    this.numberButtons.forEach(button => {
-      button.disabled = false;
-    });
-    this.stringButtons.forEach(button => {
-      button.disabled = true;
-    });
+    if (this.numberButtons.length > 0) {
+      this.numberButtons.forEach(button => {
+        button.disabled = false;
+      });
+    }
+    if (this.stringButtons.length > 0) {
+      this.stringButtons.forEach(button => {
+        button.disabled = true;
+      });
+    }
   };
 
   setUpStringButtons() {
-    this.numberButtons.forEach(button => {
-      button.disabled = true;
-    });
-    this.stringButtons.forEach(button => {
-      button.disabled = false;
-    });
+    if (this.numberButtons.length > 0) {
+      this.numberButtons.forEach(button => {
+        button.disabled = true;
+      });
+    }
+    if (this.stringButtons.length > 0) {
+      this.stringButtons.forEach(button => {
+        button.disabled = false;
+      });
+    }
   };
 
   setUpSliderWithNumbers(event: Event, valueOne: number, valueTwo: number) {

@@ -1,0 +1,11 @@
+.example--two .slider__thumb {
+  background-color: #CD5C5C;
+
+  &:active, &--touched {
+    background-color: darken( #CD5C5C, 10%);
+  }
+}
+
+.example--two .slider__interval {
+  background-color: #CD5C5C;
+}

@@ -28,6 +28,7 @@ export class Presenter {
   inputTwoBlurHandler: () => void;
   thumbOneTouchEndHandler: () => void;
   thumbTwoTouchEndHandler: () => void;
+  windowResizeHandler: () => void;
 
   constructor(model: Model, view: View, params: IParams) {
     this.model = model;
@@ -61,6 +62,9 @@ export class Presenter {
     this.thumbTwoTouchEndHandler = this.handleThumbTwoTouchEnd.bind(this);
     this.inputOneBlurHandler = this.handleInputOneBlur.bind(this);
     this.inputTwoBlurHandler = this.handleInputTwoBlur.bind(this);
+    this.windowResizeHandler = this.handleWindowResize.bind(this);
+
+    this.addResizeHandler();
   
     this.updateValueOne(this.params.valueOne);
     if(params.valueTwo !== undefined) {
@@ -469,20 +473,20 @@ export class Presenter {
 
   addOuterInputOne(input: HTMLInputElement): void {
     input.addEventListener('blur', this.inputOneBlurHandler);
-    input.value = String(this.model.state.valueOne);
+    input.value = this.makeValueString(this.model.state.valueOne);
     this.outerInputsOne.push(input);
   }
 
   addOuterInputTwo(input: HTMLInputElement): void {
     input.addEventListener('blur', this.inputTwoBlurHandler);
-    input.value = String(this.model.state.valueTwo);
+    input.value = this.makeValueString(this.model.state.valueTwo);
     this.outerInputsTwo.push(input);
   }
 
   handleInputOneBlur(event: Event) {
     const inputValue = (<HTMLInputElement>event.target).value;
     if(this.validateInputValue(inputValue)) {
-      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
+      const newValue = this.isWithStrings ? inputValue : Number.parseFloat(inputValue);
       this.updateValueOne(newValue);
     }
   }
@@ -490,7 +494,7 @@ export class Presenter {
   handleInputTwoBlur(event: Event) {
     const inputValue = (<HTMLInputElement>event.target).value;
     if(this.validateInputValue(inputValue)) {
-      const newValue = this.isWithStrings ? inputValue : Number(inputValue);
+      const newValue = this.isWithStrings ? inputValue : Number.parseFloat(inputValue);
       this.updateValueTwo(newValue);
     }
   }
@@ -532,5 +536,16 @@ export class Presenter {
 
   updateOuterInput(input: HTMLInputElement, valueString: string) {
       input.value = valueString;
+  }
+
+  handleWindowResize(): void {
+    this.view.renderThumbOne(this.model.state.valueOne, this.makeValueString(this.model.state.valueOne), this.range, this.shift);
+    if(this.params.valueTwo !== undefined) {
+      this.view.renderThumbTwo(this.model.state.valueTwo, this.makeValueString(this.model.state.valueTwo), this.range, this.shift);
+    }
+  }
+
+  addResizeHandler(): void {
+    window.addEventListener('resize', this.windowResizeHandler);
   }
 }
