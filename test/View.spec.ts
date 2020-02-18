@@ -218,4 +218,65 @@ describe( 'View', () => {
       expect(scaleMarks.length).toBe(0);
     })
   });
+
+  test('When View is created with scaleStep=2 and range=20, it should set up marksAmount to 9 and add 9 marks to slider', () => {
+    const params = {
+      minValue: 0,
+      maxValue: 20,
+      valueOne: 3,
+      isVertical: false,
+      step: 1,
+      values: emptyArray,
+      scaleStep: 2,
+      isValueAlwaysShown: false,
+      isValueOnHoverShown: true
+    };
+    const view = new View(container, params);
+    const scaleMarks = container.querySelectorAll('.slider__mark');
+
+    expect(view.marksAmount).toBe(9);
+    expect(scaleMarks.length).toBe(9);
+  });
+
+  test('When View is created for horizontal slider with scale, it should render marks with "horizontal" class', () => {
+    const params = {
+      minValue: 0,
+      maxValue: 20,
+      valueOne: 3,
+      isVertical: false,
+      step: 1,
+      values: emptyArray,
+      scaleStep: 2,
+      isValueAlwaysShown: false,
+      isValueOnHoverShown: true
+    };
+    new View(container, params);
+    const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
+    const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
+    const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
+    
+    expect(horizontalMarks.length).toBe(9);
+    expect(verticalMarks.length).toBe(0);
+  });
+
+  test('When View is created for vertical slider with scale, it should render marks with "vertical" class', () => {
+    const params = {
+      minValue: 0,
+      maxValue: 20,
+      valueOne: 3,
+      isVertical: true,
+      step: 1,
+      values: emptyArray,
+      scaleStep: 2,
+      isValueAlwaysShown: false,
+      isValueOnHoverShown: true
+    };
+    new View(container, params);
+    const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
+    const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
+    const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
+    
+    expect(horizontalMarks.length).toBe(0);
+    expect(verticalMarks.length).toBe(9);
+  });
 });
