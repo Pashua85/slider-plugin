@@ -216,67 +216,158 @@ describe( 'View', () => {
       new View(container, params);
       const scaleMarks = container.querySelectorAll('.slider__mark');
       expect(scaleMarks.length).toBe(0);
+    });
+
+    test('When View is created with scaleStep=2 and range=20, it should set up marksAmount to 9 and add 9 marks to slider', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const scaleMarks = container.querySelectorAll('.slider__mark');
+  
+      expect(view.marksAmount).toBe(9);
+      expect(scaleMarks.length).toBe(9);
+    });
+  
+    test('When View is created for horizontal slider with scale, it should render marks with "horizontal" class', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
+      const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
+      const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
+      
+      expect(horizontalMarks.length).toBe(9);
+      expect(verticalMarks.length).toBe(0);
+    });
+  
+    test('When View is created for vertical slider with scale, it should render marks with "vertical" class', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
+      const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
+      const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
+      
+      expect(horizontalMarks.length).toBe(0);
+      expect(verticalMarks.length).toBe(9);
+    });
+  });
+
+  describe('Update params', () => {
+    test('When View.updateParams is called with new values, it should changed this values is its params', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const newParams = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 'b',
+        valueTwo: 'f',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'f', 'g'],
+        scaleStep: 2,
+        isValueAlwaysShown: true,
+        isValueOnHoverShown: false
+      }
+      const view = new View(container, params);
+      expect(view.params).toEqual(params);
+      view.updateParams(newParams);
+      expect(view.params).toEqual(newParams);
+    });
+
+    test('When View created with min 0 and max 30 is updated with new params with min -10 and max 40, it should change its range from 30 to 50', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const newParams = {
+        minValue: -10,
+        maxValue: 40,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 2,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      expect(view.range).toBe(30);
+      view.updateParams(newParams);
+      expect(view.range).toBe(50);
+    });
+
+    test('When View created with min 0, max 30 and no scaleStep is updated with new params with scaleStep 5, it should changed marksAmount to 5', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const newParams = {
+          minValue: 0,
+          maxValue: 30,
+          valueOne: 3,
+          isVertical: true,
+          step: 1,
+          values: emptyArray,
+          scaleStep: 5,
+          isValueAlwaysShown: false,
+          isValueOnHoverShown: true
+      }
+      const view = new View(container, params);
+      expect(view.marksAmount).toBe(undefined);
+      view.updateParams(newParams);
+      expect(view.marksAmount).toBe(5);
     })
   });
 
-  test('When View is created with scaleStep=2 and range=20, it should set up marksAmount to 9 and add 9 marks to slider', () => {
-    const params = {
-      minValue: 0,
-      maxValue: 20,
-      valueOne: 3,
-      isVertical: false,
-      step: 1,
-      values: emptyArray,
-      scaleStep: 2,
-      isValueAlwaysShown: false,
-      isValueOnHoverShown: true
-    };
-    const view = new View(container, params);
-    const scaleMarks = container.querySelectorAll('.slider__mark');
 
-    expect(view.marksAmount).toBe(9);
-    expect(scaleMarks.length).toBe(9);
-  });
-
-  test('When View is created for horizontal slider with scale, it should render marks with "horizontal" class', () => {
-    const params = {
-      minValue: 0,
-      maxValue: 20,
-      valueOne: 3,
-      isVertical: false,
-      step: 1,
-      values: emptyArray,
-      scaleStep: 2,
-      isValueAlwaysShown: false,
-      isValueOnHoverShown: true
-    };
-    new View(container, params);
-    const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
-    const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
-    const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
-    
-    expect(horizontalMarks.length).toBe(9);
-    expect(verticalMarks.length).toBe(0);
-  });
-
-  test('When View is created for vertical slider with scale, it should render marks with "vertical" class', () => {
-    const params = {
-      minValue: 0,
-      maxValue: 20,
-      valueOne: 3,
-      isVertical: true,
-      step: 1,
-      values: emptyArray,
-      scaleStep: 2,
-      isValueAlwaysShown: false,
-      isValueOnHoverShown: true
-    };
-    new View(container, params);
-    const scaleMarks = Array.from(container.querySelectorAll('.slider__mark'));
-    const horizontalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--horizontal'));
-    const verticalMarks = scaleMarks.filter(mark => mark.classList.contains('slider__mark--vertical'));
-    
-    expect(horizontalMarks.length).toBe(0);
-    expect(verticalMarks.length).toBe(9);
-  });
 });
