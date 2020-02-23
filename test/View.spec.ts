@@ -443,7 +443,7 @@ describe( 'View', () => {
     });
   });
 
-  describe('User interaction', () => {
+  describe('Interaction with user', () => {
     test('When user starts clicking thumb one, an approptiate handler should be called for this event', () => {
       const params = {
         minValue: 0,
