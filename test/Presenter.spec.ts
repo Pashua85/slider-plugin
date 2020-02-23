@@ -198,4 +198,166 @@ describe('Presenter', () => {
       expect(presenter.model.state.valueTwo).toBe('c');
     });
   });
+
+  describe('Validate value one', () => {
+    test('When validateValueOne is called with argument 5 in the presenter with numbers, min 0, max 10 and valueTwo 6; it should return true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 6,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne(5);
+      expect(isValid).toBe(true);
+    });
+
+    test('When validateValueOne is called with argument 5 in the presenter with numbers, min 0, max 10 and valueTwo 4; it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 4,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne(5);
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateValueOne is called with argument 0 in the presenter with numbers, min 2 and max 10, it should return false', () => {
+      const params = {
+        minValue: 2,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne(0);
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateValueOne is called with argument 15 in the presenter with numbers, min 0, max 10; it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne(15);
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateValueOne is called with argument 10 in the presenter with numbers, min 0, max 10 and valueTwo 10; it should return true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 3,
+        valueTwo: 6,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne(5);
+      expect(isValid).toBe(true);
+    });
+
+    test('When validateValueOne is called with argument "a" in the presenter with strings ["a", "b", "c", "d", "e"], and valueTwo "d"; it should return true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'b',
+        valueTwo: 'd',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne('a');
+      expect(isValid).toBe(true);
+    });
+
+    test('When validateValueOne is called with argument "e" in the presenter with strings ["a", "b", "c", "d", "e"], and valueTwo "d", it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'b',
+        valueTwo: 'd',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne('e');
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateValueOne is called with argument "z" in the presenter with strings ["a", "b", "c", "d", "e"], it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'b',
+        valueTwo: 'd',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne('z');
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateValueOne is called with argument "d" in the presenter with strings ["a", "b", "c", "d", "e"], and valueTwo "d"; it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'b',
+        valueTwo: 'd',
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateValueOne('d');
+      expect(isValid).toBe(true);
+    });
+  });
 });
