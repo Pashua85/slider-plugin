@@ -1,5 +1,4 @@
 import { View } from '../src/slider/View';
-import { Value } from '../src/slider/Model';
 
 describe( 'View', () => {
   
@@ -361,13 +360,140 @@ describe( 'View', () => {
           scaleStep: 5,
           isValueAlwaysShown: false,
           isValueOnHoverShown: true
-      }
+      };
       const view = new View(container, params);
       expect(view.marksAmount).toBe(undefined);
       view.updateParams(newParams);
       expect(view.marksAmount).toBe(5);
-    })
+    });
   });
 
+  describe('Reboting the view', () => {
+    test('When View was created with two thumbs and scale, updated with params with one value and no scaleStep, and was rebooted - then it should not have second thumb, interval bar or scale', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        valueTwo: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const newParams = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      let secondThumb = container.querySelector('.slider__thumb--two');
+      let scaleMarks = container.querySelectorAll('.slider__mark');
+      let intervalBar = container.querySelector('.slider__interval');
+      expect(secondThumb).not.toBe(null);
+      expect(scaleMarks.length).toBe(5);
+      expect(intervalBar).not.toBe(null);
 
+      view.updateParams(newParams);
+      view.rebootSliderView();
+      secondThumb = container.querySelector('.slider__thumb--two');
+      scaleMarks = container.querySelectorAll('.slider__mark');
+      intervalBar = container.querySelector('.slider__interval');
+      expect(secondThumb).toBe(null);
+      expect(scaleMarks.length).toBe(0);
+      expect(intervalBar).toBe(null);
+    });
+  });
+
+  describe('User interaction', () => {
+    test('When user starts clicking thumb one, an approptiate handler should be called for this event', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        valueTwo: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'onThumbOneMouseDown');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      thumbOne.dispatchEvent(mouseDownEvent);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    test('When user starts clicking thumb two, an approptiate handler should be called for this event', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        valueTwo: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'onThumbTwoMouseDown');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    test('When user starts touch thumb one, an approptiate handler should be called for this event', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        valueTwo: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'onThumbOneTouchStart');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbOne.dispatchEvent(touchStartEvent);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    test('When user starts touch thumb two, an approptiate handler should be called for this event', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        valueTwo: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'onThumbTwoTouchStart');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbTwo.dispatchEvent(touchStartEvent);
+      expect(spy).toHaveBeenCalled();
+    });
+  });
 });
