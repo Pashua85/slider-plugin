@@ -86,4 +86,40 @@ describe('Presenter', () => {
       expect(presenter.isWithStrings).toBe(true);
     });
   });
+
+  describe('Setting up range', () => {
+    test('When Presenter is created working with numbers and min 4 an max 20, it should set up range to 16', () => {
+      const params = {
+        minValue: 4,
+        maxValue: 20,
+        valueOne: 7,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.range).toBe(16);
+    });
+
+    test('When Presenter is created for working with strings with ["a", "b", "c", "d", "e"] in params, it should set up range to 4', () => {
+      const params = {
+        minValue: 4,
+        maxValue: 20,
+        valueOne: 7,
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd', 'e'],
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.range).toBe(4);
+    });
+  })
 });
