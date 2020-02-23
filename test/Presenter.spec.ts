@@ -121,5 +121,42 @@ describe('Presenter', () => {
       const presenter = new Presenter(new Model(), view, params);
       expect(presenter.range).toBe(4);
     });
+  });
+
+  describe('Setting up fraction chars', () => {
+    test('When Presenter is created with 0.25 step in params, it shold set up fractionChars to 2', () => {
+      const params = {
+        minValue: 4,
+        maxValue: 20,
+        valueOne: 7,
+        isVertical: false,
+        step: 0.25,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.fractionChars).toBe(2);
+    });
+    
+
+    test('When Presenter is created with 2 step in params, it shold set up fractionChars to 0', () => {
+      const params = {
+        minValue: 4,
+        maxValue: 20,
+        valueOne: 7,
+        isVertical: false,
+        step: 2,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.fractionChars).toBe(0);
+    });
   })
 });
