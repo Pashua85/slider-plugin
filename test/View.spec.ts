@@ -366,6 +366,38 @@ describe( 'View', () => {
       view.updateParams(newParams);
       expect(view.marksAmount).toBe(5);
     });
+
+    test('When View updated its params(with new scaleStep), setUpIsWithStrings, setUpRange and setMarksAmount should be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 30,
+        valueOne: 3,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const newParams = {
+          minValue: 0,
+          maxValue: 30,
+          valueOne: 3,
+          isVertical: true,
+          step: 1,
+          values: emptyArray,
+          scaleStep: 5,
+          isValueAlwaysShown: false,
+          isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const spyStings = jest.spyOn(view, 'setUpIsWithStrings');
+      const spyRange = jest.spyOn(view, 'setUpRange');
+      const spyMarks = jest.spyOn(view, 'setUpMarksAmount');
+      view.updateParams(newParams);
+      expect(spyStings).toHaveBeenCalled();
+      expect(spyRange).toHaveBeenCalled();
+      expect(spyMarks).toHaveBeenCalled();
+    });
   });
 
   describe('Reboting the view', () => {

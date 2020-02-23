@@ -17,7 +17,7 @@ import { Value } from './Model';
     this.setUpRange();
 
     if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
-      this.setMarksAmount();
+      this.setUpMarksAmount();
       this.initScale(this.renderScale.bind(this));
     }
   }
@@ -34,7 +34,7 @@ import { Value } from './Model';
     }
   }
 
-  setMarksAmount(): void {
+  setUpMarksAmount(): void {
     if(this.isWithStrings) {
       this.marksAmount = this.range - 1;
     } else {
@@ -251,7 +251,7 @@ import { Value } from './Model';
     this.setUpIsWithStrings();
     this.setUpRange();
     if(this.params.scaleStep !== undefined && this.params.scaleStep > 0) {
-      this.setMarksAmount();
+      this.setUpMarksAmount();
     }
   }
 

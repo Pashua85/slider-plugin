@@ -15,20 +15,75 @@ describe('Presenter', () => {
     container.innerHTML = '';
   });
 
-  test('first test', () => {
-    const params = {
-      minValue: 0,
-      maxValue: 10,
-      valueOne: 3,
-      isVertical: false,
-      step: 1,
-      values: emptyArray,
-      scaleStep: 1,
-      isValueAlwaysShown: false,
-      isValueOnHoverShown: true
-    };
-    const view = new View(container, params);
-    const presenter = new Presenter(new Model(), view, params)
-    expect(true).toBe(true);
-  })
+  describe('Setting up shift', () => {
+    test('When Presenter is created working with numbers and with min value -20 in params, it should set up shift to -20', () => {
+      const params = {
+        minValue: -20,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params)
+      expect(presenter.shift).toBe(-20);
+    });
+
+    test('When Presenter is created working with strings and with min value 35 in params, it should set up shift to 0', () => {
+      const params = {
+        minValue: 35,
+        maxValue: 60,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c'],
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params)
+      expect(presenter.shift).toBe(0);
+    });
+  });
+
+  describe('Setting up isWithStrings value', () => {
+    test('When Presenter is created working with numbers(empty array in params for key "values"), it should set up isWithStrings to false', () => {
+      const params = {
+        minValue: -20,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.isWithStrings).toBe(false);
+    });
+
+    test('When Presenter is created working with strings(array of strings in params for key "values"), it should set up isWithStrings to true', () => {
+      const params = {
+        minValue: -20,
+        maxValue: 10,
+        valueOne: 3,
+        isVertical: false,
+        step: 1,
+        values: ['a', 'b', 'c', 'd'],
+        scaleStep: 1,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.isWithStrings).toBe(true);
+    });
+  });
 });
