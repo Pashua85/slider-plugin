@@ -506,4 +506,57 @@ describe('Presenter', () => {
       expect(isValid).toBe(false);
     });
   });
+
+  describe('Make value string', () => {
+    test('When makeValueString is called with argument 13 in the presenter working with numbers and with step 0.25, it should return "13.00"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        isVertical: false,
+        step: 0.25,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const result = presenter.makeValueString(13);
+      expect(result).toBe('13.00');
+    });
+
+    test('When makeValueString is called with argument 13 in the presenter working with numbers and with step 1, it should return "13"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const result = presenter.makeValueString(13);
+      expect(result).toBe('13');
+    });
+
+    test('When makeValueString is called with argument "John Doe" in the presenter working with strings, it should return "John Doe"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 'Peter Griffin',
+        isVertical: false,
+        step: 1,
+        values: ['Peter Griffin', 'John Doe', 'Tcheburashka'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const result = presenter.makeValueString('John Doe');
+      expect(result).toBe('John Doe');
+    });
+  });
 });

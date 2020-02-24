@@ -322,7 +322,6 @@ export class Presenter {
     let sliderWidth: number = slider.offsetWidth;
     let newLeft: number = eventX - sliderLeft;
     let thumbOne: HTMLElement = slider.querySelector('.slider__thumb--one');
-    let thumbTwo: HTMLElement = slider.querySelector('.slider__thumb--two')
     let rightEdge: number = sliderWidth;
     let leftEdge = thumbOne.getBoundingClientRect().left - sliderLeft + (thumbOne.offsetHeight - slider.offsetWidth);
 
