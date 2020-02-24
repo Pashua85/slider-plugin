@@ -602,7 +602,7 @@ describe('Presenter', () => {
   });
 
   describe('Mouse down on thumb one', () => {
-    test('When user press mouse down on thumb one, this thumb gets class "slider__thumb--top and only this thumb', () => {
+    test('When user press mouse down on the thumb one, this thumb gets class "slider__thumb--top and only this thumb', () => {
       const params = {
         minValue: 0,
         maxValue: 20,
@@ -615,7 +615,7 @@ describe('Presenter', () => {
         isValueOnHoverShown: true
       };
       const view = new View(container, params);
-      const presenter = new Presenter(new Model(), view, params);
+      new Presenter(new Model(), view, params);
       const thumbOne = container.querySelector('.slider__thumb--one');
       const thumbTwo = container.querySelector('.slider__thumb--two');
       thumbTwo.classList.add('slider__thumb--top');
@@ -628,7 +628,7 @@ describe('Presenter', () => {
   });
 
   describe('Mouse down on thumb two', () => {
-    test('When user press mouse down on thumb two, this thumb gets class "slider__thumb--top and only this thumb', () => {
+    test('When user press mouse down on the thumb two, this thumb gets class "slider__thumb--top and only this thumb', () => {
       const params = {
         minValue: 0,
         maxValue: 20,
@@ -650,6 +650,62 @@ describe('Presenter', () => {
       thumbTwo.dispatchEvent(mouseDownEvent);
       expect(thumbOne.classList).not.toContain('slider__thumb--top');
       expect(thumbTwo.classList).toContain('slider__thumb--top');
+    });
+  });
+
+  describe('Touch start on thumb one', () => {
+    test('When user touched the thumb one, this thumb gets classes "slider__thumb--top" and "slider__thumb--touched"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      new Presenter(new Model(), view, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbTwo.classList.add('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+      expect(thumbOne.classList).not.toContain('slider__thumb--touched');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbOne.dispatchEvent(touchStartEvent);
+      expect(thumbTwo.classList).not.toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--touched');
+    });
+  });
+
+  describe('Touch start on thumb two', () => {
+    test('When user touched the thumb two, this thumb gets classes "slider__thumb--top" and "slider__thumb--touched"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      new Presenter(new Model(), view, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbOne.classList.add('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      expect(thumbTwo.classList).not.toContain('slider__thumb--touched');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbTwo.dispatchEvent(touchStartEvent);
+      expect(thumbOne.classList).not.toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--touched');
     });
   });
 
