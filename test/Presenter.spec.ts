@@ -507,6 +507,47 @@ describe('Presenter', () => {
     });
   });
 
+  describe('On value one change', () => {
+    test('When value one is updated in the model of slider, renderThumbOne should be called in its view', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const spy = jest.spyOn(presenter.view, 'renderThumbOne');
+      presenter.updateValueOne(5);
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('On value two change', () => {
+    test('When value two is updated in the model of slider, renderThumbTwo should be called in its view', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 6,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const spy = jest.spyOn(presenter.view, 'renderThumbTwo');
+      presenter.updateValueTwo(7);
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
   describe('Make value string', () => {
     test('When makeValueString is called with argument 13 in the presenter working with numbers and with step 0.25, it should return "13.00"', () => {
       const params = {
@@ -559,4 +600,58 @@ describe('Presenter', () => {
       expect(result).toBe('John Doe');
     });
   });
+
+  describe('Mouse down on thumb one', () => {
+    test('When user press mouse down on thumb one, this thumb gets class "slider__thumb--top and only this thumb', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbTwo.classList.add('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      thumbOne.dispatchEvent(mouseDownEvent);
+      expect(thumbTwo.classList).not.toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+    })
+  });
+
+  describe('Mouse down on thumb two', () => {
+    test('When user press mouse down on thumb two, this thumb gets class "slider__thumb--top and only this thumb', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      new Presenter(new Model(), view, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbOne.classList.add('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      expect(thumbOne.classList).not.toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+    });
+  });
+
+
 });
