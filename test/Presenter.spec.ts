@@ -709,5 +709,41 @@ describe('Presenter', () => {
     });
   });
 
+  describe('Round to step', () => {
+    test('When roundToStep is called with argument 13.456789 in the presenter with step 0.5 in params, it should return 13.5', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 14,
+        isVertical: false,
+        step: 0.5,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const result = presenter.roundToStep(13.456789, presenter.params.step);
+      expect(result).toBe(13.5);
+    });
+
+    test('When roundToStep is called with argument 13.456789 in the presenter with step 1 in params, it should return 13', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 14,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const result = presenter.roundToStep(13.456789, presenter.params.step);
+      expect(result).toBe(13);
+    });
+  });
+
 
 });
