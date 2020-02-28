@@ -1333,7 +1333,155 @@ describe('Presenter', () => {
     });
   });
 
- 
-    
+  describe('Update options', () => {
 
+    test('When presenter working with numbers received array ["a", "b", "c", "d"] as values and valueOne "b" in new params, it changed isWithStrings to true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.isWithStrings).toBe(false);
+      presenter.updateOptions({ 
+        values: ['a', 'b', 'c', 'd'],
+        valueOne: 'b'
+      });
+      expect(presenter.isWithStrings).toBe(true);
+    });
+
+    test('When updateOptions is called with min -50 in the presenter with min 5 and max 50 in params, its range should change from 45 to 100', () => {
+      const params = {
+        minValue: 5,
+        maxValue: 50,
+        valueOne: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.range).toBe(45);
+      presenter.updateOptions({ minValue: -50});
+      expect(presenter.range).toBe(100);
+    });
+
+    test('When updateOptions is called with array ["a", "b", "c", "d", "e"] an valueOne "b" in the presenter working with numbers and min -35, shift of presenter should change from -35 to 0', () => {
+      const params = {
+        minValue: -35,
+        maxValue: 50,
+        valueOne: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.shift).toBe(-35);
+      presenter.updateOptions({
+        valueOne: 'b',
+        values: ['a', 'b', 'c', 'd', 'e']
+      });
+      expect(presenter.shift).toBe(0);
+    });
+
+    test('When updateOptions is called with array ["a", "b", "c", "d", "e"] an valueOne "b" in the presenter working with numbers and min -35, range of presenter should change from 85 to 4', () => {
+      const params = {
+        minValue: -35,
+        maxValue: 50,
+        valueOne: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.range).toBe(85);
+      presenter.updateOptions({
+        valueOne: 'b',
+        values: ['a', 'b', 'c', 'd', 'e']
+      });
+      expect(presenter.range).toBe(4);
+    });
+
+    test('When presenter updated step in params from 0.222 to 5, it should change its fractionChars from 3 to 0', () => {
+      const params = {
+        minValue: -35,
+        maxValue: 50,
+        valueOne: 10,
+        isVertical: true,
+        step: 0.222,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.fractionChars).toBe(3);
+      presenter.updateOptions({ step: 5 });
+      expect(presenter.fractionChars).toBe(0);
+    });
+
+    test('When presenter updated its params, updatingParams with new params and rebootSliderView must be called in its view', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 10,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+
+      const newParams = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 10,
+        valueTwo: 20,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const updateSpy = jest.spyOn(presenter.view, 'updateParams');
+      const rebootSpy = jest.spyOn(presenter.view, 'rebootSliderView');
+      presenter.updateOptions({ isVertical: false, valueTwo: 20 });
+      expect(updateSpy).toHaveBeenCalledWith(newParams);
+      expect(rebootSpy).toHaveBeenCalled();
+    });
+
+    test('When presenter with one value (5) in params is updated with new params with valueTwo 12, its model should change valueTwo from underfined to 12', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      expect(presenter.model.state.valueTwo).toBe(undefined);
+      presenter.updateOptions({ valueTwo: 12 });
+      expect(presenter.model.state.valueTwo).toBe(12);
+    });
+  });
 });
