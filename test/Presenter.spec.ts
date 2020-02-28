@@ -1739,5 +1739,101 @@ describe('Presenter', () => {
     });
   });
 
+  describe('Remove outer inputs', () => {
+    test('When removeOuterInputOne is called with input element as an argument in the presenter with two elements in outerInputsOne, this input must be removed, bun only this', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne = document.createElement('input');
+      const anotherInputOne = document.createElement('input');
+      presenter.addOuterInputOne(inputOne);
+      presenter.addOuterInputOne(anotherInputOne);
+      expect(presenter.outerInputsOne.length).toBe(2);
+      presenter.removeOuterInputOne(anotherInputOne);
+      const inputOneIndex = presenter.outerInputsOne.indexOf(inputOne);
+      const anotherInputOneIndex  = presenter.outerInputsOne.indexOf(anotherInputOne);
+      expect(inputOneIndex).toBe(0);
+      expect(anotherInputOneIndex).toBe(-1);
+    });
 
+    test('When removeOuterInputTwo is called with input element as an argument in the presenter with two elements in outerInputsTwo, this input must be removed, bun only this', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 20,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      const anotherInputTwo = document.createElement('input');
+      presenter.addOuterInputOne(inputTwo);
+      presenter.addOuterInputOne(anotherInputTwo);
+      expect(presenter.outerInputsOne.length).toBe(2);
+      presenter.removeOuterInputOne(anotherInputTwo);
+      const inputTwoIndex = presenter.outerInputsOne.indexOf(inputTwo);
+      const anotherInputTwoIndex  = presenter.outerInputsOne.indexOf(anotherInputTwo);
+      expect(inputTwoIndex).toBe(0);
+      expect(anotherInputTwoIndex).toBe(-1);
+    });
+
+    test('When removeAllOuterInputsOne is called in presenter with two elements in outerInputsOne, the length of outerInputsOne array must changed from 2 to 0', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne = document.createElement('input');
+      const anotherInputOne = document.createElement('input');
+      presenter.addOuterInputOne(inputOne);
+      presenter.addOuterInputOne(anotherInputOne);
+      expect(presenter.outerInputsOne.length).toBe(2);
+      presenter.removeAllOuterInputsOne();
+      expect(presenter.outerInputsOne.length).toBe(0);
+    });
+
+    test('When removeAllOuterInputsTwo is called in presenter with two elements in outerInputsTwo, the length of outerInputsTwo array must changed from 2 to 0', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 18,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      const anotherInputTwo = document.createElement('input');
+      presenter.addOuterInputTwo(inputTwo);
+      presenter.addOuterInputTwo(anotherInputTwo);
+      expect(presenter.outerInputsTwo.length).toBe(2);
+      presenter.removeAllOuterInputsTwo();
+      expect(presenter.outerInputsTwo.length).toBe(0);
+    });
+  });
 });
