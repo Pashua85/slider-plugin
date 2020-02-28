@@ -1652,7 +1652,92 @@ describe('Presenter', () => {
     });
   });
 
- 
+  describe('Validate input value', () => {
+    test('When validateInputValue is called with argument "5" in presenter working with numbers and min 0 and max 10, it should return true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateInputValue('5');
+      expect(isValid).toBe(true);
+    });
+
+    test('When validateInputValue is called with argument "15" in presenter working with numbers and min 0 and max 10, it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateInputValue('15');
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateInputValue is called with argument "some string value" in presenter working with numbers and min 0 and max 10, it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateInputValue('15');
+      expect(isValid).toBe(false);
+    });
+
+    test('When validateInputValue is called with argument "John Doe" in presenter working with strings ["John Snow", "John Doe"], it should return true', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'John Snow',
+        isVertical: true,
+        step: 1,
+        values: ['John Snow', 'John Doe'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateInputValue('John Doe');
+      expect(isValid).toBe(true);
+    });
+
+    test('When validateInputValue is called with argument "John Connor" in presenter working with strings ["John Snow", "John Doe"], it should return false', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 10,
+        valueOne: 'John Snow',
+        isVertical: true,
+        step: 1,
+        values: ['John Snow', 'John Doe'],
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const isValid = presenter.validateInputValue('John Connor');
+      expect(isValid).toBe(false);
+    });
+  });
 
 
 });
