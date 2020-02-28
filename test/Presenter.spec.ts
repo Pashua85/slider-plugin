@@ -1484,4 +1484,104 @@ describe('Presenter', () => {
       expect(presenter.model.state.valueTwo).toBe(12);
     });
   });
+
+  describe('Add outer inputs to slider', () => {
+    test('When addOuterInputOne is called with input element as argument, the value of this input must represent valueOne in string', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne = document.createElement('input');
+      inputOne.type = 'text';
+      presenter.addOuterInputOne(inputOne);
+      expect(inputOne.value).toBe('5');
+    });
+
+    test('When addOuterInputTwo is called with input element as argument, the value of this input must represent valueTwo in string', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 16,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      inputTwo.type = 'text';
+      presenter.addOuterInputTwo(inputTwo);
+      expect(inputTwo.value).toBe('16');
+    });
+
+    test('When addOuterInputOne is called twice (with two different input elements), the length of presenters outerInputsOne must be 2', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne = document.createElement('input');
+      const anotherInputOne = document.createElement('input');
+      presenter.addOuterInputOne(inputOne);
+      presenter.addOuterInputOne(anotherInputOne);
+      expect(presenter.outerInputsOne.length).toBe(2);
+    });
+
+    test('When addOuterInputTwo is called twice (with two different input elements), the length of presenters outerInputsTwo must be 2', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 20,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      const antotherInputTwo = document.createElement('input');
+      presenter.addOuterInputTwo(inputTwo);
+      presenter.addOuterInputTwo(antotherInputTwo);
+      expect(presenter.outerInputsTwo.length).toBe(2);
+    });
+
+    test('When addOuterInputTwo is called in presenter with one value in params, the length of outerInputsTwo in presenter must remain 0', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      presenter.addOuterInputTwo(inputTwo);
+      expect(presenter.outerInputsTwo.length).toBe(0);
+    });
+  });
 });

@@ -477,9 +477,11 @@ export class Presenter {
   }
 
   addOuterInputTwo(input: HTMLInputElement): void {
-    input.addEventListener('blur', this.inputTwoBlurHandler);
-    input.value = this.makeValueString(this.model.state.valueTwo);
-    this.outerInputsTwo.push(input);
+    if (this.params.valueTwo !== undefined) {
+      input.addEventListener('blur', this.inputTwoBlurHandler);
+      input.value = this.makeValueString(this.model.state.valueTwo);
+      this.outerInputsTwo.push(input);
+    }
   }
 
   handleInputOneBlur(event: Event) {
@@ -534,7 +536,7 @@ export class Presenter {
   }
 
   updateOuterInput(input: HTMLInputElement, valueString: string) {
-      input.value = valueString;
+    input.value = valueString;
   }
 
   handleWindowResize(): void {
