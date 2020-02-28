@@ -1584,4 +1584,75 @@ describe('Presenter', () => {
       expect(presenter.outerInputsTwo.length).toBe(0);
     });
   });
+
+  describe('Update outer inputs', () => {
+    test('When valueOne is updated to 20 in a presenter with two added outer input for valueOne, the values of both these inputs must be changed to "20"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 30,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne = document.createElement('input');
+      const anotherInputOne = document.createElement('input');
+      presenter.addOuterInputOne(inputOne);
+      presenter.addOuterInputOne(anotherInputOne);
+      presenter.updateValueOne(20);
+      expect(inputOne.value).toBe('20');
+      expect(anotherInputOne.value).toBe('20');
+    });
+
+    test('When valueTwo is updated to 25 in a presenter with two added outer input for valueTwo, the values of both these inputs must be changed to "25"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 30,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo = document.createElement('input');
+      const antotherInputTwo = document.createElement('input');
+      presenter.addOuterInputTwo(inputTwo);
+      presenter.addOuterInputTwo(antotherInputTwo);
+      presenter.updateValueTwo(25);
+      expect(inputTwo.value).toBe('25');
+      expect(antotherInputTwo.value).toBe('25');
+    });
+
+    test('When updateOuterInput is called with input element and string "John Doe" as arguments, the value of this input must be changed to "John Doe"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const outerInput = document.createElement('input');
+      outerInput.type = 'text';
+      presenter.updateOuterInput(outerInput, 'John Doe');
+      expect(outerInput.value).toBe('John Doe');
+    });
+  });
+
+ 
+
+
 });
