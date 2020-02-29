@@ -1739,6 +1739,53 @@ describe('Presenter', () => {
     });
   });
 
+  describe('Handle blur on outer inputs', () => {
+    test('When user changed the value of outer input one to "10" and this value is valid, then after this input lost focus, the value one in model changes to 10', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputOne: HTMLInputElement = document.createElement('input');
+      inputOne.type = 'text';
+      presenter.addOuterInputOne(inputOne);
+      inputOne.value = '10';
+      const blurEvent = new FocusEvent('blur');
+      inputOne.dispatchEvent(blurEvent);
+      expect(presenter.model.state.valueOne).toBe(10);
+    });
+
+    test('When user changed the value of outer input two to "10" and this value is valid, then after this input lost focus, the value two in model changes to 10', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const inputTwo: HTMLInputElement = document.createElement('input');
+      inputTwo.type = 'text';
+      presenter.addOuterInputTwo(inputTwo);
+      inputTwo.value = '10';
+      const blurEvent = new FocusEvent('blur');
+      inputTwo.dispatchEvent(blurEvent);
+      expect(presenter.model.state.valueTwo).toBe(10);
+    });
+  });
+
   describe('Remove outer inputs', () => {
     test('When removeOuterInputOne is called with input element as an argument in the presenter with two elements in outerInputsOne, this input must be removed, bun only this', () => {
       const params = {
@@ -1836,4 +1883,30 @@ describe('Presenter', () => {
       expect(presenter.outerInputsTwo.length).toBe(0);
     });
   });
+
+  describe('Handle window resize', () => {
+
+    test('When handleWindowResize is called, presenter shoud rerender thumbs in its view', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 50,
+        valueOne: 5,
+        valueTwo: 18,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+
+      const view = new View(container, params);
+      const presenter = new Presenter(new Model(), view, params);
+      const spyOne  = jest.spyOn(presenter.view, 'renderThumbOne');
+      const spyTwo = jest.spyOn(presenter.view, 'renderThumbTwo');
+      presenter.handleWindowResize();
+
+      expect(spyOne).toHaveBeenCalled();
+      expect(spyTwo);
+    });
+  })
 });
