@@ -45,17 +45,15 @@ export class Presenter {
     this.model.onValueTwoChange = this.onValueTwoChange.bind(this);
     this.view.handleHorizontalMoveOne = this.handleHorizontalMoveOne.bind(this);
     this.view.handleVerticalMoveOne = this.handleVerticalMoveOne.bind(this);
-    this.view.onThumbTwoMouseDown = this.onThumbTwoMouseDown.bind(this);
+    this.view.handleHorizontalMoveTwo = this.handleHorizontalMoveTwo.bind(this);
+    this.view.handleVerticalMoveTwo = this.handleVerticalMoveTwo.bind(this);
     this.view.onThumbOneTouchStart = this.onThumbOneTouchStart.bind(this);
     this.view.onThumbTwoTouchStart = this.onThumbTwoTouchStart.bind(this);
 
-    this.horizontalMouseMoveTwoHandler = this.handleHorizontalMouseMoveTwo.bind(this);
     this.horizontalTouchMoveOneHandler = this.handleHorizontalTouchMoveOne.bind(this);
     this.horizontalTouchMoveTwoHandler = this.handleHorizontalTouchMoveTwo.bind(this);
     this.verticalTouchMoveOneHandler = this.handleVerticalTouchMoveOne.bind(this);
     this.verticalTouchMoveTwoHandler = this.handleVerticalTouchMoveTwo.bind(this);
-    this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
-    this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
     this.thumbOneTouchEndHandler = this.handleThumbOneTouchEnd.bind(this);
     this.thumbTwoTouchEndHandler = this.handleThumbTwoTouchEnd.bind(this);
     this.inputOneBlurHandler = this.handleInputOneBlur.bind(this);
@@ -248,12 +246,6 @@ export class Presenter {
     return Number(roundNumber.toFixed(this.fractionChars));
   }
 
-  handleHorizontalMouseMoveTwo(event: MouseEvent): void {
-    event.preventDefault();
-    const eventX = event.clientX;
-    this.handleHorizontalMoveTwo(eventX);
-  }
-
   handleHorizontalTouchMoveOne(event: TouchEvent): void {
     event.preventDefault();
     const eventX = event.touches[0].clientX;
@@ -370,26 +362,6 @@ export class Presenter {
     } else {
       this.updateValueTwo(this.roundToStep(newValue,this.params.step));
     }
-  }
-
-  handleThumbOneMouseUp (event: MouseEvent): void {
-    event.preventDefault();
-    if (this.params.isVertical) {
-      document.removeEventListener('mousemove', this.verticalMouseMoveOneHandler);
-    } else {
-      document.removeEventListener('mousemove', this.horizontalMouseMoveOneHandler);
-    }
-    document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
-  }
-
-  handleThumbTwoMouseUp (event: MouseEvent): void {
-    event.preventDefault();
-    if (this.params.isVertical) {
-      document.removeEventListener('mousemove', this.verticalMouseMoveTwoHandler);
-    } else {
-      document.removeEventListener('mousemove', this.horizontalMouseMoveTwoHandler);      
-    } 
-    document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
   }
 
   handleThumbOneTouchEnd (event: TouchEvent): void {

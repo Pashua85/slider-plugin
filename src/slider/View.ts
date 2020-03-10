@@ -8,8 +8,11 @@ import { Value } from './Model';
   range: number;
   marksAmount?: number;
   horizontalMouseMoveOneHandler: () => void;
+  horizontalMouseMoveTwoHandler: () => void;
   verticalMouseMoveOneHandler: () => void;
+  verticalMouseMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
+  thumbTwoMouseUpHandler: () => void;
 
 
 
@@ -18,8 +21,11 @@ import { Value } from './Model';
     this.params = params;
 
     this.horizontalMouseMoveOneHandler = this.handleHorizontalMouseMoveOne.bind(this);
+    this.horizontalMouseMoveTwoHandler = this.handleHorizontalMouseMoveTwo.bind(this);
     this.verticalMouseMoveOneHandler = this.handleVerticalMouseMoveOne.bind(this);
+    this.verticalMouseMoveTwoHandler = this.handleVerticalMouseMoveTwo.bind(this);
     this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
+    this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
 
     
     this.initSlider();
@@ -289,16 +295,43 @@ import { Value } from './Model';
     document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 
+  onThumbTwoMouseDown(event: MouseEvent): void {
+    event.preventDefault();
+    const thumbOne: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    const thumbTwo: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    thumbOne.classList.remove('slider__thumb--top');
+    thumbTwo.classList.add('slider__thumb--top');
+
+    if (this.params.isVertical) {
+      document.addEventListener('mousemove', this.verticalMouseMoveTwoHandler);
+    } else {
+      document.addEventListener('mousemove', this.horizontalMouseMoveTwoHandler);
+    };
+    document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
+  };
+
   handleHorizontalMouseMoveOne(event: MouseEvent): void {
     event.preventDefault();
     const eventX = event.clientX;
     this.handleHorizontalMoveOne(eventX);
   }
 
+  handleHorizontalMouseMoveTwo(event: MouseEvent): void {
+    event.preventDefault();
+    const eventX = event.clientX;
+    this.handleHorizontalMoveTwo(eventX);
+  }
+
   handleVerticalMouseMoveOne(event: MouseEvent): void {
     event.preventDefault();
     const eventY = event.clientY;
     this.handleVerticalMoveOne(eventY);
+  }
+
+  handleVerticalMouseMoveTwo(event: MouseEvent): void {
+    event.preventDefault();
+    const eventY = event.clientY;
+    this.handleVerticalMoveTwo(eventY);
   }
 
   handleThumbOneMouseUp (event: MouseEvent): void {
@@ -310,8 +343,18 @@ import { Value } from './Model';
     }
     document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
+
+  handleThumbTwoMouseUp (event: MouseEvent): void {
+    event.preventDefault();
+    if (this.params.isVertical) {
+      document.removeEventListener('mousemove', this.verticalMouseMoveTwoHandler);
+    } else {
+      document.removeEventListener('mousemove', this.horizontalMouseMoveTwoHandler);      
+    } 
+    document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
+  }
   
-  onThumbTwoMouseDown(event: MouseEvent): void {};
+  // onThumbTwoMouseDown(event: MouseEvent): void {};
 
   onThumbOneTouchStart(event: TouchEvent): void {};
 
@@ -319,7 +362,11 @@ import { Value } from './Model';
 
   handleHorizontalMoveOne(eventX: number): void {};
 
+  handleHorizontalMoveTwo(eventX: number): void {};
+
   handleVerticalMoveOne(eventY: number): void {};
+
+  handleVerticalMoveTwo(eventY: number): void {};
 };
 
 
