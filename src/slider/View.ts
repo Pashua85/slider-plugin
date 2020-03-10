@@ -7,10 +7,20 @@ import { Value } from './Model';
   isWithStrings: boolean;
   range: number;
   marksAmount?: number;
+  horizontalMouseMoveOneHandler: () => void;
+  verticalMouseMoveOneHandler: () => void;
+  thumbOneMouseUpHandler: () => void;
+
+
 
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
     this.params = params;
+
+    this.horizontalMouseMoveOneHandler = this.handleHorizontalMouseMoveOne.bind(this);
+    this.verticalMouseMoveOneHandler = this.handleVerticalMouseMoveOne.bind(this);
+    this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
+
     
     this.initSlider();
     this.setUpIsWithStrings();
@@ -263,13 +273,53 @@ import { Value } from './Model';
     }
   };
 
-  onThumbOneMouseDown(event: MouseEvent): void {};
+  onThumbOneMouseDown(event: MouseEvent): void {
+    if(this.params.valueTwo !== undefined ) {
+      const thumbTwo: HTMLElement = this.root.querySelector('.slider__thumb--two');
+      thumbTwo.classList.remove('slider__thumb--top');
+    };
+    const thumbOne: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    thumbOne.classList.add('slider__thumb--top');
+
+    if (this.params.isVertical) {
+      document.addEventListener('mousemove', this.verticalMouseMoveOneHandler);
+    } else {
+      document.addEventListener('mousemove', this.horizontalMouseMoveOneHandler);
+    };
+    document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
+  }
+
+  handleHorizontalMouseMoveOne(event: MouseEvent): void {
+    event.preventDefault();
+    const eventX = event.clientX;
+    this.handleHorizontalMoveOne(eventX);
+  }
+
+  handleVerticalMouseMoveOne(event: MouseEvent): void {
+    event.preventDefault();
+    const eventY = event.clientY;
+    this.handleVerticalMoveOne(eventY);
+  }
+
+  handleThumbOneMouseUp (event: MouseEvent): void {
+    event.preventDefault();
+    if (this.params.isVertical) {
+      document.removeEventListener('mousemove', this.verticalMouseMoveOneHandler);
+    } else {
+      document.removeEventListener('mousemove', this.horizontalMouseMoveOneHandler);
+    }
+    document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
+  }
   
   onThumbTwoMouseDown(event: MouseEvent): void {};
 
   onThumbOneTouchStart(event: TouchEvent): void {};
 
   onThumbTwoTouchStart(event: TouchEvent): void {};
+
+  handleHorizontalMoveOne(eventX: number): void {};
+
+  handleVerticalMoveOne(eventY: number): void {};
 };
 
 
