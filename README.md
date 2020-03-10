@@ -1,7 +1,8 @@
 # Slider - JQuery плагин, реализующий функционал "бегунка".
 
 ## Описание архитектуры
-![image](https://user-images.githubusercontent.com/13976272/76143516-dd764580-6099-11ea-8444-216784fb3391.png)
+![image](https://user-images.githubusercontent.com/13976272/76285019-9322dd80-62c0-11ea-9a87-64ed850cd124.png)
+
 
 
 ## Licence & copyright
