@@ -13,21 +13,14 @@ export class Presenter {
   outerInputsOne: HTMLInputElement[];
   outerInputsTwo: HTMLInputElement[];
   fractionChars: number;
-  horizontalMouseMoveOneHandler: () => void;
-  horizontalMouseMoveTwoHandler: () => void;
-  horizontalTouchMoveOneHandler: () => void;
-  horizontalTouchMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
   thumbTwoMouseUpHandler: () => void;
   verticalMouseMoveOneHandler: () => void;
   verticalMouseMoveTwoHandler: () => void;
   verticalMoveTwoHandler: () => void;
-  verticalTouchMoveOneHandler: () => void;
   verticalTouchMoveTwoHandler: () => void;
   inputOneBlurHandler: () => void;
   inputTwoBlurHandler: () => void;
-  thumbOneTouchEndHandler: () => void;
-  thumbTwoTouchEndHandler: () => void;
   windowResizeHandler: () => void;
 
   constructor(model: Model, view: View, params: IParams) {
@@ -47,15 +40,6 @@ export class Presenter {
     this.view.handleVerticalMoveOne = this.handleVerticalMoveOne.bind(this);
     this.view.handleHorizontalMoveTwo = this.handleHorizontalMoveTwo.bind(this);
     this.view.handleVerticalMoveTwo = this.handleVerticalMoveTwo.bind(this);
-    this.view.onThumbOneTouchStart = this.onThumbOneTouchStart.bind(this);
-    this.view.onThumbTwoTouchStart = this.onThumbTwoTouchStart.bind(this);
-
-    this.horizontalTouchMoveOneHandler = this.handleHorizontalTouchMoveOne.bind(this);
-    this.horizontalTouchMoveTwoHandler = this.handleHorizontalTouchMoveTwo.bind(this);
-    this.verticalTouchMoveOneHandler = this.handleVerticalTouchMoveOne.bind(this);
-    this.verticalTouchMoveTwoHandler = this.handleVerticalTouchMoveTwo.bind(this);
-    this.thumbOneTouchEndHandler = this.handleThumbOneTouchEnd.bind(this);
-    this.thumbTwoTouchEndHandler = this.handleThumbTwoTouchEnd.bind(this);
     this.inputOneBlurHandler = this.handleInputOneBlur.bind(this);
     this.inputTwoBlurHandler = this.handleInputTwoBlur.bind(this);
     this.windowResizeHandler = this.handleWindowResize.bind(this);
@@ -191,71 +175,9 @@ export class Presenter {
     }
   }
 
-  onThumbTwoMouseDown(event: MouseEvent): void {
-    event.preventDefault();
-    const thumbOne: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    const thumbTwo: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    thumbOne.classList.remove('slider__thumb--top');
-    thumbTwo.classList.add('slider__thumb--top');
-
-    if (this.params.isVertical) {
-      document.addEventListener('mousemove', this.verticalMouseMoveTwoHandler);
-    } else {
-      document.addEventListener('mousemove', this.horizontalMouseMoveTwoHandler);
-    };
-    document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
-  };
-
-  onThumbOneTouchStart(event: TouchEvent): void {
-    event.preventDefault();
-    if(this.params.valueTwo !== undefined ) {
-      const thumbTwo: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-      thumbTwo.classList.remove('slider__thumb--top');
-    };
-    const thumbOne: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    thumbOne.classList.add('slider__thumb--top');
-
-    thumbOne.classList.add('slider__thumb--touched');
-
-    if (this.params.isVertical) {
-      thumbOne.addEventListener('touchmove', this.verticalTouchMoveOneHandler);
-    } else {
-      thumbOne.addEventListener('touchmove', this.horizontalTouchMoveOneHandler);
-    }
-    thumbOne.addEventListener('touchend', this.thumbOneTouchEndHandler);
-  }
-
-  onThumbTwoTouchStart(event: TouchEvent): void {
-    event.preventDefault();
-    const thumbOne: HTMLElement = this.view.root.querySelector('.slider__thumb--one');
-    const thumbTwo: HTMLElement = this.view.root.querySelector('.slider__thumb--two');
-    thumbOne.classList.remove('slider__thumb--top');
-    thumbTwo.classList.add('slider__thumb--top');
-    thumbTwo.classList.add('slider__thumb--touched');
-
-    if(this.params.isVertical) {
-      thumbTwo.addEventListener('touchmove', this.verticalTouchMoveTwoHandler);
-    } else {
-      thumbTwo.addEventListener('touchmove', this.horizontalTouchMoveTwoHandler);
-    }
-    thumbTwo.addEventListener('touchend', this.thumbTwoTouchEndHandler);
-  }
-
   roundToStep(number: number, step: number): number {
     const roundNumber = Math.round(number/step)*step;
     return Number(roundNumber.toFixed(this.fractionChars));
-  }
-
-  handleHorizontalTouchMoveOne(event: TouchEvent): void {
-    event.preventDefault();
-    const eventX = event.touches[0].clientX;
-    this.handleHorizontalMoveOne(eventX);
-  }
-
-  handleHorizontalTouchMoveTwo(event: TouchEvent): void {
-    event.preventDefault();
-    const eventX = event.touches[0].clientX;
-    this.handleHorizontalMoveTwo(eventX);
   }
 
   handleHorizontalMoveOne(eventX: number): void {
@@ -305,18 +227,6 @@ export class Presenter {
     }
   }
 
-  handleVerticalTouchMoveOne(event: TouchEvent): void {
-    event.preventDefault();
-    const eventY = event.touches[0].clientY;
-    this.handleVerticalMoveOne(eventY);
-  }
-
-  handleVerticalTouchMoveTwo(event: TouchEvent): void {
-    event.preventDefault();
-    const eventY = event.touches[0].clientY;
-    this.handleVerticalMoveTwo(eventY);
-  }
-
   handleVerticalMoveOne(eventY: number): void {
     const slider: HTMLElement = this.view.root.querySelector('.slider');
     const sliderBottom: number = slider.getBoundingClientRect().bottom;
@@ -362,30 +272,6 @@ export class Presenter {
     } else {
       this.updateValueTwo(this.roundToStep(newValue,this.params.step));
     }
-  }
-
-  handleThumbOneTouchEnd (event: TouchEvent): void {
-    event.preventDefault();
-    const thumbOne = this.view.root.querySelector('.slider__thumb--one');
-    thumbOne.classList.remove('slider__thumb--touched');
-    if (this.params.isVertical) {
-      thumbOne.removeEventListener('touchmove', this.verticalTouchMoveOneHandler);
-    } else {
-      thumbOne.removeEventListener('touchmove', this.horizontalTouchMoveOneHandler);
-    }
-    thumbOne.removeEventListener('touchend', this.verticalTouchMoveOneHandler);
-  }
-
-  handleThumbTwoTouchEnd (event: TouchEvent): void {
-    event.preventDefault();
-    const thumbTwo = this.view.root.querySelector('.slider__thumb--two');
-    thumbTwo.classList.remove('slider__thumb--touched');
-    if (this.params.isVertical) {
-      thumbTwo.removeEventListener('touchmove', this.verticalTouchMoveTwoHandler);
-    } else {
-      thumbTwo.removeEventListener('touchmove', this.horizontalTouchMoveTwoHandler);
-    }
-    thumbTwo.removeEventListener('touchend', this.thumbTwoTouchEndHandler);
   }
 
   updateOptions(options: IAdditionalOptions): void {

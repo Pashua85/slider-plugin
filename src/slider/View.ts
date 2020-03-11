@@ -9,24 +9,33 @@ import { Value } from './Model';
   marksAmount?: number;
   horizontalMouseMoveOneHandler: () => void;
   horizontalMouseMoveTwoHandler: () => void;
+  horizontalTouchMoveOneHandler: () => void;
+  horizontalTouchMoveTwoHandler: () => void;
   verticalMouseMoveOneHandler: () => void;
   verticalMouseMoveTwoHandler: () => void;
+  verticalTouchMoveOneHandler: () => void;
+  verticalTouchMoveTwoHandler: () => void;
   thumbOneMouseUpHandler: () => void;
   thumbTwoMouseUpHandler: () => void;
-
-
-
+  thumbOneTouchEndHandler: () => void;
+  thumbTwoTouchEndHandler: () => void;
+  
   constructor(root: HTMLElement, params: IParams) {
     this.root = root;
     this.params = params;
 
     this.horizontalMouseMoveOneHandler = this.handleHorizontalMouseMoveOne.bind(this);
     this.horizontalMouseMoveTwoHandler = this.handleHorizontalMouseMoveTwo.bind(this);
+    this.horizontalTouchMoveOneHandler = this.handleHorizontalTouchMoveOne.bind(this);
+    this.horizontalTouchMoveTwoHandler = this.handleHorizontalTouchMoveTwo.bind(this);
     this.verticalMouseMoveOneHandler = this.handleVerticalMouseMoveOne.bind(this);
     this.verticalMouseMoveTwoHandler = this.handleVerticalMouseMoveTwo.bind(this);
+    this.verticalTouchMoveOneHandler = this.handleVerticalTouchMoveOne.bind(this);
+    this.verticalTouchMoveTwoHandler = this.handleVerticalTouchMoveTwo.bind(this);
     this.thumbOneMouseUpHandler = this.handleThumbOneMouseUp.bind(this);
     this.thumbTwoMouseUpHandler = this.handleThumbTwoMouseUp.bind(this);
-
+    this.thumbOneTouchEndHandler = this.handleThumbOneTouchEnd.bind(this);
+    this.thumbTwoTouchEndHandler = this.handleThumbTwoTouchEnd.bind(this);
     
     this.initSlider();
     this.setUpIsWithStrings();
@@ -279,6 +288,8 @@ import { Value } from './Model';
     }
   };
 
+  // USER INTERACTION  
+
   onThumbOneMouseDown(event: MouseEvent): void {
     if(this.params.valueTwo !== undefined ) {
       const thumbTwo: HTMLElement = this.root.querySelector('.slider__thumb--two');
@@ -293,6 +304,28 @@ import { Value } from './Model';
       document.addEventListener('mousemove', this.horizontalMouseMoveOneHandler);
     };
     document.addEventListener('mouseup', this.thumbOneMouseUpHandler);
+  }
+
+  handleHorizontalMouseMoveOne(event: MouseEvent): void {
+    event.preventDefault();
+    const eventX = event.clientX;
+    this.handleHorizontalMoveOne(eventX);
+  }
+
+  handleVerticalMouseMoveOne(event: MouseEvent): void {
+    event.preventDefault();
+    const eventY = event.clientY;
+    this.handleVerticalMoveOne(eventY);
+  }
+
+  handleThumbOneMouseUp (event: MouseEvent): void {
+    event.preventDefault();
+    if (this.params.isVertical) {
+      document.removeEventListener('mousemove', this.verticalMouseMoveOneHandler);
+    } else {
+      document.removeEventListener('mousemove', this.horizontalMouseMoveOneHandler);
+    }
+    document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 
   onThumbTwoMouseDown(event: MouseEvent): void {
@@ -310,38 +343,16 @@ import { Value } from './Model';
     document.addEventListener('mouseup', this.thumbTwoMouseUpHandler);
   };
 
-  handleHorizontalMouseMoveOne(event: MouseEvent): void {
-    event.preventDefault();
-    const eventX = event.clientX;
-    this.handleHorizontalMoveOne(eventX);
-  }
-
   handleHorizontalMouseMoveTwo(event: MouseEvent): void {
     event.preventDefault();
     const eventX = event.clientX;
     this.handleHorizontalMoveTwo(eventX);
   }
 
-  handleVerticalMouseMoveOne(event: MouseEvent): void {
-    event.preventDefault();
-    const eventY = event.clientY;
-    this.handleVerticalMoveOne(eventY);
-  }
-
   handleVerticalMouseMoveTwo(event: MouseEvent): void {
     event.preventDefault();
     const eventY = event.clientY;
     this.handleVerticalMoveTwo(eventY);
-  }
-
-  handleThumbOneMouseUp (event: MouseEvent): void {
-    event.preventDefault();
-    if (this.params.isVertical) {
-      document.removeEventListener('mousemove', this.verticalMouseMoveOneHandler);
-    } else {
-      document.removeEventListener('mousemove', this.horizontalMouseMoveOneHandler);
-    }
-    document.removeEventListener('mouseup', this.thumbOneMouseUpHandler);
   }
 
   handleThumbTwoMouseUp (event: MouseEvent): void {
@@ -353,12 +364,88 @@ import { Value } from './Model';
     } 
     document.removeEventListener('mouseup', this.thumbTwoMouseUpHandler);
   }
-  
-  // onThumbTwoMouseDown(event: MouseEvent): void {};
 
-  onThumbOneTouchStart(event: TouchEvent): void {};
+  onThumbOneTouchStart(event: TouchEvent): void {
+    event.preventDefault();
+    if(this.params.valueTwo !== undefined ) {
+      const thumbTwo: HTMLElement = this.root.querySelector('.slider__thumb--two');
+      thumbTwo.classList.remove('slider__thumb--top');
+    };
+    const thumbOne: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    thumbOne.classList.add('slider__thumb--top');
 
-  onThumbTwoTouchStart(event: TouchEvent): void {};
+    thumbOne.classList.add('slider__thumb--touched');
+
+    if (this.params.isVertical) {
+      thumbOne.addEventListener('touchmove', this.verticalTouchMoveOneHandler);
+    } else {
+      thumbOne.addEventListener('touchmove', this.horizontalTouchMoveOneHandler);
+    }
+    thumbOne.addEventListener('touchend', this.thumbOneTouchEndHandler);
+  }
+
+  handleHorizontalTouchMoveOne(event: TouchEvent): void {
+    event.preventDefault();
+    const eventX = event.touches[0].clientX;
+    this.handleHorizontalMoveOne(eventX);
+  }
+
+  handleVerticalTouchMoveOne(event: TouchEvent): void {
+    event.preventDefault();
+    const eventY = event.touches[0].clientY;
+    this.handleVerticalMoveOne(eventY);
+  }
+
+  handleThumbOneTouchEnd (event: TouchEvent): void {
+    event.preventDefault();
+    const thumbOne = this.root.querySelector('.slider__thumb--one');
+    thumbOne.classList.remove('slider__thumb--touched');
+    if (this.params.isVertical) {
+      thumbOne.removeEventListener('touchmove', this.verticalTouchMoveOneHandler);
+    } else {
+      thumbOne.removeEventListener('touchmove', this.horizontalTouchMoveOneHandler);
+    }
+    thumbOne.removeEventListener('touchend', this.verticalTouchMoveOneHandler);
+  }
+
+  onThumbTwoTouchStart(event: TouchEvent): void {
+    event.preventDefault();
+    const thumbOne: HTMLElement = this.root.querySelector('.slider__thumb--one');
+    const thumbTwo: HTMLElement = this.root.querySelector('.slider__thumb--two');
+    thumbOne.classList.remove('slider__thumb--top');
+    thumbTwo.classList.add('slider__thumb--top');
+    thumbTwo.classList.add('slider__thumb--touched');
+
+    if(this.params.isVertical) {
+      thumbTwo.addEventListener('touchmove', this.verticalTouchMoveTwoHandler);
+    } else {
+      thumbTwo.addEventListener('touchmove', this.horizontalTouchMoveTwoHandler);
+    }
+    thumbTwo.addEventListener('touchend', this.thumbTwoTouchEndHandler);
+  }
+
+  handleHorizontalTouchMoveTwo(event: TouchEvent): void {
+    event.preventDefault();
+    const eventX = event.touches[0].clientX;
+    this.handleHorizontalMoveTwo(eventX);
+  }
+  handleVerticalTouchMoveTwo(event: TouchEvent): void {
+    event.preventDefault();
+    const eventY = event.touches[0].clientY;
+    this.handleVerticalMoveTwo(eventY);
+  }
+
+  handleThumbTwoTouchEnd (event: TouchEvent): void {
+    event.preventDefault();
+    const thumbTwo = this.root.querySelector('.slider__thumb--two');
+    thumbTwo.classList.remove('slider__thumb--touched');
+    if (this.params.isVertical) {
+      thumbTwo.removeEventListener('touchmove', this.verticalTouchMoveTwoHandler);
+    } else {
+      thumbTwo.removeEventListener('touchmove', this.horizontalTouchMoveTwoHandler);
+    }
+    thumbTwo.removeEventListener('touchend', this.thumbTwoTouchEndHandler);
+  }
 
   handleHorizontalMoveOne(eventX: number): void {};
 
