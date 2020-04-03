@@ -1,24 +1,21 @@
 type Value = number | string;
 
-interface IState {
-  valueOne?: Value;
-  valueTwo?: Value;
-}
+// interface IState {
+//   valueOne?: Value;
+//   valueTwo?: Value;
+// }
 
 class Model {
-  state: IState;
-
-  constructor() {
-    this.state = {}
-  }
+  valueOne?: Value;
+  valueTwo?: Value
 
   updateValueOne(newValue: Value): void {
-    this.state.valueOne = newValue;
+    this.valueOne = newValue;
     this.onValueOneChange();
   }
 
   updateValueTwo(newValue: Value): void {
-    this.state.valueTwo = newValue;
+    this.valueTwo = newValue;
     this.onValueTwoChange();
   }
 

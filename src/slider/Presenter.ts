@@ -90,29 +90,29 @@ export class Presenter {
   }
 
   validateValueOne(newValue: Value): boolean {
-    if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueTwo === undefined) {
+    if(this.isWithStrings && typeof newValue === 'string' && this.model.valueTwo === undefined) {
       return this.params.values.indexOf(newValue) !== -1;
 
-    } else if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueTwo !== undefined) {
+    } else if(this.isWithStrings && typeof newValue === 'string' && this.model.valueTwo !== undefined) {
     
       const newIndex = this.params.values.indexOf(newValue);
-      if(typeof this.model.state.valueTwo === 'string') {
-        const indexTwo = this.params.values.indexOf(String(this.model.state.valueTwo));
+      if(typeof this.model.valueTwo === 'string') {
+        const indexTwo = this.params.values.indexOf(String(this.model.valueTwo));
         return newIndex !== -1 && newIndex <= indexTwo;
       }
       return newIndex !== -1;
 
-    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueTwo === undefined) {
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.valueTwo === undefined) {
       
       return newValue >= this.params.minValue && newValue <= this.params.maxValue;
 
-    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueTwo !== undefined) {
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.valueTwo !== undefined) {
       // для случая с переходом "на лету" в работе слайдера от строк к числам 
-      if(typeof this.model.state.valueTwo === 'string') {
+      if(typeof this.model.valueTwo === 'string') {
         return newValue >= this.params.minValue && newValue <= this.params.maxValue;
       }
       ////
-      return newValue >= this.params.minValue && newValue <= this.model.state.valueTwo;
+      return newValue >= this.params.minValue && newValue <= this.model.valueTwo;
 
     } else {
       return false;
@@ -120,23 +120,23 @@ export class Presenter {
   }
 
   validateValueTwo(newValue: Value): boolean {
-    if(this.isWithStrings && typeof newValue === 'string' && this.model.state.valueOne === undefined) {
+    if(this.isWithStrings && typeof newValue === 'string' && this.model.valueOne === undefined) {
 
       return this.params.values.indexOf(newValue) !== -1;
       
-    } else if(this.isWithStrings && typeof newValue == 'string' && this.model.state.valueOne !== undefined) {
+    } else if(this.isWithStrings && typeof newValue == 'string' && this.model.valueOne !== undefined) {
 
       const newIndex = this.params.values.indexOf(newValue);
-      const indexOne = this.params.values.indexOf(String(this.model.state.valueOne));
+      const indexOne = this.params.values.indexOf(String(this.model.valueOne));
       return newIndex !== -1 && newIndex >= indexOne;
 
-    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueOne === undefined) {
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.valueOne === undefined) {
 
       return newValue >= this.params.minValue && newValue <= this.params.maxValue;
 
-    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.state.valueOne !== undefined) {
+    } else if(!this.isWithStrings && typeof newValue === 'number' && this.model.valueOne !== undefined) {
 
-      return newValue >= this.model.state.valueOne && newValue <= this.params.maxValue;
+      return newValue >= this.model.valueOne && newValue <= this.params.maxValue;
 
     } else {
       return false;
@@ -144,8 +144,8 @@ export class Presenter {
   }
 
   onValueOneChange(): void {
-    const valueOneString = this.makeValueString(this.model.state.valueOne);
-    this.view.renderThumbOne(this.model.state.valueOne, valueOneString, this.range, this.shift);
+    const valueOneString = this.makeValueString(this.model.valueOne);
+    this.view.renderThumbOne(this.model.valueOne, valueOneString, this.range, this.shift);
 
     if(this.outerInputsOne.length > 0) {
       this.outerInputsOne.forEach(input => {
@@ -156,8 +156,8 @@ export class Presenter {
 
   onValueTwoChange(): void {
     if(this.params.valueTwo !== undefined) {
-      const valueTwoString = this.makeValueString(this.model.state.valueTwo)
-      this.view.renderThumbTwo(this.model.state.valueTwo, valueTwoString, this.range, this.shift);
+      const valueTwoString = this.makeValueString(this.model.valueTwo)
+      this.view.renderThumbTwo(this.model.valueTwo, valueTwoString, this.range, this.shift);
 
       if(this.outerInputsTwo.length > 0) {
         this.outerInputsTwo.forEach(input => {
@@ -294,14 +294,14 @@ export class Presenter {
 
   addOuterInputOne(input: HTMLInputElement): void {
     input.addEventListener('blur', this.inputOneBlurHandler);
-    input.value = this.makeValueString(this.model.state.valueOne);
+    input.value = this.makeValueString(this.model.valueOne);
     this.outerInputsOne.push(input);
   }
 
   addOuterInputTwo(input: HTMLInputElement): void {
     if (this.params.valueTwo !== undefined) {
       input.addEventListener('blur', this.inputTwoBlurHandler);
-      input.value = this.makeValueString(this.model.state.valueTwo);
+      input.value = this.makeValueString(this.model.valueTwo);
       this.outerInputsTwo.push(input);
     }
   }
@@ -362,9 +362,9 @@ export class Presenter {
   }
 
   handleWindowResize(): void {
-    this.view.renderThumbOne(this.model.state.valueOne, this.makeValueString(this.model.state.valueOne), this.range, this.shift);
+    this.view.renderThumbOne(this.model.valueOne, this.makeValueString(this.model.valueOne), this.range, this.shift);
     if(this.params.valueTwo !== undefined) {
-      this.view.renderThumbTwo(this.model.state.valueTwo, this.makeValueString(this.model.state.valueTwo), this.range, this.shift);
+      this.view.renderThumbTwo(this.model.valueTwo, this.makeValueString(this.model.valueTwo), this.range, this.shift);
     }
   }
 

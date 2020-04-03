@@ -175,9 +175,9 @@ describe('Presenter', () => {
       };
       const view = new View(container, params);
       const presenter = new Presenter(new Model(), view, params);
-      expect(presenter.model.state.valueOne).toBe(7);
+      expect(presenter.model.valueOne).toBe(7);
       presenter.updateValueOne(20);
-      expect(presenter.model.state.valueOne).toBe(20);
+      expect(presenter.model.valueOne).toBe(20);
     });
     
     test('When in a presenter working with stings ["a", "b", "c", "d"] updateValueTwo is called with argument "c", valueTwo in its model state should be change to "b"', () => {
@@ -193,9 +193,9 @@ describe('Presenter', () => {
       };
       const view = new View(container, params);
       const presenter = new Presenter(new Model(), view, params);
-      expect(presenter.model.state.valueTwo).toBe(undefined);
+      expect(presenter.model.valueTwo).toBe(undefined);
       presenter.updateValueTwo('c');
-      expect(presenter.model.state.valueTwo).toBe('c');
+      expect(presenter.model.valueTwo).toBe('c');
     });
   });
 
@@ -1479,9 +1479,9 @@ describe('Presenter', () => {
       };
       const view = new View(container, params);
       const presenter = new Presenter(new Model(), view, params);
-      expect(presenter.model.state.valueTwo).toBe(undefined);
+      expect(presenter.model.valueTwo).toBe(undefined);
       presenter.updateOptions({ valueTwo: 12 });
-      expect(presenter.model.state.valueTwo).toBe(12);
+      expect(presenter.model.valueTwo).toBe(12);
     });
   });
 
@@ -1759,7 +1759,7 @@ describe('Presenter', () => {
       inputOne.value = '10';
       const blurEvent = new FocusEvent('blur');
       inputOne.dispatchEvent(blurEvent);
-      expect(presenter.model.state.valueOne).toBe(10);
+      expect(presenter.model.valueOne).toBe(10);
     });
 
     test('When user changed the value of outer input two to "10" and this value is valid, then after this input lost focus, the value two in model changes to 10', () => {
@@ -1782,7 +1782,7 @@ describe('Presenter', () => {
       inputTwo.value = '10';
       const blurEvent = new FocusEvent('blur');
       inputTwo.dispatchEvent(blurEvent);
-      expect(presenter.model.state.valueTwo).toBe(10);
+      expect(presenter.model.valueTwo).toBe(10);
     });
   });
 
