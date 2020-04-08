@@ -92,7 +92,6 @@ export class Presenter {
   validateValueOne(newValue: Value): boolean {
     if(this.isWithStrings && typeof newValue === 'string' && this.model.valueTwo === undefined) {
       return this.params.values.indexOf(newValue) !== -1;
-
     } else if(this.isWithStrings && typeof newValue === 'string' && this.model.valueTwo !== undefined) {
     
       const newIndex = this.params.values.indexOf(newValue);
@@ -357,7 +356,7 @@ export class Presenter {
     }
   }
 
-  updateOuterInput(input: HTMLInputElement, valueString: string) {
+  updateOuterInput(input: HTMLInputElement, valueString: string): void {
     input.value = valueString;
   }
 

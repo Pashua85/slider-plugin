@@ -1,10 +1,5 @@
 type Value = number | string;
 
-// interface IState {
-//   valueOne?: Value;
-//   valueTwo?: Value;
-// }
-
 class Model {
   valueOne?: Value;
   valueTwo?: Value
