@@ -443,89 +443,677 @@ describe( 'View', () => {
     });
   });
 
-  describe('Interaction with user', () => {
-    test('When user starts clicking thumb one, an approptiate handler should be called for this event', () => {
+  describe('Mouse down on thumb one', () => {
+    test('When user press mouse down on the thumb one, this thumb gets class "slider__thumb--top and only this thumb', () => {
       const params = {
         minValue: 0,
-        maxValue: 30,
-        valueOne: 3,
-        valueTwo: 10,
-        isVertical: true,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
         step: 1,
         values: emptyArray,
-        scaleStep: 5,
         isValueAlwaysShown: false,
         isValueOnHoverShown: true
       };
       const view = new View(container, params);
-      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
-      const spy = jest.spyOn(view, 'onThumbOneMouseDown');
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbTwo.classList.add('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
       const mouseDownEvent = new MouseEvent('mousedown');
       thumbOne.dispatchEvent(mouseDownEvent);
-      expect(spy).toHaveBeenCalled();
+      expect(thumbTwo.classList).not.toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
     });
+  });
 
-    test('When user starts clicking thumb two, an approptiate handler should be called for this event', () => {
+  describe('Mouse down on thumb two', () => {
+    test('When user press mouse down on the thumb two, this thumb gets class "slider__thumb--top and only this thumb', () => {
       const params = {
         minValue: 0,
-        maxValue: 30,
-        valueOne: 3,
-        valueTwo: 10,
-        isVertical: true,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
         step: 1,
         values: emptyArray,
-        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbOne.classList.add('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      expect(thumbOne.classList).not.toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+    });
+  });
+
+  describe('Touch start on thumb one', () => {
+    test('When user touched the thumb one, this thumb gets classes "slider__thumb--top" and "slider__thumb--touched"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      new View(container, params);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbTwo.classList.add('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+      expect(thumbOne.classList).not.toContain('slider__thumb--touched');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbOne.dispatchEvent(touchStartEvent);
+      expect(thumbTwo.classList).not.toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--touched');
+    });
+  });
+
+  describe('Touch start on thumb two', () => {
+    test('When user touched the thumb two, this thumb gets classes "slider__thumb--top" and "slider__thumb--touched"', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
         isValueAlwaysShown: false,
         isValueOnHoverShown: true
       };
       const view = new View(container, params);
-      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
-      const spy = jest.spyOn(view, 'onThumbTwoMouseDown');
-      const mouseDownEvent = new MouseEvent('mousedown');
-      thumbTwo.dispatchEvent(mouseDownEvent);
-      expect(spy).toHaveBeenCalled();
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      thumbOne.classList.add('slider__thumb--top');
+      expect(thumbOne.classList).toContain('slider__thumb--top');
+      expect(thumbTwo.classList).not.toContain('slider__thumb--touched');
+      const touchStartEvent = new TouchEvent('touchstart');
+      thumbTwo.dispatchEvent(touchStartEvent);
+      expect(thumbOne.classList).not.toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--top');
+      expect(thumbTwo.classList).toContain('slider__thumb--touched');
+    });
+  });
+
+  describe('Horizontal move on thumb one', () => {
+
+    afterEach(() => {
+      document.body.innerHTML = '';
     });
 
-    test('When user starts touch thumb one, an approptiate handler should be called for this event', () => {
+    test('When user press down mouse on the thumb one in the horizontal slider and move mouse horizontally with clientX=300 in event, handleHorizontalMoveOne should be called with argument 300', () => {
       const params = {
         minValue: 0,
-        maxValue: 30,
-        valueOne: 3,
-        valueTwo: 10,
-        isVertical: true,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
         step: 1,
         values: emptyArray,
-        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveOne');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 300 });
+      thumbOne.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+      test('When user touches the thumb one in the horizontal slider and move finger horizontally with clientX=300 in event, handleHorizontalMoveOne should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
         isValueAlwaysShown: false,
         isValueOnHoverShown: true
       };
       const view = new View(container, params);
       const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
-      const spy = jest.spyOn(view, 'onThumbOneTouchStart');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveOne');
       const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbOne,
+          touchType: 'direct'
+        }] 
+      });
       thumbOne.dispatchEvent(touchStartEvent);
-      expect(spy).toHaveBeenCalled();
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
     });
 
-    test('When user starts touch thumb two, an approptiate handler should be called for this event', () => {
+    test('When user moving thumb one horizontally with mouse down and then mouse is up, handleHorizontalMoveOne should stop to be called', () => {
       const params = {
         minValue: 0,
-        maxValue: 30,
-        valueOne: 3,
-        valueTwo: 10,
-        isVertical: true,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
         step: 1,
         values: emptyArray,
-        scaleStep: 5,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveOne');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove');
+      const mouseUpEvent = new MouseEvent('mouseup');
+      thumbOne.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      document.dispatchEvent(mouseUpEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('When user moving thumb one horizontally with touch and then thouch is ended, handleHorizontalMoveOne should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveOne');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbOne,
+          touchType: 'direct'
+        }] 
+      });
+      const touchEndEvent = new TouchEvent('touchend');
+      thumbOne.dispatchEvent(touchStartEvent);
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      thumbOne.dispatchEvent(touchEndEvent);
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Horizontal move on thumb two', () => {
+    afterEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    test('When user press down mouse on the thumb two in the horizontal slider and move mouse horizontally with clientX=300 in event, handleHorizontalMoveTwo should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveTwo');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 300 });
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });    
+
+    test('When user touches the thumb two in the horizontal slider and move finger horizontally with clientX=300 in event, handleHorizontalMoveTwo should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
         isValueAlwaysShown: false,
         isValueOnHoverShown: true
       };
       const view = new View(container, params);
       const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
-      const spy = jest.spyOn(view, 'onThumbTwoTouchStart');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveTwo');
       const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbTwo,
+          touchType: 'direct'
+        }] 
+      });
       thumbTwo.dispatchEvent(touchStartEvent);
-      expect(spy).toHaveBeenCalled();
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+    test('When user moving thumb two horizontaly with mouse down and then mouse is up, handleHorizontalMoveTwo should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveTwo');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove');
+      const mouseUpEvent = new MouseEvent('mouseup');
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      document.dispatchEvent(mouseUpEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('When user moving thumb two horizontaly with touch and then thouch is ended, handleHorizontalMoveTwo should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: false,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleHorizontalMoveTwo');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbTwo,
+          touchType: 'direct'
+        }] 
+      });
+      const touchEndEvent = new TouchEvent('touchend');
+      thumbTwo.dispatchEvent(touchStartEvent);
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      thumbTwo.dispatchEvent(touchEndEvent);
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Vertical move on thumb one', () => {
+
+    afterEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    test('When user press down mouse on the thumb one in the vertical slider and move mouse vertically with clientY=300 in event, handleVerticalMoveOne should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleVerticalMoveOne');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove', { clientY: 300 });
+      thumbOne.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+    test('When user touches the thumb one in the vertical slider and move finger vertically with clientY=300 in event, handleVerticalMoveOne should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleVerticalMoveOne');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 50, 
+          clientY: 300, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbOne,
+          touchType: 'direct'
+        }] 
+      });
+      thumbOne.dispatchEvent(touchStartEvent);
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+    test('When user moving thumb one vertically with mouse down and then mouse is up, handleVerticalMoveOne should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbOne = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleVerticalMoveOne');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove');
+      const mouseUpEvent = new MouseEvent('mouseup');
+      thumbOne.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      document.dispatchEvent(mouseUpEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('When user moving thumb one vertically with touch and then thouch is ended, handleVerticalMoveOne should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbOne: HTMLElement = container.querySelector('.slider__thumb--one');
+      const spy = jest.spyOn(view, 'handleVerticalMoveOne');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbOne,
+          touchType: 'direct'
+        }] 
+      });
+      const touchEndEvent = new TouchEvent('touchend');
+      thumbOne.dispatchEvent(touchStartEvent);
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      thumbOne.dispatchEvent(touchEndEvent);
+      thumbOne.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Vertical move on thumb two', () => {
+
+    afterEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    test('When user press down mouse on the thumb two in the vertical slider and move mouse vertically with clientY=300 in event, handleVerticalMoveTwo should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleVerticalMoveTwo');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove', { clientY: 300 });
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+    test('When user touches the thumb two in the vertical slider and move finger vertically with clientY=300 in event, handleVerticalMoveTwo should be called with argument 300', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleVerticalMoveTwo');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 50, 
+          clientY: 300, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbTwo,
+          touchType: 'direct'
+        }] 
+      });
+      thumbTwo.dispatchEvent(touchStartEvent);
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledWith(300);
+    });
+
+    test('When user moving thumb two vertically with mouse down and then mouse is up, handleVerticalMoveTwo should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      document.body.appendChild(container);
+      const thumbTwo = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleVerticalMoveTwo');
+      const mouseDownEvent = new MouseEvent('mousedown');
+      const mouseMoveEvent = new MouseEvent('mousemove');
+      const mouseUpEvent = new MouseEvent('mouseup');
+      thumbTwo.dispatchEvent(mouseDownEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      document.dispatchEvent(mouseUpEvent);
+      document.dispatchEvent(mouseMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('When user moving thumb two vertically with touch and then thouch is ended, handleVerticalMoveTwo should stop to be called', () => {
+      const params = {
+        minValue: 0,
+        maxValue: 20,
+        valueOne: 4,
+        valueTwo: 8,
+        isVertical: true,
+        step: 1,
+        values: emptyArray,
+        isValueAlwaysShown: false,
+        isValueOnHoverShown: true
+      };
+      const view = new View(container, params);
+      const thumbTwo: HTMLElement = container.querySelector('.slider__thumb--two');
+      const spy = jest.spyOn(view, 'handleVerticalMoveTwo');
+      const touchStartEvent = new TouchEvent('touchstart');
+      const touchMoveEvent = new TouchEvent('touchmove', { 
+        touches: [ { 
+          altitudeAngle: 50, 
+          azimuthAngle: 50, 
+          clientX: 300, 
+          clientY: 50, 
+          force: 50, 
+          identifier: 50, 
+          pageX: 50, 
+          pageY: 50, 
+          radiusX: 50, 
+          radiusY: 50, 
+          rotationAngle: 50, 
+          screenX: 50, 
+          screenY: 50, 
+          target: thumbTwo,
+          touchType: 'direct'
+        }] 
+      });
+      const touchEndEvent = new TouchEvent('touchend');
+      thumbTwo.dispatchEvent(touchStartEvent);
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      thumbTwo.dispatchEvent(touchEndEvent);
+      thumbTwo.dispatchEvent(touchMoveEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 });

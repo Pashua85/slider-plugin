@@ -53,7 +53,6 @@ export class Example {
 
   addSecondValue(event: Event, stringValue: string, numberValue: number) {
     if((<HTMLInputElement>event.target).checked) {
-      this.slider.addOuterInputTwo(this.outerInput2);
       if(this.slider.isWithStrings) {
         this.slider.updateOptions({
           valueTwo: stringValue
@@ -62,7 +61,8 @@ export class Example {
         this.slider.updateOptions({
           valueTwo: numberValue
         });
-      }      
+      } 
+      this.slider.addOuterInputTwo(this.outerInput2);     
     }
   };
 
