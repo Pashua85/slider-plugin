@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider</title>
+  <link href="./css/index.css" rel="stylesheet"></head>
+  <body>
+    <main class="main">
+      <div class="main__item">
+        <div class="example example--one">
+          <div class="example__column--left">
+            <div class="example__input-row">
+              <input class="example__input example__input--1" type="text" id="input-1-1">
+              <input class="example__input example__input--2" type="text" id="input-1-2">
+            </div>
+            <div class="slider-container slider-container--one"></div>
+          </div>
+          <div class="example__column--right">
+            <form class="form form--one">
+              <div class="form__group">
+                <div class="form__header">Направление слайдера</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--1" type="radio" name="isVertical" value="true" id="radio-button-1-1" checked>
+                                  <label class="input-group__label" for="radio-button-1-1">горизонтальное</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--2" type="radio" name="isVertical" value="false" id="radio-button-1-2">
+                                  <label class="input-group__label" for="radio-button-1-2">вертикальное</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Количество значений</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--3" type="radio" name="valueAmount" value="two" id="radio-button-1-3" checked>
+                                  <label class="input-group__label" for="radio-button-1-3">два</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--4" type="radio" name="valueAmount" value="one" id="radio-button-1-4">
+                                  <label class="input-group__label" for="radio-button-1-4">одно</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Работа с числами / строками</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--5" type="radio" name="data-type" value="numbers" id="radio-button-1-5" checked>
+                                  <label class="input-group__label" for="radio-button-1-5">числа</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--6" type="radio" name="data-type" value="strings" id="radio-button-1-6">
+                                  <label class="input-group__label" for="radio-button-1-6">строки</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Диапазон значений чисел</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--7" type="radio" name="range" value="0-100" id="radio-button-1-7" checked>
+                                  <label class="input-group__label" for="radio-button-1-7">0 - 100</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--8" type="radio" name="range" value="-60-120" id="radio-button-1-8">
+                                  <label class="input-group__label" for="radio-button-1-8">-60 - 120</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Шаг слайдера (для чисел)</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--9" type="radio" name="step" value="1" id="radio-button-1-9" checked>
+                                  <label class="input-group__label" for="radio-button-1-9">1</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--10" type="radio" name="step" value="5" id="radio-button-1-10">
+                                  <label class="input-group__label" for="radio-button-1-10">5</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--11" type="radio" name="step" value="0.2" id="radio-button-1-11">
+                                  <label class="input-group__label" for="radio-button-1-11">0.2</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Шаг шкалы слайдера</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--12" type="radio" name="scale-step" value="0" id="radio-button-1-12" checked>
+                                  <label class="input-group__label" for="radio-button-1-12">без шкалы</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--13" type="radio" name="scale-step" value="10" id="radio-button-1-13">
+                                  <label class="input-group__label" for="radio-button-1-13">10</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--14" type="radio" name="scale-step" value="20" id="radio-button-1-14">
+                                  <label class="input-group__label" for="radio-button-1-14">20</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-strings radio-button--15" type="radio" name="scale-step" value="1" id="radio-button-1-15" disabled>
+                                  <label class="input-group__label" for="radio-button-1-15">1 (для строк)</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Отображение значения над ползунком</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--16" type="radio" name="showing-value" value="hover" id="radio-button-1-16" checked>
+                                  <label class="input-group__label" for="radio-button-1-16">при наведении курсора</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--17" type="radio" name="showing-value" value="never" id="radio-button-1-17">
+                                  <label class="input-group__label" for="radio-button-1-17">никогда</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--18" type="radio" name="showing-value" value="always" id="radio-button-1-18">
+                                  <label class="input-group__label" for="radio-button-1-18">всегда</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="main__item">
+        <div class="example example--two">
+          <div class="example__column--left">
+            <div class="example__input-row">
+              <input class="example__input example__input--1" type="text" id="input-2-1">
+              <input class="example__input example__input--2" type="text" id="input-2-2">
+            </div>
+            <div class="slider-container slider-container--two"></div>
+          </div>
+          <div class="example__column--right">
+            <form class="form form--one">
+              <div class="form__group">
+                <div class="form__header">Направление слайдера</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--1" type="radio" name="isVertical" value="true" id="radio-button-2-1" checked>
+                                  <label class="input-group__label" for="radio-button-2-1">горизонтальное</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--2" type="radio" name="isVertical" value="false" id="radio-button-2-2">
+                                  <label class="input-group__label" for="radio-button-2-2">вертикальное</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Количество значений</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--3" type="radio" name="valueAmount" value="two" id="radio-button-2-3" checked>
+                                  <label class="input-group__label" for="radio-button-2-3">два</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--4" type="radio" name="valueAmount" value="one" id="radio-button-2-4">
+                                  <label class="input-group__label" for="radio-button-2-4">одно</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Работа с числами / строками</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--5" type="radio" name="data-type" value="numbers" id="radio-button-2-5" checked>
+                                  <label class="input-group__label" for="radio-button-2-5">числа</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--6" type="radio" name="data-type" value="strings" id="radio-button-2-6">
+                                  <label class="input-group__label" for="radio-button-2-6">строки</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Диапазон значений чисел</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--7" type="radio" name="range" value="0-30" id="radio-button-2-7" checked>
+                                  <label class="input-group__label" for="radio-button-2-7">0 - 30</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--8" type="radio" name="range" value="-5 - 25" id="radio-button-2-8">
+                                  <label class="input-group__label" for="radio-button-2-8">-5 - 25</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Шаг слайдера (для чисел)</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--9" type="radio" name="step" value="0.1" id="radio-button-2-9" checked>
+                                  <label class="input-group__label" for="radio-button-2-9">0.1</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--10" type="radio" name="step" value="0.5" id="radio-button-2-10">
+                                  <label class="input-group__label" for="radio-button-2-10">0.25</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--11" type="radio" name="step" value="1" id="radio-button-2-11">
+                                  <label class="input-group__label" for="radio-button-2-11">1</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Шаг шкалы слайдера</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--12" type="radio" name="scale-step" value="0" id="radio-button-2-12" checked>
+                                  <label class="input-group__label" for="radio-button-2-12">без шкалы</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--13" type="radio" name="scale-step" value="1.5" id="radio-button-2-13">
+                                  <label class="input-group__label" for="radio-button-2-13">1.5</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input input-group__input--for-numbers radio-button--14" type="radio" name="scale-step" value="3" id="radio-button-2-14">
+                                  <label class="input-group__label" for="radio-button-2-14">3</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--15" type="radio" name="scale-step" value="1" id="radio-button-2-15">
+                                  <label class="input-group__label" for="radio-button-2-15">1</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form__group">
+                <div class="form__header">Отображение значения над ползунком</div>
+                <div class="form__row">
+                  <div class="form__input-group"> 
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--16" type="radio" name="showing-value" value="hover" id="radio-button-2-16" checked>
+                                  <label class="input-group__label" for="radio-button-2-16">при наведении курсора</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--17" type="radio" name="showing-value" value="never" id="radio-button-2-17">
+                                  <label class="input-group__label" for="radio-button-2-17">никогда</label>
+                                </div>
+                  </div>
+                  <div class="form__input-group">
+                                <div class="input-group"> 
+                                  <input class="input-group__input radio-button--18" type="radio" name="showing-value" value="always" id="radio-button-2-18">
+                                  <label class="input-group__label" for="radio-button-2-18">всегда</label>
+                                </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  <script type="text/javascript" src="./js/index.js"></script></body>
+</html>
